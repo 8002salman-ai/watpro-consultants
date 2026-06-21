@@ -1,117 +1,167 @@
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import {
-  GlassCard,
-  PageHero,
-  SectionHeading,
-  SectionShell,
-  iconMap,
-  primaryButtonClass,
-  secondaryButtonClass,
-} from "../components/ui";
-import { useDocumentMeta } from "../hooks/useDocumentMeta";
-import { academyPrograms, pageMeta, trainings } from "../data/watproContent";
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { academyPrograms, founderProfile, founderTrainingsDelivered } from '../data/watproContent';
+import { GlassCard, PageHero, SectionHeading, primaryButtonClass, secondaryButtonClass } from '../components/ui';
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.55, delay },
+});
+
+const levelColor: Record<string, string> = {
+  Foundation: 'text-green-400 bg-green-400/10 border-green-400/20',
+  Intermediate: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
+  Professional: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
+  Specialist: 'text-purple-400 bg-purple-400/10 border-purple-400/20',
+};
 
 export default function Academy() {
-  useDocumentMeta(pageMeta.academy);
-
   return (
-    <>
-      <PageHero meta={pageMeta.academy}>
-        <Link to="/training-calendar" className={primaryButtonClass}>
-          View calendar
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-        <Link to="/contact" className={secondaryButtonClass}>
-          Design a custom program
-        </Link>
+    <div style={{ background: '#07111e' }}>
+      <PageHero
+        eyebrow="WATPRO Academy"
+        title="Professional Development for Pakistan's Infrastructure Sector"
+        subtitle="Six intensive programmes taught by Dr. Waseem Ali Tipu — a published researcher and field practitioner with 25+ years of delivery experience. Theory that works. Practice that teaches."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Link to="/contact" className={primaryButtonClass}>Enquire About Training</Link>
+          <a href={`mailto:${founderProfile.email}`} className={secondaryButtonClass}>Email Dr. Tipu</a>
+        </div>
       </PageHero>
 
-      <SectionShell>
-        <div className="grid gap-6 lg:grid-cols-2">
-          {academyPrograms.map((program, index) => {
-            const Icon = iconMap[program.icon];
-            return (
-              <GlassCard key={program.title} className="h-full" delay={index * 0.05}>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-300/12 text-amber-200">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h2 className="mt-4 text-lg font-semibold text-white">{program.title}</h2>
-                <p className="mt-2.5 text-[13px] leading-6 text-slate-400">{program.description}</p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-400">Formats</p>
-                    <div className="mt-3 space-y-2 text-sm text-slate-200">
-                      {program.formats.map((format) => (
-                        <div key={format}>{format}</div>
-                      ))}
+      {/* Why train with WATPRO */}
+      <section className="py-16" style={{ background: 'rgba(255,255,255,0.02)' }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid sm:grid-cols-4 gap-6">
+            {[
+              { stat: '500+', label: 'Officials Trained' },
+              { stat: '6', label: 'Specialist Programmes' },
+              { stat: '25+', label: 'Years\'  Experience' },
+              { stat: 'PhD', label: 'Researcher-Practitioner' },
+            ].map((item, i) => (
+              <motion.div key={item.label} {...fadeUp(i * 0.07)} className="text-center">
+                <div className="text-4xl font-black stat-big mb-1">{item.stat}</div>
+                <div className="text-xs font-semibold uppercase tracking-widest text-slate-400">{item.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Programmes */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div {...fadeUp(0)} className="mb-12">
+            <SectionHeading
+              eyebrow="Our Programmes"
+              title="Six Specialist Training Programmes"
+              subtitle="Each programme combines international frameworks (PMBOK, PPP best practice, ISO) with Pakistan-specific case studies, PPRA rules, and real delivery challenges."
+            />
+          </motion.div>
+
+          <div className="flex flex-col gap-8">
+            {academyPrograms.map((prog, i) => (
+              <motion.div key={prog.id} {...fadeUp(i * 0.07)}>
+                <GlassCard premium className="p-8">
+                  <div className="grid md:grid-cols-3 gap-8">
+                    {/* Header */}
+                    <div className="md:col-span-1">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full border text-xs font-bold uppercase tracking-wider mb-3 ${levelColor[prog.level] || 'text-slate-400 bg-white/5 border-white/10'}`}>
+                        {prog.level}
+                      </span>
+                      <h3 className="text-lg font-black text-white mb-3 leading-snug">{prog.title}</h3>
+                      <div className="flex flex-col gap-1.5 text-sm text-slate-400">
+                        <div className="flex items-center gap-2">
+                          <span className="text-amber-400">⏱</span> {prog.duration}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-amber-400">🎯</span> {prog.targetAudience}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className="md:col-span-1">
+                      <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">About This Programme</p>
+                      <p className="text-sm text-slate-300 leading-relaxed">{prog.description}</p>
+                    </div>
+
+                    {/* Topics */}
+                    <div className="md:col-span-1">
+                      <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">Topics Covered</p>
+                      <ul className="flex flex-col gap-2">
+                        {prog.topics.map(topic => (
+                          <li key={topic} className="flex items-start gap-2 text-sm text-slate-300">
+                            <span className="text-amber-400 flex-shrink-0 text-xs mt-0.5">&#10003;</span>
+                            {topic}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-400">Outcomes</p>
-                    <div className="mt-3 space-y-2 text-sm text-slate-200">
-                      {program.outcomes.map((outcome) => (
-                        <div key={outcome}>{outcome}</div>
-                      ))}
-                    </div>
+
+                  <div className="mt-6 pt-5 border-t border-white/8 flex items-center justify-between">
+                    <p className="text-xs text-slate-500">In-house and open enrolment options available</p>
+                    <Link to="/contact" className="text-xs font-semibold text-amber-400 hover:text-amber-300">
+                      Enquire &rarr;
+                    </Link>
                   </div>
-                </div>
+                </GlassCard>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trainer profile */}
+      <section className="py-20" style={{ background: 'rgba(255,255,255,0.02)' }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div {...fadeUp(0)}>
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">Your Trainer</p>
+              <h2 className="text-3xl font-black text-white mb-4">{founderProfile.name}</h2>
+              <p className="text-amber-300 font-medium mb-4">{founderProfile.title}</p>
+              <p className="text-slate-300 leading-relaxed mb-6">
+                Dr. Tipu brings a rare combination: PhD-level research methodology, gold medal academic
+                achievement, and hands-on delivery across Pakistan Army, HIT, UN Peacekeeping, SDPI,
+                and Air University. His training programmes are known for translating complex theory into
+                immediately applicable practice.
+              </p>
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">Training Portfolio</p>
+              <ul className="flex flex-col gap-2">
+                {founderTrainingsDelivered.map(t => (
+                  <li key={t} className="flex items-center gap-2 text-sm text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.15)}>
+              <GlassCard premium className="p-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Book In-House Training</p>
+                <p className="text-white font-bold text-lg mb-3">Bring WATPRO Academy to Your Organisation</p>
+                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                  All programmes are available as customised in-house training for government departments,
+                  corporations, and development organisations. We tailor content to your sector,
+                  context, and capability level.
+                </p>
+                <ul className="flex flex-col gap-2 mb-8">
+                  {['Custom content for your sector', 'Flexible duration (1–5 days)', 'Islamabad, Lahore, Karachi, or virtual', 'Certificate of completion', 'Post-training follow-up session'].map(b => (
+                    <li key={b} className="flex items-center gap-2 text-sm text-slate-300">
+                      <span className="text-amber-400 text-xs">&#10003;</span> {b}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/contact" className={primaryButtonClass}>Request In-House Training</Link>
               </GlassCard>
-            );
-          })}
+            </motion.div>
+          </div>
         </div>
-      </SectionShell>
-
-      <SectionShell className="pb-8">
-        <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
-          <GlassCard className="h-full" delay={0.05}>
-            <SectionHeading
-              eyebrow="Learning model"
-              title="Open-enrolment, in-house, and executive formats for practical institutional impact."
-              description="Every academy offer is designed to be applied immediately through templates, simulations, executive discussions, and organization-specific use cases."
-            />
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              {[
-                { title: "Open enrolment", text: "For professionals seeking certification support, specialist training, and cross-sector peer learning." },
-                { title: "Corporate programs", text: "Customized in-house delivery aligned to your systems, contracts, governance, and transformation agenda." },
-                { title: "Executive labs", text: "Focused sessions for boards, directors, sponsors, and change leaders managing high-visibility mandates." },
-              ].map((item) => (
-                <div key={item.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <p className="text-base font-semibold text-white">{item.title}</p>
-                  <p className="mt-3 text-sm leading-7 text-slate-400">{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-
-          <GlassCard className="h-full" delay={0.1}>
-            <SectionHeading
-              eyebrow="Upcoming programs"
-              title="Book upcoming workshops or commission a dedicated cohort for your team."
-              description="Our upcoming calendar highlights practical capability tracks across project delivery, PPP, contracts, and institutional reform."
-            />
-            <div className="mt-6 space-y-4">
-              {trainings.slice(0, 4).map((training) => (
-                <div key={training.title} className="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
-                  <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-[0.26em] text-slate-400">
-                    <span>{training.track}</span>
-                    <span>{training.date}</span>
-                  </div>
-                  <p className="mt-3 text-lg font-semibold text-white">{training.title}</p>
-                  <p className="mt-2 text-sm text-slate-400">{training.format} · {training.location}</p>
-                  <Link
-                    to="/training-calendar"
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-amber-200 transition hover:text-amber-100"
-                  >
-                    Register interest
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-        </div>
-      </SectionShell>
-    </>
+      </section>
+    </div>
   );
 }
