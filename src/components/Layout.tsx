@@ -126,7 +126,9 @@ export default function Layout() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
-                <WatproLogo size={40} />
+                <div className="bg-white rounded-lg p-1 flex items-center justify-center flex-shrink-0" style={{ width: 44, height: 34 }}>
+                  <img src="/watpro-logo.jpg" alt="WATPRO Logo" className="w-full h-full object-contain" />
+                </div>
                 <div>
                   <div className="text-base font-extrabold text-white">WATPRO Consultants</div>
                   <div className="text-xs font-semibold tracking-widest text-amber-400 uppercase">The Ultimate Solution Hub</div>
