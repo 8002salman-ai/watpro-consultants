@@ -1,129 +1,273 @@
-import { useState, type FormEvent } from "react";
-import { ArrowRight, BriefcaseBusiness, Mail, MapPin, Phone } from "lucide-react";
-import {
-  GlassCard,
-  PageHero,
-  SectionShell,
-  inputClassName,
-  primaryButtonClass,
-  textareaClassName,
-} from "../components/ui";
-import { cn } from "../utils/cn";
-import { useDocumentMeta } from "../hooks/useDocumentMeta";
-import { contactPoints, pageMeta } from "../data/watproContent";
-import { addMessage } from "../utils/store";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { founderProfile } from '../data/watproContent';
+import { GlassCard, PageHero, SectionHeading, inputClassName, labelClassName, primaryButtonClass } from '../components/ui';
 
-const interests = [
-  "Strategic advisory",
-  "PMO setup and project delivery",
-  "PPP advisory",
-  "Contract & commercial management",
-  "Stakeholder management",
-  "Defence acquisition systems",
-  "Organization development",
-  "Academy & corporate training",
-];
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.55, delay },
+});
 
-export default function Contact() {
-  useDocumentMeta(pageMeta.contact);
+function ConsultationForm() {
+  const [form, setForm] = useState({ name: '', org: '', email: '', phone: '', service: '', message: '' });
+  const [sent, setSent] = useState(false);
 
-  const [success, setSuccess] = useState("");
-  const [form, setForm] = useState({
-    fullName: "",
-    organization: "",
-    email: "",
-    interest: interests[0],
-    message: "",
-  });
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    addMessage(form);
-    setSuccess(`Thank you, ${form.fullName || "there"}. Your request has been captured and a WATPRO consultant will respond shortly.`);
-    setForm({ fullName: "", organization: "", email: "", interest: interests[0], message: "" });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSent(true);
   };
 
+  if (sent) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-5xl mb-4">✅</div>
+        <h3 className="text-xl font-bold text-white mb-2">Message Received</h3>
+        <p className="text-slate-400">Dr. Tipu will respond within 24 hours.</p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <PageHero meta={pageMeta.contact} />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className={labelClassName}>Full Name *</label>
+          <input required className={inputClassName} placeholder="Dr. / Mr. / Ms. ..." value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+        </div>
+        <div>
+          <label className={labelClassName}>Organisation</label>
+          <input className={inputClassName} placeholder="Ministry / Company" value={form.org} onChange={e => setForm({ ...form, org: e.target.value })} />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className={labelClassName}>Email *</label>
+          <input required type="email" className={inputClassName} placeholder="you@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+        </div>
+        <div>
+          <label className={labelClassName}>Phone</label>
+          <input type="tel" className={inputClassName} placeholder="+92 ..." value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+        </div>
+      </div>
+      <div>
+        <label className={labelClassName}>Area of Interest *</label>
+        <select required className={inputClassName + ' bg-[#0a1728]'} value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}>
+          <option value="">Select a service...</option>
+          <option>PPP Advisory</option>
+          <option>Project Management Consulting</option>
+          <option>Procurement &amp; Contract Management</option>
+          <option>Infrastructure Development &amp; Planning</option>
+          <option>Sustainable Development Consulting</option>
+          <option>Defence Acquisition Advisory</option>
+          <option>Policy Development &amp; Regulatory Reform</option>
+          <option>Training &amp; Capacity Building</option>
+          <option>Other / Multiple</option>
+        </select>
+      </div>
+      <div>
+        <label className={labelClassName}>Project Brief *</label>
+        <textarea required rows={5} className={inputClassName + ' resize-none'} placeholder="Briefly describe your challenge, project context, and what you need..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
+      </div>
+      <button type="submit" className={primaryButtonClass + ' w-full justify-center py-3.5 text-base'}>
+        Send Consultation Request
+      </button>
+    </form>
+  );
+}
 
-      <SectionShell>
-        <div className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
-          <div className="space-y-6">
-            {contactPoints.map((point, index) => (
-              <GlassCard key={point.title} delay={index * 0.05}>
-                <h2 className="text-base font-semibold text-white md:text-lg">{point.title}</h2>
-                <p className="mt-1.5 text-[13px] leading-6 text-slate-400">{point.region}</p>
-                <div className="mt-6 space-y-3 text-sm text-slate-200">
-                  <div className="flex items-center gap-3">
-                    <Mail className="h-4 w-4 text-amber-200" />
-                    <a href={`mailto:${point.email}`} className="transition hover:text-amber-100">{point.email}</a>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="h-4 w-4 text-amber-200" />
-                    <a href={`tel:${point.phone.replace(/\s+/g, "")}`} className="transition hover:text-amber-100">{point.phone}</a>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="h-4 w-4 text-amber-200" />
-                    <span>{point.location}</span>
-                  </div>
+function TrainingForm() {
+  const [form, setForm] = useState({ name: '', org: '', email: '', programme: '', participants: '', delivery: '', notes: '' });
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-5xl mb-4">✅</div>
+        <h3 className="text-xl font-bold text-white mb-2">Training Enquiry Received</h3>
+        <p className="text-slate-400">The Academy team will follow up within 48 hours.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className={labelClassName}>Contact Name *</label>
+          <input required className={inputClassName} placeholder="Your name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+        </div>
+        <div>
+          <label className={labelClassName}>Organisation *</label>
+          <input required className={inputClassName} placeholder="Ministry / Dept / Company" value={form.org} onChange={e => setForm({ ...form, org: e.target.value })} />
+        </div>
+      </div>
+      <div>
+        <label className={labelClassName}>Email *</label>
+        <input required type="email" className={inputClassName} placeholder="you@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+      </div>
+      <div>
+        <label className={labelClassName}>Programme Interest *</label>
+        <select required className={inputClassName + ' bg-[#0a1728]'} value={form.programme} onChange={e => setForm({ ...form, programme: e.target.value })}>
+          <option value="">Select programme...</option>
+          <option>PPP Foundation Programme</option>
+          <option>PPP Professional Certificate</option>
+          <option>Project Management Professional Programme</option>
+          <option>Risk &amp; Quality Management</option>
+          <option>Procurement &amp; Contract Management Masterclass</option>
+          <option>System Acquisition Process (SAP)</option>
+          <option>Custom / Bespoke Programme</option>
+        </select>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className={labelClassName}>No. of Participants</label>
+          <input type="number" min="1" className={inputClassName} placeholder="e.g. 20" value={form.participants} onChange={e => setForm({ ...form, participants: e.target.value })} />
+        </div>
+        <div>
+          <label className={labelClassName}>Preferred Delivery</label>
+          <select className={inputClassName + ' bg-[#0a1728]'} value={form.delivery} onChange={e => setForm({ ...form, delivery: e.target.value })}>
+            <option value="">Select...</option>
+            <option>In-Person (Islamabad)</option>
+            <option>In-Person (Lahore)</option>
+            <option>In-Person (Karachi)</option>
+            <option>In-House at My Location</option>
+            <option>Virtual / Online</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label className={labelClassName}>Additional Notes</label>
+        <textarea rows={3} className={inputClassName + ' resize-none'} placeholder="Preferred dates, specific topics, or any customisation needs..." value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
+      </div>
+      <button type="submit" className={primaryButtonClass + ' w-full justify-center py-3.5 text-base'}>
+        Submit Training Enquiry
+      </button>
+    </form>
+  );
+}
+
+export default function Contact() {
+  const [activeTab, setActiveTab] = useState<'consultation' | 'training'>('consultation');
+
+  return (
+    <div style={{ background: '#07111e' }}>
+      <PageHero
+        eyebrow="Contact WATPRO"
+        title="Let's Start the Conversation"
+        subtitle="Whether you need advisory, training, or policy support — every engagement begins with a conversation. Reach out directly to Dr. Tipu."
+      />
+
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-10">
+
+            {/* Contact info */}
+            <div className="md:col-span-1">
+              <motion.div {...fadeUp(0)} className="flex flex-col gap-5">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Direct Contact</p>
+                  {[
+                    { icon: '📧', label: 'Email', value: founderProfile.email, href: `mailto:${founderProfile.email}` },
+                    { icon: '📞', label: 'Phone / WhatsApp', value: founderProfile.phone, href: `tel:${founderProfile.phone}` },
+                    { icon: '📍', label: 'Location', value: 'Islamabad, Pakistan', href: null },
+                  ].map(c => (
+                    <div key={c.label} className="flex items-start gap-3 p-4 mb-3 rounded-xl border border-white/8 bg-white/[0.04]">
+                      <span className="text-xl flex-shrink-0">{c.icon}</span>
+                      <div>
+                        <p className="text-xs text-slate-500 uppercase tracking-wider mb-0.5">{c.label}</p>
+                        {c.href ? (
+                          <a href={c.href} className="text-sm font-semibold text-white hover:text-amber-400 transition-colors">{c.value}</a>
+                        ) : (
+                          <p className="text-sm font-semibold text-white">{c.value}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </GlassCard>
-            ))}
-          </div>
 
-          <GlassCard delay={0.08} hover={false}>
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.28em] text-amber-200">Engagement form</p>
-                <h2 className="mt-2 text-lg font-semibold text-white">Tell us what you need</h2>
-              </div>
-              <BriefcaseBusiness className="h-10 w-10 text-amber-200" />
+                <GlassCard premium className="p-5">
+                  <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">Connect Online</p>
+                  <div className="flex flex-col gap-2">
+                    <a href={founderProfile.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 transition-colors">
+                      <span className="w-7 h-7 rounded bg-white/5 border border-white/10 flex items-center justify-center text-xs font-bold">in</span>
+                      LinkedIn Profile
+                    </a>
+                    <a href={founderProfile.scholar} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 transition-colors">
+                      <span className="w-7 h-7 rounded bg-white/5 border border-white/10 flex items-center justify-center text-xs font-bold">GS</span>
+                      Google Scholar
+                    </a>
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-5">
+                  <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-2">Response Time</p>
+                  <p className="text-sm text-slate-300">Consultations: within 24 hrs<br />Training enquiries: within 48 hrs</p>
+                </GlassCard>
+              </motion.div>
             </div>
 
-            {success ? (
-              <div aria-live="polite" className="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-sm text-emerald-100">
-                {success}
-              </div>
-            ) : null}
+            {/* Forms */}
+            <div className="md:col-span-2">
+              <motion.div {...fadeUp(0.1)}>
+                {/* Tab switcher */}
+                <div className="flex gap-1 p-1 rounded-xl border border-white/10 bg-white/[0.04] mb-6 w-fit">
+                  {[
+                    { key: 'consultation', label: 'Request Consultation' },
+                    { key: 'training', label: 'Training Enquiry' },
+                  ].map(tab => (
+                    <button
+                      key={tab.key}
+                      onClick={() => setActiveTab(tab.key as 'consultation' | 'training')}
+                      className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                        activeTab === tab.key
+                          ? 'bg-amber-400 text-slate-900 shadow-lg'
+                          : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
 
-            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block text-sm text-slate-300">
-                  Full name
-                  <input className={cn(inputClassName, "mt-2")} value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} placeholder="Your full name" required />
-                </label>
-                <label className="block text-sm text-slate-300">
-                  Organization
-                  <input className={cn(inputClassName, "mt-2")} value={form.organization} onChange={(e) => setForm({ ...form, organization: e.target.value })} placeholder="Organization name" required />
-                </label>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block text-sm text-slate-300">
-                  Email
-                  <input type="email" className={cn(inputClassName, "mt-2")} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="name@organization.com" required />
-                </label>
-                <label className="block text-sm text-slate-300">
-                  Area of interest
-                  <select className={cn(inputClassName, "mt-2")} value={form.interest} onChange={(e) => setForm({ ...form, interest: e.target.value })}>
-                    {interests.map((option) => (
-                      <option key={option} value={option}>{option}</option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-              <label className="block text-sm text-slate-300">
-                Project brief or requirement
-                <textarea className={cn(textareaClassName, "mt-2")} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Describe your challenge, program, training need, or transformation priority" required />
-              </label>
-              <button type="submit" className={cn(primaryButtonClass, "w-full")}>
-                Send engagement request
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-          </GlassCard>
+                <GlassCard premium className="p-8">
+                  {activeTab === 'consultation' ? (
+                    <>
+                      <SectionHeading
+                        eyebrow="Consulting Enquiry"
+                        title="Book a Discovery Consultation"
+                      />
+                      <p className="text-slate-400 text-sm mb-6">
+                        Tell us about your project or challenge. Dr. Tipu will review your brief and
+                        suggest the most appropriate advisory approach.
+                      </p>
+                      <ConsultationForm />
+                    </>
+                  ) : (
+                    <>
+                      <SectionHeading
+                        eyebrow="Academy Enquiry"
+                        title="Register Interest in Training"
+                      />
+                      <p className="text-slate-400 text-sm mb-6">
+                        Interested in open-enrolment or in-house training? Complete this form and the
+                        WATPRO Academy team will send you a detailed programme outline and pricing.
+                      </p>
+                      <TrainingForm />
+                    </>
+                  )}
+                </GlassCard>
+              </motion.div>
+            </div>
+          </div>
         </div>
-      </SectionShell>
-    </>
+      </section>
+    </div>
   );
 }

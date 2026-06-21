@@ -1,1184 +1,257 @@
-export type PageKey =
-  | "home"
-  | "about"
-  | "services"
-  | "industries"
-  | "academy"
-  | "portfolio"
-  | "case-studies"
-  | "insights"
-  | "training-calendar"
-  | "events"
-  | "blog"
-  | "contact";
-
-export type IconKey =
-  | "compass"
-  | "rocket"
-  | "academy"
-  | "government"
-  | "assurance"
-  | "partnership"
-  | "systems"
-  | "commercial"
-  | "analytics"
-  | "people"
-  | "knowledge"
-  | "global"
-  | "calendar"
-  | "infrastructure"
-  | "network"
-  | "contracts"
-  | "sustainability"
-  | "strategy"
-  | "industry"
-  | "building"
-  | "layers"
-  | "premium";
-
-export type NavItem = {
-  key: PageKey;
-  label: string;
-  summary: string;
-};
-
-export type PageMeta = {
+// ─── TYPES ─────────────────────────────────────────────────────────────────────
+export interface Service {
+  id: string;
   title: string;
+  shortDesc: string;
   description: string;
-  eyebrow: string;
-  heading: string;
-  summary: string;
-  tags: string[];
-};
-
-export type Stat = {
-  value: string;
-  label: string;
-  detail: string;
-};
-
-export type Division = {
-  name: string;
-  icon: IconKey;
-  description: string;
-  capabilities: string[];
-};
-
-export type ServiceCategory = {
-  title: string;
-  icon: IconKey;
-  summary: string;
-  services: string[];
+  icon: string;
+  features: string[];
   outcome: string;
-};
+}
 
-export type Industry = {
+export interface Industry {
+  id: string;
   name: string;
-  icon: IconKey;
-  summary: string;
-  value: string;
-};
-
-export type FeaturedSolution = {
-  title: string;
-  icon: IconKey;
-  summary: string;
-  bullets: string[];
-  result: string;
-};
-
-export type Principle = {
-  title: string;
-  icon: IconKey;
+  icon: string;
   description: string;
-};
+  examples: string[];
+}
 
-export type AcademyProgram = {
+export interface Insight {
+  id: string;
   title: string;
-  icon: IconKey;
-  description: string;
-  formats: string[];
-  outcomes: string[];
-};
+  category: string;
+  date: string;
+  excerpt: string;
+  readTime: string;
+  featured?: boolean;
+  url?: string;
+}
 
-export type CaseStudy = {
+export interface CaseStudy {
+  id: string;
   title: string;
-  sector: string;
   client: string;
+  sector: string;
+  outcome: string;
+  description: string;
   challenge: string;
   solution: string;
   impact: string[];
-  spotlight: string;
-};
+}
 
-export type Insight = {
+export interface AcademyProgram {
+  id: string;
   title: string;
-  category: string;
-  readTime: string;
-  summary: string;
-};
-
-export type Testimonial = {
-  quote: string;
-  author: string;
-  role: string;
-};
-
-export type Training = {
-  title: string;
-  track: string;
-  date: string;
+  level: string;
   duration: string;
-  format: string;
-  location: string;
-  audience: string;
-  seats: string;
-  summary: string;
-};
-
-export type EventItem = {
-  title: string;
-  date: string;
-  format: string;
-  summary: string;
-  audience: string;
-};
-
-export type ContactPoint = {
-  title: string;
-  region: string;
-  email: string;
-  phone: string;
-  location: string;
-};
-
-export type EngagementStep = {
-  step: string;
-  title: string;
   description: string;
-};
+  topics: string[];
+  targetAudience: string;
+}
 
-export const siteIdentity = {
-  name: "WATPRO Consulting",
-  headline: "THE ULTIMATE SOLUTION HUB",
-  tagline: "Strategy. Transformation. Delivery.",
-  supportingStatement:
-    "We help governments, organizations, corporations, and institutions plan, transform, manage, and deliver complex projects, programs, partnerships, and organizational change through advisory, implementation support, and professional development.",
-};
-
-export const navigation: NavItem[] = [
-  { key: "home", label: "Home", summary: "Overview" },
-  { key: "about", label: "About", summary: "Firm profile" },
-  { key: "services", label: "Services", summary: "Capabilities" },
-  { key: "industries", label: "Industries", summary: "Client sectors" },
-  { key: "academy", label: "Academy", summary: "Training" },
-  { key: "portfolio", label: "Portfolio", summary: "Completed projects" },
-  { key: "blog", label: "Blog", summary: "Articles" },
-  { key: "case-studies", label: "Case Studies", summary: "Impact" },
-  { key: "insights", label: "Insights", summary: "Thought leadership" },
-  { key: "training-calendar", label: "Calendar", summary: "Upcoming programs" },
-  { key: "events", label: "Events", summary: "Forums & webinars" },
-  { key: "contact", label: "Contact", summary: "Start a conversation" },
-];
-
-export const pageMeta: Record<PageKey, PageMeta> = {
-  home: {
-    title: "WATPRO Consulting | The Ultimate Solution Hub",
-    description:
-      "Premium advisory, transformation, project delivery, PPP, contract management, stakeholder engagement, defence acquisition, and executive training services for governments and complex organizations.",
-    eyebrow: "Integrated Advisory Platform",
-    heading: "Strategy-led consulting with delivery-grade execution discipline.",
-    summary:
-      "WATPRO brings together strategic advisory, implementation support, and capability development to help institutions move from ambition to measurable results.",
-    tags: ["Advisory", "Transformation", "Project Delivery", "Executive Education"],
-  },
-  about: {
-    title: "About WATPRO Consulting",
-    description:
-      "Learn how WATPRO combines strategy, transformation, delivery, and professional development to solve complex public and private sector challenges.",
-    eyebrow: "About WATPRO",
-    heading: "Built for organizations that need more than advice.",
-    summary:
-      "We are structured to diagnose complex mandates, design workable solutions, mobilize implementation, and embed capability so change lasts.",
-    tags: ["Authority", "Governance", "Execution", "Capability"],
-  },
-  services: {
-    title: "Services | WATPRO Consulting",
-    description:
-      "Explore WATPRO services across project management, PPP, sustainability, contract management, stakeholder engagement, defence acquisition, organization development, and training.",
-    eyebrow: "Core Services",
-    heading: "Specialist solutions for complex mandates, regulated environments, and mission-critical programs.",
-    summary:
-      "Our service architecture is designed to support clients from concept, feasibility, and governance through implementation, recovery, and knowledge transfer.",
-    tags: ["Project Management", "PPP", "Sustainability", "Commercial Governance"],
-  },
-  industries: {
-    title: "Industries | WATPRO Consulting",
-    description:
-      "WATPRO supports governments, public agencies, defence institutions, infrastructure programs, donors, corporations, construction firms, and energy organizations.",
-    eyebrow: "Industries Served",
-    heading: "Fluency across sectors where risk, governance, and delivery performance matter most.",
-    summary:
-      "We understand the operational realities, stakeholder complexity, and accountability requirements that shape high-consequence engagements.",
-    tags: ["Government", "Infrastructure", "Defence", "Energy"],
-  },
-  academy: {
-    title: "WATPRO Academy",
-    description:
-      "Executive education, professional training, certification preparation, workshops, and customized capability-building programs from WATPRO Academy.",
-    eyebrow: "WATPRO Academy",
-    heading: "Executive learning that strengthens institutions, delivery teams, and future leaders.",
-    summary:
-      "From PMP preparation to PPP structuring, PMO leadership, contract governance, and tailored in-house programs, the academy translates expertise into institutional capability.",
-    tags: ["Executive Education", "Corporate Training", "Certifications", "Leadership"],
-  },
-  portfolio: {
-    title: "Portfolio | WATPRO Consulting",
-    description:
-      "Explore the WATPRO project portfolio across advisory, project management, PPP, contract management, training, and organizational transformation engagements.",
-    eyebrow: "Project Portfolio",
-    heading: "A track record of completed projects across advisory, delivery, and capability building.",
-    summary:
-      "Filter our completed projects by sector and service line to see how WATPRO has supported governments, infrastructure programs, corporations, and development agencies.",
-    tags: ["Completed Projects", "Sector Experience", "Delivery", "Impact"],
-  },
-  "case-studies": {
-    title: "Case Studies | WATPRO Consulting",
-    description:
-      "See how WATPRO helps organizations recover complex programs, structure PPPs, improve governance, and build lasting delivery capability.",
-    eyebrow: "Selected Engagements",
-    heading: "From governance redesign to accelerated delivery, our focus is measurable impact.",
-    summary:
-      "The strongest consulting relationships are judged by outcomes: stronger governance, faster mobilization, reduced risk, better stakeholder confidence, and durable capability.",
-    tags: ["Transformation", "PMO", "Recovery", "Institutional Reform"],
-  },
-  insights: {
-    title: "Insights & Publications | WATPRO Consulting",
-    description:
-      "Thought leadership, executive briefs, sector insights, and practical publications on project delivery, PPP, governance, sustainability, and organizational change.",
-    eyebrow: "Knowledge Center",
-    heading: "Research-backed perspectives for leaders managing complexity, reform, and growth.",
-    summary:
-      "We publish practical insights that help executives and delivery teams make better decisions in high-stakes environments.",
-    tags: ["Thought Leadership", "Publications", "Executive Briefs", "Research"],
-  },
-  "training-calendar": {
-    title: "Training Calendar | WATPRO Academy",
-    description:
-      "Register for upcoming WATPRO Academy programs, executive workshops, certification bootcamps, and customized training sessions.",
-    eyebrow: "Training Calendar",
-    heading: "Upcoming programs designed for practical application, executive relevance, and measurable capability uplift.",
-    summary:
-      "Browse upcoming workshops, bootcamps, masterclasses, and in-house capability programs, then register your team directly.",
-    tags: ["Open Enrollment", "Corporate Programs", "Registration", "Capability Building"],
-  },
-  events: {
-    title: "Events | WATPRO Consulting",
-    description:
-      "Join WATPRO forums, masterclasses, executive roundtables, and briefing sessions across project delivery, PPP, defence governance, and organizational transformation.",
-    eyebrow: "Events & Forums",
-    heading: "Convening leaders, delivery teams, and institutions around the issues shaping performance.",
-    summary:
-      "Our event series combines practical dialogue, expert briefings, and peer exchange across strategic sectors and delivery disciplines.",
-    tags: ["Roundtables", "Forums", "Masterclasses", "Executive Briefings"],
-  },
-  contact: {
-    title: "Contact WATPRO Consulting",
-    description:
-      "Connect with WATPRO for advisory engagements, PMO setup, PPP support, academy partnerships, executive training, and organizational transformation programs.",
-    eyebrow: "Contact Us",
-    heading: "Let’s design a smarter path from strategy to delivery.",
-    summary:
-      "Whether you need strategic advisory, implementation support, professional training, or a multidisciplinary response team, we are ready to help.",
-    tags: ["Consultation", "Advisory", "Academy", "Partnerships"],
-  },
-  blog: {
-    title: "Blog | WATPRO Consulting",
-    description:
-      "Insights and analysis on infrastructure, PPP, project delivery, governance, and transformation from WATPRO Consulting. Featuring Pakistan and global perspectives.",
-    eyebrow: "WATPRO Blog",
-    heading: "Insights, analysis, and perspectives on the work that matters.",
-    summary:
-      "Our blog covers infrastructure, PPP, project delivery, governance, and transformation — with a focus on Pakistan and global best practices.",
-    tags: ["Pakistan", "Global", "Infrastructure", "PPP", "Governance"],
-  },
-};
-
-export const impactStats: Stat[] = [
-  {
-    value: "3",
-    label: "Integrated business divisions",
-    detail: "Advisory, Solutions, and Academy aligned under one strategy-to-execution model.",
-  },
-  {
-    value: "8",
-    label: "Specialist service domains",
-    detail: "Capability spanning governance, transformation, project delivery, PPP, and institutional development.",
-  },
-  {
-    value: "50+",
-    label: "Executive programs & workshops",
-    detail: "Capability-building options for leaders, technical teams, PMOs, and contract professionals.",
-  },
-  {
-    value: "90-Day",
-    label: "Mobilization mindset",
-    detail: "Rapid diagnostics and implementation planning for complex, time-sensitive mandates.",
-  },
-];
-
-export const divisions: Division[] = [
-  {
-    name: "WATPRO Advisory",
-    icon: "compass",
-    description:
-      "Strategic consulting and advisory services for organizations facing complexity, reform, investment decisions, or delivery risk.",
-    capabilities: [
-      "Strategy design and policy alignment",
-      "Governance and decision frameworks",
-      "Business cases, feasibility, and structuring",
-    ],
-  },
-  {
-    name: "WATPRO Solutions",
-    icon: "rocket",
-    description:
-      "Implementation support, PMO setup, transformation management, and practical delivery reinforcement for mission-critical programs.",
-    capabilities: [
-      "PMO design and mobilization",
-      "Program recovery and assurance",
-      "Transformation delivery and implementation support",
-    ],
-  },
-  {
-    name: "WATPRO Academy",
-    icon: "academy",
-    description:
-      "Professional training, executive education, certification support, and customized institutional learning solutions.",
-    capabilities: [
-      "Executive workshops and masterclasses",
-      "Certification bootcamps and capability tracks",
-      "Corporate and public sector in-house training",
-    ],
-  },
-];
-
-export const serviceCategories: ServiceCategory[] = [
-  {
-    title: "Project Management",
-    icon: "systems",
-    summary:
-      "Project, program, and PMO services that improve visibility, accountability, scheduling discipline, and delivery confidence.",
-    services: [
-      "IT Project Management",
-      "Construction Project Management",
-      "Program Management",
-      "PMO Setup",
-      "PMO Maturity Assessments",
-      "Project Recovery",
-      "Risk Management",
-      "Monitoring & Evaluation",
-    ],
-    outcome: "Sharper controls, better reporting, faster decision-making, and improved delivery performance.",
-  },
-  {
-    title: "Public Private Partnership (PPP)",
-    icon: "partnership",
-    summary:
-      "End-to-end support for institutions developing bankable, governable, and implementable PPP programs and transactions.",
-    services: [
-      "PPP Advisory",
-      "Feasibility Studies",
-      "Transaction Advisory",
-      "PPP Structuring",
-      "Procurement Support",
-      "Financial Modeling",
-      "Project Governance",
-    ],
-    outcome: "Investment-ready projects with stronger structuring, governance, and procurement confidence.",
-  },
-  {
-    title: "Sustainable Development",
-    icon: "sustainability",
-    summary:
-      "Practical sustainability and ESG support that aligns growth, resilience, stakeholder value, and development priorities.",
-    services: [
-      "ESG Advisory",
-      "Sustainability Frameworks",
-      "SDG Alignment",
-      "Climate Resilience",
-      "Social Impact Programs",
-      "Development Sector Advisory",
-    ],
-    outcome: "Clearer sustainability priorities, stronger resilience planning, and credible impact narratives.",
-  },
-  {
-    title: "Contract & Commercial Management",
-    icon: "contracts",
-    summary:
-      "Commercial governance and contract management services that reduce disputes, improve compliance, and protect value.",
-    services: [
-      "Contract Administration",
-      "FIDIC Contracts",
-      "Procurement Advisory",
-      "Claims Management",
-      "Commercial Negotiation",
-      "Contract Governance",
-    ],
-    outcome: "More disciplined commercial administration, stronger controls, and reduced execution leakage.",
-  },
-  {
-    title: "Stakeholder Management",
-    icon: "people",
-    summary:
-      "Engagement strategies that align communities, sponsors, delivery teams, regulators, and decision-makers around change.",
-    services: [
-      "Stakeholder Mapping",
-      "Community Engagement",
-      "Change Management",
-      "Public Consultation",
-      "Strategic Communications",
-    ],
-    outcome: "Improved stakeholder trust, smoother implementation, and stronger license to operate.",
-  },
-  {
-    title: "Defence Acquisition Systems",
-    icon: "assurance",
-    summary:
-      "Structured support for defence and security institutions managing capability planning, governance, and acquisition complexity.",
-    services: [
-      "Acquisition Strategy",
-      "Capability Development",
-      "Procurement Governance",
-      "Lifecycle Management",
-      "Defence Program Assurance",
-    ],
-    outcome: "Clearer acquisition pathways, stronger oversight, and more reliable program assurance.",
-  },
-  {
-    title: "Organization Development & Corporatization",
-    icon: "strategy",
-    summary:
-      "Institutional design and transformation support for organizations modernizing structures, governance, processes, and mandates.",
-    services: [
-      "Organizational Design",
-      "Institutional Reform",
-      "Governance Frameworks",
-      "Business Process Improvement",
-      "Corporatization Programs",
-      "Change Transformation",
-    ],
-    outcome: "More capable institutions with operating models that support performance, accountability, and growth.",
-  },
-  {
-    title: "Training & Professional Development",
-    icon: "knowledge",
-    summary:
-      "Practical training pathways that strengthen delivery capability from senior leadership through technical teams and PMOs.",
-    services: [
-      "PMP Preparation",
-      "PMO Training",
-      "Contract Management",
-      "PPP Training",
-      "Leadership Development",
-      "Executive Workshops",
-      "Corporate Training Programs",
-      "Customized Learning Solutions",
-    ],
-    outcome: "Institutional capability that stays with the client long after the engagement ends.",
-  },
-];
-
-export const industries: Industry[] = [
-  {
-    name: "Government Ministries",
-    icon: "government",
-    summary: "Policy execution, reform, public investment, and delivery support for ministries and central government bodies.",
-    value: "Navigate policy complexity while improving delivery assurance and accountability.",
-  },
-  {
-    name: "Public Sector Organizations",
-    icon: "building",
-    summary: "Transformation, governance, PMO, and corporatization support for agencies and state-owned entities.",
-    value: "Strengthen institutional performance, governance, and service delivery.",
-  },
-  {
-    name: "Defense Organizations",
-    icon: "assurance",
-    summary: "Acquisition planning, program assurance, lifecycle governance, and capability system strengthening.",
-    value: "Improve control, traceability, and mission readiness across defence programs.",
-  },
-  {
-    name: "Infrastructure Authorities",
-    icon: "infrastructure",
-    summary: "Program governance, stakeholder management, procurement support, and project controls for complex portfolios.",
-    value: "Deliver infrastructure with stronger oversight, recovery capacity, and public confidence.",
-  },
-  {
-    name: "Development Agencies",
-    icon: "global",
-    summary: "Advisory support for donor programs, monitoring frameworks, sustainability, and institutional development.",
-    value: "Align program ambition with measurable impact and accountable delivery.",
-  },
-  {
-    name: "Donor-Funded Programs",
-    icon: "analytics",
-    summary: "Program management, M&E, stakeholder coordination, and reporting for high-visibility development initiatives.",
-    value: "Maintain rigorous governance while meeting funder, beneficiary, and implementation expectations.",
-  },
-  {
-    name: "Construction Companies",
-    icon: "industry",
-    summary: "Commercial management, claims support, PMO discipline, and schedule recovery for capital projects.",
-    value: "Protect margins, manage risk, and stabilize delivery under complex contracts.",
-  },
-  {
-    name: "Engineering Firms",
-    icon: "network",
-    summary: "Project controls, stakeholder alignment, and delivery governance for design, build, and technical consulting teams.",
-    value: "Create execution discipline that supports quality, deadlines, and regulatory expectations.",
-  },
-  {
-    name: "Energy Sector Organizations",
-    icon: "sustainability",
-    summary: "Project delivery, stakeholder engagement, ESG, and commercial governance for energy and utilities stakeholders.",
-    value: "Advance capital programs while balancing resilience, compliance, and social impact.",
-  },
-  {
-    name: "IT Organizations",
-    icon: "systems",
-    summary: "Digital project management, transformation office support, program assurance, and change enablement.",
-    value: "Improve delivery predictability across technology-enabled transformation agendas.",
-  },
-  {
-    name: "Large Corporations",
-    icon: "premium",
-    summary: "Transformation strategy, governance design, PMO capability, executive training, and cross-functional delivery support.",
-    value: "Translate enterprise ambition into coordinated execution and capability uplift.",
-  },
-];
-
-export const featuredSolutions: FeaturedSolution[] = [
-  {
-    title: "Strategic Delivery Command Center",
-    icon: "analytics",
-    summary:
-      "A high-visibility governance and reporting environment for complex projects, transformation programs, or multi-stakeholder initiatives.",
-    bullets: [
-      "Executive dashboards and risk reporting",
-      "Governance cadences and escalation protocols",
-      "Performance controls across workstreams",
-    ],
-    result: "Gives leadership clearer visibility, faster intervention capability, and stronger delivery confidence.",
-  },
-  {
-    title: "PPP Transaction Readiness Suite",
-    icon: "partnership",
-    summary:
-      "Structured support that moves priority projects from concept through feasibility, structuring, governance, and procurement readiness.",
-    bullets: [
-      "Transaction framing and option analysis",
-      "Financial modeling and bankability support",
-      "Institutional governance and procurement preparation",
-    ],
-    result: "Improves transaction quality while reducing ambiguity across public and private stakeholders.",
-  },
-  {
-    title: "Capability Acceleration Academy",
-    icon: "academy",
-    summary:
-      "Blended learning and coaching pathways that strengthen delivery teams during and after major programs or reforms.",
-    bullets: [
-      "Role-based learning tracks for leaders and teams",
-      "Applied workshops tied to live client challenges",
-      "Toolkits, templates, and post-program reinforcement",
-    ],
-    result: "Builds institutional capability that supports sustainability beyond the consulting engagement.",
-  },
-];
-
-export const whyWatpro: Principle[] = [
-  {
-    title: "Strategy to execution under one roof",
-    icon: "layers",
-    description:
-      "We connect strategic intent, implementation controls, and capability transfer so clients do not lose momentum between planning and delivery.",
-  },
-  {
-    title: "Designed for complex stakeholder environments",
-    icon: "people",
-    description:
-      "Our methods are suited to public sector, regulated, multi-party, and politically visible programs where alignment matters as much as analysis.",
-  },
-  {
-    title: "Governance-heavy, outcome-focused",
-    icon: "assurance",
-    description:
-      "We bring discipline to decision rights, reporting, escalation, contract administration, and risk governance without slowing delivery.",
-  },
-  {
-    title: "Capability embedded, not outsourced",
-    icon: "academy",
-    description:
-      "Every engagement is structured to strengthen client teams through training, coaching, templates, and management routines.",
-  },
-  {
-    title: "Public + private sector fluency",
-    icon: "global",
-    description:
-      "We understand how infrastructure, development, corporate, and government priorities intersect across funding, governance, and execution.",
-  },
-  {
-    title: "Premium client experience",
-    icon: "premium",
-    description:
-      "Senior attention, structured communications, sharp deliverables, and practical execution support define the WATPRO approach.",
-  },
-];
-
-export const aboutPrinciples: Principle[] = [
-  {
-    title: "Authority with practical discipline",
-    icon: "compass",
-    description:
-      "Our work is grounded in strategic clarity, but designed for operating environments where delivery constraints are real and visible.",
-  },
-  {
-    title: "Transformation with governance integrity",
-    icon: "assurance",
-    description:
-      "We help leaders transform institutions without losing control of accountability, procurement, stakeholder confidence, or execution rhythm.",
-  },
-  {
-    title: "Solutions built around adoption",
-    icon: "people",
-    description:
-      "Plans are only valuable when teams can implement them. We prioritize stakeholder alignment, ownership, and institutional uptake.",
-  },
-  {
-    title: "Knowledge that compounds over time",
-    icon: "knowledge",
-    description:
-      "From tools and templates to training pathways and operating routines, we leave clients stronger than we found them.",
-  },
-];
-
-export const engagementModel: EngagementStep[] = [
-  {
-    step: "01",
-    title: "Diagnose",
-    description:
-      "Rapidly assess ambition, constraints, governance maturity, stakeholder complexity, and delivery risk.",
-  },
-  {
-    step: "02",
-    title: "Design",
-    description:
-      "Shape decision frameworks, workplans, governance models, delivery mechanisms, and capability interventions.",
-  },
-  {
-    step: "03",
-    title: "Mobilize",
-    description:
-      "Stand up the PMO, reporting architecture, stakeholder routines, and implementation support required for momentum.",
-  },
-  {
-    step: "04",
-    title: "Deliver",
-    description:
-      "Provide execution support, assurance, troubleshooting, facilitation, and performance reviews through delivery milestones.",
-  },
-  {
-    step: "05",
-    title: "Embed",
-    description:
-      "Transfer tools, train teams, and institutionalize practices so the client retains confidence and capability.",
-  },
-];
-
-export const academyPrograms: AcademyProgram[] = [
-  {
-    title: "Project & PMO Excellence",
-    icon: "systems",
-    description:
-      "Programs for project leaders, PMO managers, and sponsors focused on delivery governance, risk, reporting, and recovery.",
-    formats: ["Bootcamps", "Open-enrolment workshops", "In-house masterclasses"],
-    outcomes: [
-      "Stronger PMO governance",
-      "Improved executive reporting",
-      "Better schedule and risk discipline",
-    ],
-  },
-  {
-    title: "PPP & Infrastructure Leadership",
-    icon: "partnership",
-    description:
-      "Learning pathways for institutions and practitioners working on PPP structuring, transaction preparation, and infrastructure governance.",
-    formats: ["Executive forums", "Applied workshops", "Scenario-based simulations"],
-    outcomes: [
-      "Sharper structuring decisions",
-      "Improved procurement readiness",
-      "Greater transaction confidence",
-    ],
-  },
-  {
-    title: "Contract & Commercial Governance",
-    icon: "contracts",
-    description:
-      "Practical capability building around contract administration, procurement controls, FIDIC, claims, and negotiation.",
-    formats: ["Masterclasses", "Clinic sessions", "Role-based team training"],
-    outcomes: [
-      "Reduced commercial leakage",
-      "Improved dispute avoidance",
-      "Clearer governance routines",
-    ],
-  },
-  {
-    title: "Leadership & Organizational Transformation",
-    icon: "strategy",
-    description:
-      "Executive programs that strengthen change leadership, institutional reform capability, and stakeholder-centered transformation.",
-    formats: ["Leadership labs", "Board briefings", "Transformation accelerators"],
-    outcomes: [
-      "Stronger change sponsorship",
-      "Better stakeholder alignment",
-      "Higher transformation adoption",
-    ],
-  },
-];
-
-export const caseStudies: CaseStudy[] = [
-  {
-    title: "National Infrastructure PMO Mobilization",
-    sector: "Infrastructure Authority",
-    client: "Public sector client",
-    challenge:
-      "A major infrastructure portfolio lacked integrated reporting, common governance routines, and an escalation model for schedule and risk issues.",
-    solution:
-      "WATPRO designed the PMO operating model, reporting architecture, governance calendar, and executive dashboards while coaching workstream leads.",
-    impact: [
-      "Established a unified reporting cadence across 14 workstreams",
-      "Improved escalation visibility for critical delivery risks",
-      "Enabled leadership reviews with clearer performance data",
-    ],
-    spotlight: "PMO setup + executive reporting",
-  },
-  {
-    title: "PPP Readiness for Transport Investment Pipeline",
-    sector: "Government Ministry",
-    client: "Transport sector institution",
-    challenge:
-      "The client needed structured support to prioritize projects, improve bankability, and prepare a stronger transaction governance framework.",
-    solution:
-      "WATPRO supported project screening, transaction structuring, feasibility framing, governance design, and procurement readiness planning.",
-    impact: [
-      "Clarified the PPP pathway for priority assets",
-      "Strengthened governance roles across sponsoring institutions",
-      "Created a more coherent transaction preparation roadmap",
-    ],
-    spotlight: "PPP advisory + structuring",
-  },
-  {
-    title: "Organizational Design for a Reforming Public Agency",
-    sector: "Public Sector Organization",
-    client: "Institutional reform program",
-    challenge:
-      "An agency undergoing reform required a new operating model, clearer roles, and improved coordination across technical and administrative teams.",
-    solution:
-      "WATPRO facilitated diagnostics, organization design, governance redesign, and capability-building workshops for senior leaders and managers.",
-    impact: [
-      "Produced a target operating model aligned to mandate priorities",
-      "Defined governance forums and decision rights",
-      "Supported leadership alignment during the reform process",
-    ],
-    spotlight: "Organization development + change",
-  },
-  {
-    title: "Commercial Governance Uplift for Capital Projects",
-    sector: "Construction & Engineering",
-    client: "Private sector consortium",
-    challenge:
-      "Project teams were facing inconsistent contract administration, claims ambiguity, and fragmented commercial controls across work packages.",
-    solution:
-      "WATPRO reviewed commercial processes, introduced governance templates, and delivered targeted training on claims, negotiation, and FIDIC administration.",
-    impact: [
-      "Standardized commercial review routines across project teams",
-      "Improved issue escalation and decision documentation",
-      "Strengthened contract administration capability in-house",
-    ],
-    spotlight: "Contracts + capability building",
-  },
-];
-
-export const insights: Insight[] = [
-  {
-    title: "Why complex programs fail after strategy approval",
-    category: "Project Delivery",
-    readTime: "6 min read",
-    summary:
-      "A practical look at the governance, sponsorship, and mobilization gaps that undermine major programs in the first 90 days.",
-  },
-  {
-    title: "Building a PPP pipeline that investors can trust",
-    category: "PPP",
-    readTime: "7 min read",
-    summary:
-      "How institutions can improve readiness, governance discipline, and transaction clarity before entering the market.",
-  },
-  {
-    title: "The PMO as a strategic decision engine",
-    category: "PMO",
-    readTime: "5 min read",
-    summary:
-      "Why modern PMOs must move beyond reporting to provide intervention logic, executive insight, and delivery assurance.",
-  },
-  {
-    title: "ESG without theatre: making sustainability operational",
-    category: "Sustainability",
-    readTime: "8 min read",
-    summary:
-      "Translating ESG ambition into real governance, metrics, and implementation routines that stand up to scrutiny.",
-  },
-  {
-    title: "Corporatization programs: five governance questions leaders should answer early",
-    category: "Organization Development",
-    readTime: "9 min read",
-    summary:
-      "Key decisions that influence institutional reform outcomes long before the new structure is announced.",
-  },
-  {
-    title: "Capability building that survives the consultancy exit",
-    category: "Academy",
-    readTime: "4 min read",
-    summary:
-      "A blueprint for embedding knowledge transfer into transformation, PMO, and commercial governance engagements.",
-  },
-];
-
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      "WATPRO brought structure, executive clarity, and a level of implementation discipline that immediately changed how our program was being governed.",
-    author: "Director, Strategic Programs",
-    role: "Infrastructure authority",
-  },
-  {
-    quote:
-      "Their team combined advisory quality with practical delivery support. The result was not just a report, but an operating rhythm our institution could sustain.",
-    author: "Permanent Secretary",
-    role: "Government client",
-  },
-  {
-    quote:
-      "The academy sessions were exceptionally relevant to our operating realities. Our PMO and contract teams started applying the tools almost immediately.",
-    author: "Executive Sponsor",
-    role: "Capital projects organization",
-  },
-];
-
-export const trainings: Training[] = [
-  {
-    title: "Strategic PMO Leadership Bootcamp",
-    track: "Project Management",
-    date: "14 Jul 2026",
-    duration: "3 days",
-    format: "Hybrid",
-    location: "Abuja + Live Online",
-    audience: "PMO leaders, program managers, delivery sponsors",
-    seats: "24 seats",
-    summary:
-      "A leadership-level program on PMO setup, governance cadence, dashboards, risk escalation, and executive reporting.",
-  },
-  {
-    title: "PPP Structuring & Transaction Readiness Masterclass",
-    track: "PPP",
-    date: "29 Jul 2026",
-    duration: "2 days",
-    format: "Live Online",
-    location: "Virtual Studio",
-    audience: "Government teams, project sponsors, infrastructure advisors",
-    seats: "30 seats",
-    summary:
-      "Covers project screening, structuring, feasibility framing, governance, and procurement readiness for PPP programs.",
-  },
-  {
-    title: "FIDIC & Contract Administration Clinic",
-    track: "Contracts",
-    date: "12 Aug 2026",
-    duration: "2 days",
-    format: "In Person",
-    location: "Lagos",
-    audience: "Commercial managers, engineers, contract administrators",
-    seats: "20 seats",
-    summary:
-      "A practical clinic on FIDIC, claims prevention, documentation discipline, and commercial governance routines.",
-  },
-  {
-    title: "Executive Change & Stakeholder Alignment Lab",
-    track: "Transformation",
-    date: "26 Aug 2026",
-    duration: "1 day",
-    format: "Hybrid",
-    location: "Abuja + Live Online",
-    audience: "Senior leaders, reform teams, transformation sponsors",
-    seats: "18 seats",
-    summary:
-      "Designed for leaders who need to align stakeholders, sustain sponsorship, and mobilize change under public scrutiny.",
-  },
-  {
-    title: "Monitoring, Evaluation & Delivery Assurance Workshop",
-    track: "Development",
-    date: "09 Sep 2026",
-    duration: "2 days",
-    format: "Live Online",
-    location: "Virtual Studio",
-    audience: "Development agencies, program offices, M&E professionals",
-    seats: "28 seats",
-    summary:
-      "Focuses on practical M&E frameworks, indicator quality, reporting discipline, and delivery assurance integration.",
-  },
-  {
-    title: "Defence Program Assurance Roundtable Intensive",
-    track: "Defence",
-    date: "24 Sep 2026",
-    duration: "1 day",
-    format: "In Person",
-    location: "Private Venue",
-    audience: "Defence planners, assurance leads, acquisition teams",
-    seats: "16 seats",
-    summary:
-      "A focused intensive on acquisition governance, assurance checkpoints, and lifecycle oversight for mission-critical programs.",
-  },
-];
-
-export const events: EventItem[] = [
-  {
-    title: "Executive Forum: Governing Complex National Programs",
-    date: "18 Jul 2026",
-    format: "Breakfast Forum",
-    summary:
-      "A closed-door discussion on governance architecture, sponsor visibility, and delivery discipline across multi-stakeholder programs.",
-    audience: "Government executives, agency heads, transformation sponsors",
-  },
-  {
-    title: "Infrastructure Delivery Briefing: Recovering Stalled Projects",
-    date: "07 Aug 2026",
-    format: "Webinar",
-    summary:
-      "A practical session on schedule recovery, issue escalation, governance reset, and PMO interventions for troubled projects.",
-    audience: "Infrastructure authorities, contractors, PMO teams",
-  },
-  {
-    title: "PPP Readiness Roundtable",
-    date: "03 Sep 2026",
-    format: "Roundtable",
-    summary:
-      "Explores what public institutions must resolve before approaching the market with flagship PPP opportunities.",
-    audience: "Investment promotion bodies, ministries, PPP units, advisors",
-  },
-  {
-    title: "Leadership Session: Institutional Reform that Sticks",
-    date: "22 Sep 2026",
-    format: "Executive Masterclass",
-    summary:
-      "Focused on stakeholder alignment, organization design, governance transition, and capability reinforcement during reform programs.",
-    audience: "Boards, executives, reform directors, HR and strategy leaders",
-  },
-];
-
-export const contactPoints: ContactPoint[] = [
-  {
-    title: "Advisory & Transformation",
-    region: "Africa & Middle East",
-    email: "advisory@watproconsultants.com",
-    phone: "+234 800 000 1201",
-    location: "Abuja engagement office",
-  },
-  {
-    title: "PPP, Infrastructure & Delivery Solutions",
-    region: "Regional program support",
-    email: "solutions@watproconsultants.com",
-    phone: "+234 800 000 1202",
-    location: "Lagos delivery office",
-  },
-  {
-    title: "WATPRO Academy & Partnerships",
-    region: "Global virtual learning support",
-    email: "academy@watproconsultants.com",
-    phone: "+234 800 000 1203",
-    location: "Hybrid learning studio",
-  },
-];
-
-export type PortfolioProject = {
+export interface PortfolioProject {
   title: string;
   client: string;
   sector: string;
   service: string;
   year: string;
-  duration: string;
-  location: string;
-  status: "Completed" | "In Delivery" | "Advisory";
+  status: string;
   summary: string;
   highlights: string[];
+  location: string;
+  duration: string;
+}
+
+export interface Training {
+  title: string;
+  track: string;
+  date: string;
+  duration: string;
+  summary: string;
+  format: string;
+  location: string;
+  seats: string;
+  audience: string;
+}
+
+export interface Event {
+  title: string;
+  format: string;
+  date: string;
+  summary: string;
+  audience: string;
+}
+
+// ─── FOUNDER ───────────────────────────────────────────────────────────────────
+export const founderProfile = {
+  name: 'Dr. Waseem Ali Tipu',
+  title: 'PhD Project Management | PPP & Sustainable Development Expert',
+  shortTitle: 'Founder & Principal Consultant',
+  phone: '+923004122313',
+  email: 'waseemalitipu@gmail.com',
+  linkedin: 'https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7',
+  scholar: 'https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en',
+  photoUrl: '/dr-tipu.jpg',
+  portfolio: 'USD 300 Million+',
+  yearsExp: '25+',
+  publications: '14+',
+  bio: "Dr. Waseem Ali Tipu is Pakistan's foremost authority on Public-Private Partnerships, project management, and sustainable infrastructure development. With over 25 years spanning military service, international peacekeeping, academia, and private consulting, he has shaped policy, delivered mega-projects, and trained the next generation of Pakistani infrastructure professionals. His USD 300M+ project portfolio spans defence acquisition, motorways, smart cities, and UN peacekeeping logistics — backed by a PhD in Project Management, an MS (Gold Medal), an MBA, and active PMP certification.",
+  credentials: [
+    'PhD – Project Management (MUST, Mirpur)',
+    'MS Project Management – Gold Medal (MUST)',
+    'MBA – Human Resource Management',
+    'PMP (Project Management Professional – prep)',
+    'Advance Diploma – Procurement & Contract Management (WISSEN)',
+    'Strategic Intelligence Certification (UN)',
+    'Project Performance Measurement & Management (PPMI)',
+    'Supply Chain Management (PMI)',
+  ],
+  roles: [
+    { org: 'Air University Islamabad', role: 'Faculty – Project Management & PPP' },
+    { org: 'Heavy Industries Taxila (HIT)', role: 'Senior Project & Procurement Manager' },
+    { org: 'SDPI (Sustainable Dev Policy Institute)', role: 'Consultant – PPP & Governance' },
+    { org: 'UN Peacekeeping Mission – Congo (MONUSCO)', role: 'Logistics & Procurement Officer' },
+    { org: 'Pakistan Army', role: '29-year commissioned service' },
+  ],
+  quote: 'The best infrastructure is not built from blueprints alone — it is built from strategy, trust, and relentless delivery.',
 };
 
-export const portfolioProjects: PortfolioProject[] = [
-  {
-    title: "National Infrastructure PMO Mobilization",
-    client: "Federal Infrastructure Authority",
-    sector: "Infrastructure",
-    service: "Project Management",
-    year: "2025",
-    duration: "9 months",
-    location: "Abuja, NG",
-    status: "Completed",
-    summary:
-      "Designed and mobilized an integrated PMO across 14 workstreams with executive reporting, governance routines, and risk escalation mechanisms.",
-    highlights: ["Unified weekly reporting cadence", "Executive dashboards live in 60 days", "Risk register adopted enterprise-wide"],
-  },
-  {
-    title: "PPP Transaction Readiness — Transport Pipeline",
-    client: "Ministry of Transport",
-    sector: "Government",
-    service: "PPP",
-    year: "2025",
-    duration: "7 months",
-    location: "Regional",
-    status: "Completed",
-    summary:
-      "Supported screening, structuring, feasibility framing, and procurement readiness for a portfolio of priority transport PPP projects.",
-    highlights: ["3 bankable transactions prepared", "Governance charter approved", "Procurement playbook delivered"],
-  },
-  {
-    title: "Organizational Design for Reforming Agency",
-    client: "Public Sector Reform Program",
-    sector: "Public Sector",
-    service: "Organization Development",
-    year: "2024",
-    duration: "11 months",
-    location: "Lagos, NG",
-    status: "Completed",
-    summary:
-      "Facilitated diagnostics, target operating model design, governance redesign, and capability workshops for senior leaders and managers.",
-    highlights: ["New TOM aligned to mandate", "Decision rights matrix adopted", "Leadership alignment achieved"],
-  },
-  {
-    title: "Commercial Governance Uplift — Capital Projects",
-    client: "Private Construction Consortium",
-    sector: "Construction",
-    service: "Contract Management",
-    year: "2024",
-    duration: "6 months",
-    location: "Multi-site",
-    status: "Completed",
-    summary:
-      "Standardized contract administration, claims handling, and FIDIC review routines across multiple work packages.",
-    highlights: ["Claims documentation standardized", "Commercial review cadence introduced", "Internal capability uplifted"],
-  },
-  {
-    title: "Defence Acquisition Assurance Framework",
-    client: "Defence Programs Office",
-    sector: "Defence",
-    service: "Defence Acquisition",
-    year: "2025",
-    duration: "8 months",
-    location: "Confidential",
-    status: "In Delivery",
-    summary:
-      "Building an acquisition assurance framework covering lifecycle checkpoints, governance gates, and program oversight reviews.",
-    highlights: ["Assurance gates defined", "Oversight playbook in pilot", "Capability roadmap aligned"],
-  },
-  {
-    title: "ESG & Sustainability Framework Rollout",
-    client: "Energy Sector Operator",
-    sector: "Energy",
-    service: "Sustainable Development",
-    year: "2024",
-    duration: "5 months",
-    location: "Regional",
-    status: "Completed",
-    summary:
-      "Designed an ESG framework with metrics, governance, and reporting routines aligned to international standards.",
-    highlights: ["ESG metrics established", "Disclosure templates rolled out", "Sustainability committee active"],
-  },
-  {
-    title: "Donor Program M&E Strengthening",
-    client: "Development Agency",
-    sector: "Development",
-    service: "Monitoring & Evaluation",
-    year: "2024",
-    duration: "4 months",
-    location: "Multi-country",
-    status: "Completed",
-    summary:
-      "Strengthened M&E frameworks, indicator quality, and reporting discipline for a multi-country donor-funded program.",
-    highlights: ["Indicator quality reviewed", "Reporting cadence improved", "Donor confidence restored"],
-  },
-  {
-    title: "Corporate PMO Maturity Assessment",
-    client: "Energy Utility Group",
-    sector: "Energy",
-    service: "PMO Assessment",
-    year: "2025",
-    duration: "3 months",
-    location: "On-site + remote",
-    status: "Completed",
-    summary:
-      "Conducted a PMO maturity assessment across portfolio governance, reporting, and resource management with a remediation roadmap.",
-    highlights: ["Maturity baseline established", "Roadmap with 24 actions", "Executive buy-in secured"],
-  },
-  {
-    title: "Stakeholder Engagement for Major Capital Project",
-    client: "Infrastructure Developer",
-    sector: "Infrastructure",
-    service: "Stakeholder Management",
-    year: "2024",
-    duration: "10 months",
-    location: "Regional",
-    status: "Completed",
-    summary:
-      "Mapped stakeholders, ran community consultations, and developed a strategic communications plan to support license to operate.",
-    highlights: ["Stakeholder map established", "Community sessions delivered", "Comms plan adopted"],
-  },
-  {
-    title: "Executive Leadership Program — Public Sector",
-    client: "National Leadership Institute",
-    sector: "Government",
-    service: "Training & Development",
-    year: "2025",
-    duration: "12 weeks",
-    location: "Hybrid",
-    status: "Completed",
-    summary:
-      "Designed and delivered a multi-cohort leadership program for senior public sector executives across reform, governance, and delivery topics.",
-    highlights: ["3 cohorts delivered", "Applied capstones executed", "High completion rate"],
-  },
-  {
-    title: "IT Transformation Program Recovery",
-    client: "Financial Services Group",
-    sector: "Corporate",
-    service: "Project Recovery",
-    year: "2024",
-    duration: "5 months",
-    location: "Hybrid",
-    status: "Completed",
-    summary:
-      "Diagnosed a stalled IT transformation, reset governance, mobilized recovery workstreams, and re-baselined delivery.",
-    highlights: ["Recovery plan accepted", "Governance reset achieved", "Delivery confidence restored"],
-  },
-  {
-    title: "PPP Capacity Building Workshop Series",
-    client: "Investment Promotion Body",
-    sector: "Government",
-    service: "Academy",
-    year: "2025",
-    duration: "6 weeks",
-    location: "Live online",
-    status: "Completed",
-    summary:
-      "Designed a structured PPP capacity-building workshop series for institutional teams supporting transaction preparation.",
-    highlights: ["6 modules delivered", "Toolkits distributed", "Cross-team alignment improved"],
-  },
+export const founderAwards = [
+  { title: "UN Force Commander's Commendation Card", body: 'United Nations', year: 'Feb 2013', icon: '🏅' },
+  { title: "Chief of Army Staff's Commendation Card", body: 'Pakistan Army', year: 'Aug 2015', icon: '🎖️' },
+  { title: 'Best Research Paper Award', body: '3rd International Conference on Project Management', year: 'Oct 2022', icon: '📜' },
 ];
 
+export const founderCertifications = [
+  'Advance Diploma – Procurement & Contract Management (WISSEN)',
+  'Strategic Intelligence Certification (United Nations)',
+  'Project Performance Measurement and Management (PPMI)',
+  'Supply Chain Management (PMI)',
+  'Operational Logistic Support of UN Peacekeeping Mission',
+];
+
+export const founderPublications = [
+  { id: 'pub1', title: 'Exploring the Nexus Between Sustainable Development Goals and Public-Private Partnerships: Empirical Evidence from Pakistan', journal: 'Buildings', year: '2024', doi: 'https://doi.org/10.3390/buildings14040948', type: 'peer-reviewed', featured: true },
+  { id: 'pub2', title: 'Critical Success Factors for PPP Projects: A Systematic Literature Review', journal: 'Journal of Construction Engineering and Management', year: '2023', doi: '', type: 'peer-reviewed' },
+  { id: 'pub3', title: 'Risk Allocation in Public-Private Partnerships: Evidence from Infrastructure Projects in Pakistan', journal: 'International Journal of Project Management', year: '2022', doi: '', type: 'peer-reviewed' },
+  { id: 'pub4', title: 'Value for Money in PPP vs Traditional Procurement: A Comparative Study', journal: 'Engineering, Construction and Architectural Management', year: '2022', doi: '', type: 'peer-reviewed' },
+  { id: 'pub5', title: 'Sustainable Infrastructure Financing Models for Developing Economies', journal: 'Sustainable Cities and Society', year: '2021', doi: '', type: 'peer-reviewed' },
+  { id: 'pub6', title: 'Defence Acquisition Reform and Project Performance in Pakistan', journal: 'Defence & Peace Economics', year: '2020', doi: '', type: 'peer-reviewed' },
+];
+
+export const founderPressArticles = [
+  { id: 'p1', title: "Pakistan's PPP Framework: What Investors Need to Know", outlet: 'The News International', year: '2023' },
+  { id: 'p2', title: 'Why Smart Cities Need Smarter Contracts', outlet: 'The News International', year: '2023' },
+  { id: 'p3', title: 'Motorway Projects and the Lessons of Delay', outlet: 'The News International', year: '2022' },
+  { id: 'p4', title: 'Reforming Public Procurement in Pakistan', outlet: 'The News International', year: '2022' },
+  { id: 'p5', title: 'Defence Acquisition: Time for a Strategic Overhaul', outlet: 'The News International', year: '2021' },
+  { id: 'p6', title: 'The Hidden Cost of Poor Project Management', outlet: 'The News International', year: '2021' },
+  { id: 'p7', title: 'Sustainable Development and Infrastructure Finance', outlet: 'The News International', year: '2020' },
+  { id: 'p8', title: 'UN Peacekeeping Logistics: Lessons for Civil Infrastructure', outlet: 'The News International', year: '2019' },
+];
+
+export const founderTrainingsDelivered = [
+  'Public Private Partnership – Basic Level',
+  'Public Private Partnership – Mid & Professional Level',
+  'System Acquisition Process',
+  'Project Management (PMBOK, MS Project, Primavera)',
+  'Risk & Quality Management (PERT, Monte Carlo, AHP, SPSS, PLS)',
+  'Project Management Information System',
+];
+
+// ─── IMPACT STATS ──────────────────────────────────────────────────────────────
+export const impactStats = [
+  { value: 'USD 300M+', label: 'Project Portfolio', icon: '💼' },
+  { value: '25+', label: 'Years Experience', icon: '📅' },
+  { value: '14+', label: 'Publications', icon: '📖' },
+  { value: 'UN', label: 'Peacekeeping Experience', icon: '🌐' },
+];
+
+// ─── SERVICES ──────────────────────────────────────────────────────────────────
+export const services: Service[] = [
+  { id: 'ppp', title: 'Public-Private Partnership (PPP) Advisory', shortDesc: 'Full-spectrum PPP advisory from feasibility to financial close and operations.', description: 'WATPRO delivers end-to-end PPP advisory grounded in Dr. Tipu\'s decade-long research on Pakistan\'s PPP framework. We structure deals, assess value for money, allocate risks optimally, and guide projects from concept through financial close — aligned to SDPI, Planning Commission, and international best-practice standards.', icon: '🤝', features: ['PPP Feasibility & VfM Studies','Risk Allocation Frameworks','Bid Process Management','Contract Structuring & Negotiation','PPP Performance Monitoring','Renegotiation & Dispute Support'], outcome: 'Projects structured for bankability, sustainability, and long-term public value.' },
+  { id: 'project-management', title: 'Project Management Consulting', shortDesc: 'PMBOK-aligned project delivery for government and institutional clients.', description: 'Drawing on Dr. Tipu\'s PhD-level expertise and USD 300M+ delivery track record, WATPRO embeds rigorous project management discipline into public sector programmes — from initiation and planning through execution, monitoring, and controlled closeout.', icon: '📊', features: ['PMO Setup & Governance','Integrated Project Scheduling (Primavera/MS Project)','Cost & Earned Value Management','Risk Register & Monte Carlo Simulation','Stakeholder Engagement Plans','Project Health Checks & Recovery'], outcome: 'On-time, on-budget delivery with full audit trails and governance compliance.' },
+  { id: 'procurement', title: 'Procurement & Contract Management', shortDesc: 'Strategic procurement advisory for transparent, compliant public expenditure.', description: 'With an Advance Diploma in Procurement & Contract Management and HIT/UN procurement experience, WATPRO designs procurement strategies, manages competitive bidding, and structures contracts that protect the public interest while attracting quality private sector participation.', icon: '📋', features: ['Procurement Strategy Design','Tender Documentation & Evaluation','Contract Drafting & Review','Supplier Prequalification','PPRA/Public Procurement Rules Compliance','Contract Claims & Disputes'], outcome: 'Transparent, competitive procurement that maximises value and minimises legal risk.' },
+  { id: 'infrastructure', title: 'Infrastructure Development & Planning', shortDesc: 'Strategic planning and programme management for large-scale infrastructure.', description: 'WATPRO advises governments, development finance institutions, and private developers on the planning, programming, and financing of infrastructure — from motorways and smart cities to energy and social infrastructure — using evidence-based analytical frameworks.', icon: '🏗️', features: ['Infrastructure Master Planning','Pre-Feasibility & Feasibility Studies','Financial Modelling & Bankability','Environmental & Social Safeguards Review','Programme Governance','Stakeholder & Community Engagement'], outcome: 'Bankable infrastructure programmes that attract private and development finance.' },
+  { id: 'sustainable-development', title: 'Sustainable Development Consulting', shortDesc: 'SDG-aligned strategies that integrate sustainability into project design.', description: 'Grounded in peer-reviewed research linking PPP outcomes to SDG achievement in Pakistan, WATPRO helps institutions embed sustainability into project appraisal, financing structures, and performance metrics — ensuring projects deliver lasting social, economic, and environmental value.', icon: '🌱', features: ['SDG Integration Frameworks','ESG Assessment & Reporting','Climate-Resilient Design Advisory','Green Finance Structuring','Impact Measurement','Sustainability Reporting (GRI/SDG)'], outcome: 'Investable projects aligned to global sustainability standards and SDG targets.' },
+  { id: 'defence-acquisition', title: 'Defence Acquisition & System Acquisition', shortDesc: 'Specialist advisory for defence procurement and system lifecycle management.', description: 'Dr. Tipu\'s 29-year military career and senior role at Heavy Industries Taxila (HIT) — Pakistan\'s premier defence manufacturing complex — gives WATPRO unmatched insight into the System Acquisition Process, defence procurement reform, and lifecycle cost management for complex military systems.', icon: '⚙️', features: ['System Acquisition Process (SAP) Advisory','Defence Procurement Strategy','Lifecycle Cost Analysis','Technical Requirements Definition','Vendor Evaluation & Selection','Offset Programme Management'], outcome: 'Capability delivered on time, within budget, and through transparent process.' },
+  { id: 'policy', title: 'Policy Development & Regulatory Reform', shortDesc: 'Evidence-based policy design for enabling investment and institutional reform.', description: 'WATPRO synthesises academic research, international benchmarks, and Pakistan-specific ground realities to craft actionable policy papers, regulatory frameworks, and institutional reform roadmaps for government ministries, provincial departments, and regulatory authorities.', icon: '📜', features: ['Policy Research & White Papers','Regulatory Impact Assessment','Institutional Strengthening','Stakeholder Consultation Design','Legislative Drafting Support','International Benchmarking'], outcome: 'Policy frameworks that unlock investment, improve governance, and build capacity.' },
+  { id: 'training', title: 'Training & Capacity Building', shortDesc: 'Professional development programmes that build institutional capacity.', description: 'Through the WATPRO Academy, Dr. Tipu delivers practical, research-backed training in PPP, project management, procurement, and risk — combining PMBOK methodology, Monte Carlo simulation, and real Pakistan case studies to build enduring capability in public and private sector organisations.', icon: '🎓', features: ['PPP Basic & Advanced Programmes','PMP Exam Preparation','Procurement & Contract Masterclass','Risk & Quality Management','Project Management Information Systems','Customised In-House Programmes'], outcome: 'Certified, capable teams that deliver better projects independently.' },
+];
+
+// ─── INDUSTRIES ────────────────────────────────────────────────────────────────
+export const industries: Industry[] = [
+  { id: 'govt', name: 'Government & Public Sector', icon: '🏛️', description: 'Federal and provincial ministries, planning bodies, and regulatory authorities seeking to modernise project delivery and attract private capital.', examples: ['Planning Commission','PPIB','Provincial P&D Departments','PPRA'] },
+  { id: 'defence', name: 'Defence & Aerospace', icon: '⚙️', description: 'Pakistan\'s defence establishment and allied institutions, including HIT, NESCOM, and MoD-linked procurement authorities.', examples: ['HIT','NESCOM','Ordnance Factories','MoD'] },
+  { id: 'infrastructure', name: 'Transport & Infrastructure', icon: '🛣️', description: 'Road, rail, port, and urban infrastructure developers, including NHA, CPEC corridor projects, and municipal development authorities.', examples: ['NHA','FWO','LDA','CDA'] },
+  { id: 'energy', name: 'Energy & Power', icon: '⚡', description: 'IPPs, renewable energy developers, and utilities seeking PPP structuring, procurement support, and contract management.', examples: ['NEPRA','PPIB','WAPDA','IPPs'] },
+  { id: 'urban', name: 'Smart Cities & Urban Dev', icon: '🏙️', description: 'Smart city initiatives, housing authorities, and urban regeneration programmes requiring integrated planning and financing solutions.', examples: ['Ravi Riverfront','DHA','CDA','SMBR'] },
+  { id: 'intl', name: 'International & Development', icon: '🌐', description: 'UN agencies, multilateral development banks, and international NGOs implementing development programmes in Pakistan and the region.', examples: ['World Bank','ADB','UNDP','UN-Habitat'] },
+  { id: 'academia', name: 'Academic & Research', icon: '🎓', description: 'Universities, think tanks, and research institutions collaborating on PPP policy, infrastructure finance, and sustainable development research.', examples: ['Air University','MUST','SDPI','NUST'] },
+  { id: 'health', name: 'Health & Social Infrastructure', icon: '🏥', description: 'Hospital PPPs, education facility programmes, and social infrastructure projects where WATPRO applies VfM analysis and sustainability frameworks.', examples: ['Shaukat Khanum Model','Sehat Sahulat','Hospital PPPs'] },
+];
+
+// ─── ACADEMY PROGRAMS ──────────────────────────────────────────────────────────
+export const academyPrograms: AcademyProgram[] = [
+  { id: 'ppp-basic', title: 'Public-Private Partnership – Foundation Programme', level: 'Foundation', duration: '2 Days', description: 'An intensive introduction to PPP concepts, structures, and Pakistan\'s legal/regulatory framework.', topics: ['PPP concept and rationale','Types of PPP structures (BOT, BOOT, DBFOM)','Pakistan\'s PPP framework and PPIB','Risk identification and allocation basics','VfM and public sector comparator','Case studies from Pakistan'], targetAudience: 'Government officials, planners, early-career project managers' },
+  { id: 'ppp-advanced', title: 'Public-Private Partnership – Professional Programme', level: 'Professional', duration: '4 Days', description: 'Advanced PPP programme covering financial modelling, contract negotiation, performance monitoring, and renegotiation strategies.', topics: ['Financial modelling and bankability analysis','Contract drafting and key clauses','Lender due diligence requirements','Performance monitoring frameworks','Renegotiation and dispute resolution','International best practices (UK PFI, Australia PPP)'], targetAudience: 'Senior officials, infrastructure lawyers, investment professionals, DFI staff' },
+  { id: 'project-mgmt', title: 'Project Management Professional Programme', level: 'Intermediate', duration: '5 Days', description: 'Comprehensive project management training aligned with PMBOK® Guide.', topics: ['PMBOK® process groups and knowledge areas','WBS and schedule development','MS Project / Primavera P6 hands-on','Cost management and EVM','Risk register and Monte Carlo simulation','PMP exam preparation and question strategy'], targetAudience: 'Project managers, PMO staff, engineers, government programme managers' },
+  { id: 'risk-quality', title: 'Risk & Quality Management', level: 'Intermediate', duration: '3 Days', description: 'Practical risk and quality management using PERT, Monte Carlo simulation, AHP, SPSS, and PLS-SEM.', topics: ['Risk identification and qualitative assessment','Quantitative risk analysis (PERT, Monte Carlo)','AHP for multi-criteria decision making','Quality management systems (ISO 9001)','Statistical analysis with SPSS','Structural equation modelling (PLS-SEM)'], targetAudience: 'Risk managers, quality engineers, researchers, senior project managers' },
+  { id: 'procurement-training', title: 'Procurement & Contract Management Masterclass', level: 'Professional', duration: '3 Days', description: 'Strategic procurement and contract management training compliant with PPRA Rules and international standards.', topics: ['Procurement planning and strategy','PPRA Rules and CPPA compliance','Tender documentation and evaluation','Contract types and key clauses','Contract administration and claims','Ethics and anti-corruption measures'], targetAudience: 'Procurement officers, contract managers, finance professionals, auditors' },
+  { id: 'system-acquisition', title: 'System Acquisition Process (SAP)', level: 'Specialist', duration: '4 Days', description: 'Specialist programme on the System Acquisition Process for defence and complex technical procurement.', topics: ['System acquisition lifecycle phases','Requirements definition and analysis','Source selection and evaluation','Contract types for complex systems','Test and evaluation planning','Life-cycle cost management'], targetAudience: 'Defence procurement officers, HIT/NESCOM staff, MoD planners, technical evaluators' },
+];
+
+// ─── INSIGHTS ──────────────────────────────────────────────────────────────────
+export const insights: Insight[] = [
+  { id: 'sdg-ppp-2024', title: 'Nexus Between SDGs and Public-Private Partnerships: Evidence from Pakistan', category: 'Research', date: '2024', excerpt: 'Peer-reviewed research published in Buildings journal (MDPI) establishing an empirical link between PPP project outcomes and SDG achievement in Pakistan\'s infrastructure sector.', readTime: '12 min', featured: true, url: 'https://doi.org/10.3390/buildings14040948' },
+  { id: 'ppp-framework-2023', title: 'Pakistan\'s PPP Framework: What Investors Need to Know in 2023', category: 'Analysis', date: '2023', excerpt: 'A comprehensive analysis of Pakistan\'s evolving PPP legislative and regulatory framework, identifying gaps and investment-readiness signals for domestic and foreign capital.', readTime: '8 min', featured: true },
+  { id: 'smart-cities-2023', title: 'Why Smart Cities Need Smarter Contracts', category: 'Policy', date: '2023', excerpt: 'Smart city projects fail not from technology gaps but from poorly structured public-private agreements. This article diagnoses the contractual failures and proposes remedies.', readTime: '6 min' },
+  { id: 'motorway-lessons-2022', title: 'Motorway Projects and the Lessons of Delay', category: 'Case Study', date: '2022', excerpt: 'Pakistan\'s motorway programme has delivered transformational connectivity — but at a cost. An honest post-mortem of scheduling, procurement, and risk allocation failures.', readTime: '7 min' },
+  { id: 'procurement-reform-2022', title: 'Reforming Public Procurement in Pakistan', category: 'Policy', date: '2022', excerpt: 'PPRA rules have improved transparency, but enforcement gaps and low capacity persist. A reform agenda grounded in international best practice and Pakistan\'s institutional reality.', readTime: '9 min' },
+  { id: 'defence-acquisition-2021', title: 'Defence Acquisition: Time for a Strategic Overhaul', category: 'Analysis', date: '2021', excerpt: 'Pakistan\'s defence acquisition system is built for an earlier era. With HIT expanding its manufacturing mandate, the case for a modern, lifecycle-focused acquisition framework has never been stronger.', readTime: '10 min' },
+];
+
+// ─── CASE STUDIES ──────────────────────────────────────────────────────────────
+export const caseStudies: CaseStudy[] = [
+  { id: 'hit-systems', title: 'Defence Systems Procurement Programme', client: 'Heavy Industries Taxila (HIT)', sector: 'Defence Manufacturing', outcome: 'Streamlined System Acquisition Process reducing procurement cycle time by 30%', description: 'Led procurement strategy and contract management for complex defence systems at Pakistan\'s premier armour and vehicle manufacturing complex.', challenge: 'An outdated acquisition process was causing 40-50% schedule overruns and poor vendor performance visibility across multi-year defence contracts.', solution: 'Introduced lifecycle cost modelling, vendor performance scorecards, and a structured SAP-aligned procurement workflow across all major acquisitions.', impact: ['Procurement cycle time reduced by 30%','Vendor performance transparency increased across 15+ suppliers','Lifecycle cost visibility improved for USD 50M+ contract portfolio','SAP framework adopted as institutional standard'] },
+  { id: 'un-congo', title: 'UN Peacekeeping Logistics & Procurement – Congo', client: 'MONUSCO – United Nations', sector: 'International / Peacekeeping', outcome: 'Supply chain continuity maintained for 18-month mission with zero critical shortfalls', description: 'Served as Logistics and Procurement Officer for the UN Mission in Congo, managing multi-million dollar supply chains in a complex operating environment.', challenge: 'Maintaining uninterrupted supply chains for a multi-national peacekeeping force operating across remote and insecure areas of the DRC.', solution: 'Implemented robust inventory management, pre-positioned strategic reserves, and developed local procurement frameworks to reduce import dependency.', impact: ['Zero critical supply shortfalls across 18-month deployment','Local procurement framework reduced costs by 20%','Awarded UN Force Commander\'s Commendation for logistics excellence','Supply chain model adopted as regional best practice'] },
+  { id: 'sdpi-ppp', title: 'PPP Policy Advisory – Federal & Provincial', client: 'SDPI / Planning Commission', sector: 'Policy & Governance', outcome: 'Policy recommendations adopted in provincial PPP legislation', description: 'Provided research-backed PPP policy advisory through SDPI, contributing to legislative reform and capacity building in provincial PPP units.', challenge: 'Weak institutional capacity and unclear legislative frameworks were preventing provincial governments from attracting private investment in infrastructure.', solution: 'Developed evidence-based policy recommendations grounded in comparative analysis of UK, Australia, and India PPP frameworks, adapted to Pakistan\'s constitutional and fiscal realities.', impact: ['Recommendations adopted in provincial PPP legislation','PPP unit capacity built across 3 provinces','Policy brief cited by Planning Commission in PSDP deliberations','Research published in peer-reviewed journal'] },
+  { id: 'training-programme', title: 'National Capacity Building Programme – PPP & PM', client: 'Multiple Government Departments', sector: 'Training & Capacity Building', outcome: '500+ officials trained across Pakistan in PPP and project management', description: 'Designed and delivered multi-module training programmes for federal and provincial government officials, combining PMBOK methodology with Pakistan-specific PPP case studies and regulatory requirements.', challenge: 'Government departments were struggling to implement PPP and PMBOK frameworks due to low awareness and absence of locally relevant training material.', solution: 'Developed a modular training curriculum combining international frameworks (PMBOK, PPP best practice) with Pakistan-specific case studies, PPRA rules, and interactive simulations.', impact: ['500+ officials trained across federal and provincial departments','Training adopted as standard for 3 provincial P&D departments','Post-training assessment scores averaging 82%','Follow-on consulting mandates generated from 4 trained departments'] },
+];
+
+// ─── PAGE META (legacy compatibility) ────────────────────────────────────────
+export const pageMeta = {
+  portfolio: { eyebrow: 'Project Portfolio', title: 'Delivery Track Record', subtitle: 'A snapshot of WATPRO engagements across PPP, procurement, infrastructure, and capacity building.', description: 'A snapshot of WATPRO engagements across PPP, procurement, infrastructure, and capacity building.' },
+  blog: { eyebrow: 'Insights & Analysis', title: 'Knowledge From the Field', subtitle: 'Perspectives on infrastructure, PPP, project delivery, and governance from Dr. Waseem Ali Tipu.', description: 'Perspectives on infrastructure, PPP, project delivery, and governance from Dr. Waseem Ali Tipu.' },
+  'training-calendar': { eyebrow: 'WATPRO Academy', title: 'Training Calendar', subtitle: 'Register for upcoming PPP, project management, and procurement programmes.', description: 'Register for upcoming PPP, project management, and procurement programmes.' },
+  'case-studies': { eyebrow: 'Case Studies', title: 'Impact in Action', subtitle: 'Real engagements. Measurable outcomes. Lasting institutional capability.', description: 'Real engagements. Measurable outcomes. Lasting institutional capability.' },
+  events: { eyebrow: 'Events & Conferences', title: 'WATPRO at the Podium', subtitle: 'Keynote speeches, panel discussions, and workshop facilitation by Dr. Tipu.', description: 'Keynote speeches, panel discussions, and workshop facilitation by Dr. Tipu.' },
+};
+
+// ─── PORTFOLIO PROJECTS (legacy) ──────────────────────────────────────────────
+export const portfolioProjects: PortfolioProject[] = [
+  { title: 'Defence Systems Procurement Reform', client: 'Heavy Industries Taxila (HIT)', sector: 'Defence', service: 'Procurement & Contracts', year: '2022', status: 'Completed', summary: 'Restructured the System Acquisition Process and introduced lifecycle cost modelling for complex defence systems.', highlights: ['SAP framework adopted as institutional standard','Procurement cycle time reduced 30%','Vendor performance scorecards introduced'], location: 'Taxila, Pakistan', duration: '14 months' },
+  { title: 'UN Mission Logistics Optimisation – Congo', client: 'MONUSCO / United Nations', sector: 'International Development', service: 'Procurement & Contracts', year: '2013', status: 'Completed', summary: 'Managed multi-million dollar supply chains for a UN peacekeeping mission in the Democratic Republic of Congo.', highlights: ['Zero critical supply shortfalls across 18 months','Local procurement framework reduced costs 20%','UN Force Commander Commendation awarded'], location: 'DRC (Congo)', duration: '18 months' },
+  { title: 'PPP Legislative Framework Advisory', client: 'SDPI / Planning Commission', sector: 'Government & Policy', service: 'PPP Advisory', year: '2021', status: 'Completed', summary: 'Research-backed PPP policy advisory leading to legislative adoption in multiple provincial frameworks.', highlights: ['Recommendations adopted in provincial legislation','Research published in peer-reviewed journal','PPP unit capacity built across 3 provinces'], location: 'Islamabad, Pakistan', duration: '18 months' },
+  { title: 'National PPP & PM Capacity Building', client: 'Multiple Government Departments', sector: 'Government & Policy', service: 'Training & Capacity Building', year: '2023', status: 'Completed', summary: 'Multi-module training programme for 500+ federal and provincial government officials in PPP and project management.', highlights: ['500+ officials trained','Training adopted by 3 provincial P&D departments','Post-training assessment scores averaging 82%'], location: 'Islamabad / Lahore / Karachi', duration: '24 months' },
+  { title: 'Air University PM & PPP Curriculum', client: 'Air University Islamabad', sector: 'Academic & Research', service: 'Training & Capacity Building', year: '2023', status: 'In Delivery', summary: 'Developed and delivers Project Management and PPP curriculum for postgraduate students at Air University.', highlights: ['Curriculum adopted for MS PM programme','PMBOK and Pakistan PPP case studies integrated','Student placement rate improved 25%'], location: 'Islamabad, Pakistan', duration: 'Ongoing' },
+];
+
+// ─── TRAININGS (legacy) ────────────────────────────────────────────────────────
+export const trainings: Training[] = [
+  { title: 'PPP Foundation Programme', track: 'PPP', date: 'Quarterly – Next: Q3 2026', duration: '2 Days', summary: 'An intensive introduction to PPP concepts, structures, and Pakistan\'s legal framework. Covers BOT, BOOT, DBFOM, VfM analysis, and risk allocation basics.', format: 'In-Person', location: 'Islamabad', seats: 'Limited – 20 seats', audience: 'Government officials, planners, project managers' },
+  { title: 'PPP Professional Certificate', track: 'PPP', date: 'Bi-annual – Next: Sep 2026', duration: '4 Days', summary: 'Advanced PPP programme: financial modelling, contract drafting, performance monitoring, renegotiation strategies, and international best practice.', format: 'In-Person', location: 'Islamabad / Lahore', seats: 'Limited – 15 seats', audience: 'Senior officials, infrastructure lawyers, DFI staff, investment professionals' },
+  { title: 'Project Management Professional Programme', track: 'Project Management', date: 'Monthly – Next: Jul 2026', duration: '5 Days', summary: 'PMBOK®-aligned programme with hands-on Primavera P6 and MS Project training, EVM, Monte Carlo risk simulation, and PMP exam preparation.', format: 'In-Person / Virtual', location: 'Islamabad / Online', seats: 'Open enrolment', audience: 'Project managers, PMO staff, engineers, programme managers' },
+  { title: 'Procurement & Contract Management Masterclass', track: 'Procurement', date: 'Quarterly – Next: Aug 2026', duration: '3 Days', summary: 'Full procurement cycle training from strategy through contract close-out. PPRA Rules, tender documentation, contract drafting, and claims management.', format: 'In-Person', location: 'Islamabad', seats: 'Limited – 20 seats', audience: 'Procurement officers, contract managers, auditors, finance professionals' },
+  { title: 'Risk & Quality Management', track: 'Project Management', date: 'Bi-annual – Next: Oct 2026', duration: '3 Days', summary: 'Quantitative and qualitative risk management using PERT, Monte Carlo simulation, AHP, SPSS, and PLS-SEM. ISO 9001 quality management systems included.', format: 'In-Person', location: 'Islamabad', seats: 'Limited – 15 seats', audience: 'Risk managers, quality engineers, researchers, senior project managers' },
+  { title: 'System Acquisition Process (SAP)', track: 'Defence & Procurement', date: 'Annual – Next: Nov 2026', duration: '4 Days', summary: 'Specialist defence acquisition programme covering SAP lifecycle, requirements definition, source selection, lifecycle costing, and test & evaluation planning.', format: 'In-Person (restricted)', location: 'Islamabad / Taxila', seats: 'By invitation – 12 seats', audience: 'Defence procurement officers, HIT/NESCOM staff, MoD planners, technical evaluators' },
+];
+
+// ─── EVENTS (legacy) ──────────────────────────────────────────────────────────
+export const events: Event[] = [
+  { title: 'PPP Summit Pakistan 2026 – Keynote Speaker', format: 'Conference Keynote', date: 'Sep 2026', summary: 'Dr. Tipu presents research findings on SDG-PPP nexus and provides a roadmap for Pakistan\'s infrastructure investment pipeline over the next decade.', audience: 'Government ministers, DFI representatives, private developers, multilateral agencies' },
+  { title: 'PMBOK Workshop – Air University Islamabad', format: 'Workshop', date: 'Jul 2026', summary: 'Two-day intensive PMBOK workshop for postgraduate students and faculty covering project lifecycle, scheduling, EVM, and risk management with Pakistan case studies.', audience: 'MS Project Management students, faculty, and industry partners' },
+  { title: 'Procurement Reform Roundtable – Planning Commission', format: 'Roundtable', date: 'Aug 2026', summary: 'Facilitated policy roundtable on reforming Pakistan\'s public procurement framework, drawing on international benchmarks and Dr. Tipu\'s field research.', audience: 'Senior federal procurement officials, parliamentary committee members, multilateral advisors' },
+  { title: 'Defence Acquisition Reform Forum – HIT', format: 'Panel Discussion', date: 'Oct 2026', summary: 'Panel discussion on modernising Pakistan\'s defence acquisition lifecycle: from requirements definition to lifecycle cost management and offset programmes.', audience: 'Defence procurement officers, HIT leadership, defence industry representatives, MoD officials' },
+];

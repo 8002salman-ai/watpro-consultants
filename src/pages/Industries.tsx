@@ -1,77 +1,86 @@
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import {
-  GlassCard,
-  PageHero,
-  SectionHeading,
-  SectionShell,
-  iconMap,
-  primaryButtonClass,
-} from "../components/ui";
-import { useDocumentMeta } from "../hooks/useDocumentMeta";
-import { industries, pageMeta } from "../data/watproContent";
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { industries } from '../data/watproContent';
+import { GlassCard, PageHero, SectionHeading, primaryButtonClass } from '../components/ui';
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.55, delay },
+});
 
 export default function Industries() {
-  useDocumentMeta(pageMeta.industries);
-
   return (
-    <>
-      <PageHero meta={pageMeta.industries}>
-        <Link to="/contact" className={primaryButtonClass}>
-          Discuss your sector challenge
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </PageHero>
+    <div style={{ background: '#07111e' }}>
+      <PageHero
+        eyebrow="Industries"
+        title="Sectors Where We Create Value"
+        subtitle="WATPRO's cross-sector experience — from Pakistan Army and UN Peacekeeping to academia, defence manufacturing, and infrastructure finance — enables us to serve diverse clients with precision."
+      />
 
-      <SectionShell>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {industries.map((industry, index) => {
-            const Icon = iconMap[industry.icon];
-            return (
-              <GlassCard key={industry.name} className="h-full" delay={index * 0.04}>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-300/12 text-amber-200">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h2 className="mt-3 text-base font-semibold text-white md:text-lg">{industry.name}</h2>
-                <p className="mt-2 text-[13px] leading-6 text-slate-400">{industry.summary}</p>
-                <div className="mt-3 rounded-lg border border-white/10 bg-white/[0.03] p-3 text-[12.5px] leading-6 text-slate-200">
-                  {industry.value}
-                </div>
-              </GlassCard>
-            );
-          })}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            {industries.map((ind, i) => (
+              <motion.div key={ind.id} {...fadeUp(i * 0.07)}>
+                <GlassCard hover premium className="p-8">
+                  <div className="flex items-start gap-5">
+                    <span className="text-4xl flex-shrink-0">{ind.icon}</span>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-black text-white mb-2">{ind.name}</h3>
+                      <p className="text-sm text-slate-400 leading-relaxed mb-4">{ind.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {ind.examples.map(ex => (
+                          <span key={ex} className="px-2.5 py-1 rounded-full border border-amber-400/20 bg-amber-400/5 text-xs font-medium text-amber-400">
+                            {ex}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </SectionShell>
+      </section>
 
-      <SectionShell className="pb-8">
-        <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-          <GlassCard className="h-full" delay={0.05}>
+      {/* Differentiator section */}
+      <section className="py-20" style={{ background: 'rgba(255,255,255,0.02)' }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div {...fadeUp(0)} className="text-center mb-12">
             <SectionHeading
-              eyebrow="Target client profile"
-              title="Ideal for institutions managing complexity, scrutiny, or delivery pressure."
-              description="WATPRO is especially relevant where cross-functional coordination, public visibility, procurement governance, or capability gaps can affect outcomes."
+              eyebrow="Cross-Sector Advantage"
+              title="Why Breadth Matters"
+              subtitle="Infrastructure, defence, and development challenges rarely stay within a single sector. WATPRO's rare cross-sector experience means we see solutions others miss."
+              centered
             />
-            <div className="mt-6 flex flex-wrap gap-3">
-              {industries.map((industry) => (
-                <span key={industry.name} className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-slate-200">
-                  {industry.name}
-                </span>
-              ))}
-            </div>
-          </GlassCard>
-          <GlassCard className="h-full" delay={0.1}>
-            <SectionHeading
-              eyebrow="What clients value"
-              title="Sector fluency paired with governance and implementation discipline."
-              description="Clients engage WATPRO to align stakeholders, sharpen decision-making, structure programs, strengthen PMOs, and build internal capability."
-            />
-            <Link to="/services" className={`${primaryButtonClass} mt-6`}>
-              View service capabilities
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </GlassCard>
+          </motion.div>
+          <div className="grid sm:grid-cols-3 gap-6">
+            {[
+              { title: 'Military Precision', desc: 'Pakistan Army and UN Peacekeeping experience brings rigorous planning, logistics discipline, and crisis management to every engagement.' },
+              { title: 'Academic Depth', desc: 'PhD research and university teaching ensure every advisory product is grounded in current theory and best practice — not received wisdom.' },
+              { title: 'Institutional Knowledge', desc: '25+ years inside HIT, SDPI, Planning Commission, and provincial governments means we know how decisions actually get made in Pakistan.' },
+            ].map((item, i) => (
+              <motion.div key={item.title} {...fadeUp(i * 0.08)}>
+                <GlassCard premium className="p-6">
+                  <h3 className="text-base font-bold text-white mb-3">{item.title}</h3>
+                  <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                </GlassCard>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </SectionShell>
-    </>
+      </section>
+
+      <section className="py-16 text-center">
+        <motion.div {...fadeUp(0)}>
+          <h2 className="text-2xl font-black text-white mb-4">Your sector, our expertise</h2>
+          <p className="text-slate-400 mb-8 max-w-md mx-auto">Let's discuss how WATPRO's cross-sector knowledge creates value for your specific challenge.</p>
+          <Link to="/contact" className={primaryButtonClass}>Speak to Dr. Tipu</Link>
+        </motion.div>
+      </section>
+    </div>
   );
 }

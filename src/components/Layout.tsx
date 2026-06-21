@@ -1,246 +1,201 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, LayoutDashboard, LogIn, Menu, ShieldCheck, X } from "lucide-react";
-import { cn } from "../utils/cn";
-import { navigation, siteIdentity } from "../data/watproContent";
-import { BackgroundDecor, primaryButtonClass } from "./ui";
-import { useAuth } from "../context/AuthContext";
-import { FloatingWidgets } from "./FloatingWidgets";
+import { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const routeFor = (key: string) => (key === "home" ? "/" : `/${key}`);
+const navLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About' },
+  { to: '/services', label: 'Services' },
+  { to: '/industries', label: 'Industries' },
+  { to: '/academy', label: 'Academy' },
+  { to: '/insights', label: 'Insights' },
+  { to: '/contact', label: 'Contact' },
+];
 
-export default function Layout() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
-  const { client, admin } = useAuth();
-
-  useEffect(() => {
-    setMenuOpen(false);
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-
+function WatproLogo({ size = 44 }: { size?: number }) {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#04111f] text-slate-100">
-      <BackgroundDecor />
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} clientName={client?.name} adminName={admin?.name} />
-      <main className="relative z-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
-      </main>
-      <FloatingWidgets />
-      <Footer />
-    </div>
+    <svg
+      width={size}
+      height={Math.round(size * 0.77)}
+      viewBox="0 0 110 85"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="animated-logo flex-shrink-0"
+      aria-label="WATPRO Consultants Logo"
+    >
+      <polyline
+        points="4,12 26,70 47,24 62,58"
+        stroke="#3b82f6"
+        strokeWidth="10"
+        strokeLinejoin="miter"
+        strokeLinecap="square"
+        fill="none"
+      />
+      <line x1="62" y1="58" x2="96" y2="6" stroke="#d97706" strokeWidth="10" strokeLinecap="square" />
+      <polygon points="104,2 82,10 92,28" fill="#d97706" />
+    </svg>
   );
 }
 
-function Header({
-  menuOpen,
-  setMenuOpen,
-  clientName,
-  adminName,
-}: {
-  menuOpen: boolean;
-  setMenuOpen: (value: boolean) => void;
-  clientName?: string;
-  adminName?: string;
-}) {
+export default function Layout() {
+  const { pathname } = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-30 px-3 pt-3 md:px-5">
-      <div className="mx-auto max-w-[1400px] rounded-2xl border border-white/10 bg-white/90 px-3 py-2 shadow-[0_18px_44px_rgba(2,8,23,0.15)] backdrop-blur-2xl md:px-4 animated-header">
-        <div className="flex items-center justify-between gap-3">
-          <Link to="/" className="flex min-w-0 items-center gap-2.5">
-            <div className="flex h-9 w-12 items-center justify-center animated-logo">
-              <svg viewBox="0 0 120 80" fill="none" className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 25 L35 70 L55 25" stroke="#1e3a8a" strokeWidth="14" strokeLinejoin="miter" strokeLinecap="square" />
-                <path d="M65 45 L75 70 L95 25" stroke="#1e3a8a" strokeWidth="14" strokeLinejoin="miter" strokeLinecap="square" />
-                <path d="M48 40 L60 15 L90 5" stroke="#d97706" strokeWidth="12" strokeLinejoin="miter" strokeLinecap="square" />
-                <polygon points="78,0 100,0 92,22" fill="#d97706"/>
-              </svg>
-            </div>
-            <div className="min-w-0 leading-tight">
-              <p className="truncate text-sm font-black uppercase tracking-[0.28em] text-slate-900">
-                WATPRO
-              </p>
-              <p className="truncate text-[9px] uppercase tracking-[0.28em] text-amber-700">
-                The Ultimate Solution Hub
-              </p>
+    <div className="min-h-screen flex flex-col" style={{ background: '#07111e' }}>
+      <header
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? 'bg-[#07111e]/95 backdrop-blur-md border-b border-white/8 animated-header'
+            : 'bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: '72px' }}>
+          <Link to="/" className="flex items-center gap-3 group">
+            <WatproLogo size={44} />
+            <div>
+              <div className="text-base font-extrabold tracking-tight text-white leading-none">WATPRO</div>
+              <div className="text-[10px] font-semibold tracking-[0.15em] text-amber-400 uppercase leading-none mt-0.5">Consultants</div>
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-0.5 lg:flex">
-            {navigation.map((item) => (
-              <NavLink
-                key={item.key}
-                to={routeFor(item.key)}
-                end={item.key === "home"}
-                className={({ isActive }) =>
-                  cn(
-                    "nav-link whitespace-nowrap rounded-full px-3 py-1.5 text-[12.5px] font-semibold transition",
-                    isActive ? "nav-active text-amber-700 bg-amber-50" : "text-slate-700 hover:text-amber-700 hover:bg-amber-50/50",
-                  )
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navLinks.map(({ to, label }) => {
+              const active = pathname === to || (to !== '/' && pathname.startsWith(to));
+              return (
+                <Link
+                  key={to}
+                  to={to}
+                  className={`nav-link px-3.5 py-2 text-sm font-medium rounded-md transition-colors ${
+                    active ? 'text-amber-400 nav-active' : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
 
-          <div className="hidden items-center gap-1.5 lg:flex">
-            <Link
-              to="/admin"
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:text-amber-700 hover:border-amber-400/50"
-              title="Admin area"
-            >
-              <ShieldCheck className="h-3.5 w-3.5" />
-            </Link>
-            <Link
-              to={clientName ? "/client" : "/client/login"}
-              className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-[12px] font-semibold text-slate-800 transition hover:border-amber-400/60 hover:text-amber-700"
-            >
-              {clientName ? <LayoutDashboard className="h-3.5 w-3.5" /> : <LogIn className="h-3.5 w-3.5" />}
-              {clientName ? "Client" : "Client Login"}
-            </Link>
+          <div className="flex items-center gap-3">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-1.5 rounded-full shine-button px-3.5 py-1.5 text-[12px] font-bold text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(217,171,83,0.3)]"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-lg shadow-amber-900/30 transition-all duration-200 hover:-translate-y-0.5"
             >
-              Start a Conversation
-              <ArrowRight className="h-3.5 w-3.5" />
+              Book Consultation
             </Link>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 text-white"
+              aria-label="Toggle menu"
+            >
+              <span className={`block h-0.5 w-6 bg-current transition-all ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <span className={`block h-0.5 w-6 bg-current transition-all ${mobileOpen ? 'opacity-0' : ''}`} />
+              <span className={`block h-0.5 w-6 bg-current transition-all ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            </button>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white transition hover:bg-white/[0.08] lg:hidden"
-            aria-label="Toggle navigation menu"
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
         </div>
 
         <AnimatePresence>
-          {menuOpen ? (
+          {mobileOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden lg:hidden"
+              className="lg:hidden border-t border-white/8 bg-[#07111e]/98 backdrop-blur-md"
             >
-              <div className="mt-4 grid gap-2 border-t border-white/10 pt-4 sm:grid-cols-2">
-                {navigation.map((item) => (
-                  <NavLink
-                    key={item.key}
-                    to={routeFor(item.key)}
-                    end={item.key === "home"}
-                    className={({ isActive }) =>
-                      cn(
-                        "rounded-2xl border px-4 py-3 text-sm transition",
-                        isActive
-                          ? "border-amber-400/40 bg-amber-50 text-amber-700"
-                          : "border-slate-200 bg-white text-slate-700 hover:border-amber-400/40 hover:text-amber-700",
-                      )
-                    }
-                  >
-                    <span className="block font-semibold">{item.label}</span>
-                    <span className="block text-xs text-slate-500">{item.summary}</span>
-                  </NavLink>
-                ))}
+              <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
+                {navLinks.map(({ to, label }) => {
+                  const active = pathname === to || (to !== '/' && pathname.startsWith(to));
+                  return (
+                    <Link
+                      key={to}
+                      to={to}
+                      className={`px-4 py-3 rounded-lg text-sm font-medium ${
+                        active ? 'text-amber-400 bg-amber-400/10' : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      {label}
+                    </Link>
+                  );
+                })}
                 <Link
-                  to={clientName ? "/client" : "/client/login"}
-                  className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 transition hover:border-amber-400/40 hover:text-amber-700"
+                  to="/contact"
+                  className="mt-2 px-4 py-3 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 text-center"
                 >
-                  <span className="block font-semibold">{clientName ? "Client Area" : "Client Login / Sign Up"}</span>
-                  <span className="block text-xs text-slate-500">Secure client portal</span>
-                </Link>
-                <Link
-                  to={adminName ? "/admin/dashboard" : "/admin"}
-                  className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 transition hover:border-amber-400/40 hover:text-amber-700"
-                >
-                  <span className="block font-semibold">Admin Area</span>
-                  <span className="block text-xs text-slate-500">Internal management</span>
-                </Link>
-                <Link to="/contact" className={cn(primaryButtonClass, "mt-1 w-full sm:col-span-2")}>
-                  Start a Conversation
-                  <ArrowRight className="h-4 w-4" />
+                  Book Consultation
                 </Link>
               </div>
             </motion.div>
-          ) : null}
+          )}
         </AnimatePresence>
-      </div>
-    </header>
-  );
-}
+      </header>
 
-function Footer() {
-  return (
-    <footer className="relative z-10 px-4 pb-8 pt-12 md:px-6">
-      <div className="mx-auto max-w-7xl rounded-[2rem] border border-slate-200 bg-white p-8 shadow-lg md:p-10">
-        <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-[1.2fr_0.8fr_0.8fr]">
-          <div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-16 items-center justify-center animated-logo">
-                <svg viewBox="0 0 120 80" fill="none" className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 25 L35 70 L55 25" stroke="#1e3a8a" strokeWidth="14" strokeLinejoin="miter" strokeLinecap="square" />
-                  <path d="M65 45 L75 70 L95 25" stroke="#1e3a8a" strokeWidth="14" strokeLinejoin="miter" strokeLinecap="square" />
-                  <path d="M48 40 L60 15 L90 5" stroke="#d97706" strokeWidth="12" strokeLinejoin="miter" strokeLinecap="square" />
-                  <polygon points="78,0 100,0 92,22" fill="#d97706"/>
-                </svg>
+      <main className="flex-1">
+        <Outlet />
+      </main>
+
+      <footer className="border-t border-white/8 bg-[#050d17]">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                <WatproLogo size={40} />
+                <div>
+                  <div className="text-base font-extrabold text-white">WATPRO Consultants</div>
+                  <div className="text-xs font-semibold tracking-widest text-amber-400 uppercase">The Ultimate Solution Hub</div>
+                </div>
               </div>
-              <div>
-                <p className="text-xl font-black uppercase tracking-[0.3em] text-slate-900">WATPRO</p>
-                <p className="text-[10px] uppercase tracking-[0.28em] text-amber-700">{siteIdentity.tagline}</p>
+              <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
+                Strategy. Transformation. Delivery. Led by Dr. Waseem Ali Tipu, Pakistan's foremost PPP
+                and project management authority with a USD 300M+ delivery portfolio.
+              </p>
+              <div className="mt-5 flex flex-col gap-1.5 text-sm text-slate-400">
+                <a href="mailto:waseemalitipu@gmail.com" className="hover:text-amber-400 transition-colors">waseemalitipu@gmail.com</a>
+                <a href="tel:+923004122313" className="hover:text-amber-400 transition-colors">+92 300 412 2313</a>
               </div>
             </div>
-            <p className="mt-6 max-w-xl text-[13px] leading-7 text-slate-600">
-              {siteIdentity.supportingStatement}
-            </p>
+
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Services</h4>
+              <ul className="space-y-2 text-sm text-slate-400">
+                {['PPP Advisory','Project Management','Procurement & Contracts','Infrastructure Planning','Sustainable Development','Defence Acquisition','Policy & Regulatory','Training & Academy'].map(s => (
+                  <li key={s}><Link to="/services" className="hover:text-white transition-colors">{s}</Link></li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Company</h4>
+              <ul className="space-y-2 text-sm text-slate-400">
+                {[['About Dr. Tipu','/about'],['Our Services','/services'],['Industries','/industries'],['WATPRO Academy','/academy'],['Insights & Research','/insights'],['Contact','/contact']].map(([label,to]) => (
+                  <li key={to}><Link to={to} className="hover:text-white transition-colors">{label}</Link></li>
+                ))}
+              </ul>
+              <div className="mt-6">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">Connect</h4>
+                <div className="flex gap-3">
+                  <a href="https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-sm">in</a>
+                  <a href="https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-xs">GS</a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.28em] text-slate-900">Navigate</p>
-            <div className="mt-5 grid gap-2">
-              {navigation.map((item) => (
-                <Link key={item.key} to={routeFor(item.key)} className="text-[13px] text-slate-700 transition hover:text-amber-700">
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.28em] text-slate-900">Access & Contact</p>
-            <div className="mt-5 space-y-3 text-[13px] text-slate-700">
-              <Link to="/client/login" className="block transition hover:text-amber-700">Client Login</Link>
-              <Link to="/client/signup" className="block transition hover:text-amber-700">Client Sign Up</Link>
-              <Link to="/admin" className="block transition hover:text-amber-700">Admin Area</Link>
-              <p className="pt-2 font-bold text-slate-900">advisory@watproconsultants.com</p>
-              <p>academy@watproconsultants.com</p>
-              <Link to="/contact" className={cn(primaryButtonClass, "mt-2")}>
-                Contact WATPRO
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+          <div className="mt-12 pt-6 border-t border-white/8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>&copy; {new Date().getFullYear()} WATPRO Consultants. All rights reserved.</p>
+            <p>Strategy. Transformation. Delivery.</p>
           </div>
         </div>
-
-        <div className="mt-10 border-t border-slate-200 pt-6 text-[13px] text-slate-600">
-          © 2026 WATPRO Consulting. Premium advisory, transformation, delivery, and executive learning platform.
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 }
