@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
@@ -23,7 +23,6 @@ function WatproLogo({ size = 44 }: { size?: number }) {
       className="animated-logo flex-shrink-0"
       aria-label="WATPRO Consultants Logo"
     >
-      {/* Navy W — three connected segments */}
       <polyline
         points="4,12 26,70 47,24 62,58"
         stroke="#3b82f6"
@@ -32,21 +31,13 @@ function WatproLogo({ size = 44 }: { size?: number }) {
         strokeLinecap="square"
         fill="none"
       />
-      {/* Gold arrow shaft — right arm of W going up-right */}
-      <line
-        x1="62" y1="58"
-        x2="96" y2="6"
-        stroke="#d97706"
-        strokeWidth="10"
-        strokeLinecap="square"
-      />
-      {/* Gold arrowhead */}
+      <line x1="62" y1="58" x2="96" y2="6" stroke="#d97706" strokeWidth="10" strokeLinecap="square" />
       <polygon points="104,2 82,10 92,28" fill="#d97706" />
     </svg>
   );
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout() {
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -61,7 +52,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#07111e' }}>
-      {/* ── NAV ── */}
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
@@ -69,21 +59,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between" style={{ height: '72px' }}>
-          {/* Brand */}
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: '72px' }}>
           <Link to="/" className="flex items-center gap-3 group">
             <WatproLogo size={44} />
             <div>
-              <div className="text-base font-extrabold tracking-tight text-white leading-none">
-                WATPRO
-              </div>
-              <div className="text-[10px] font-semibold tracking-[0.15em] text-amber-400 uppercase leading-none mt-0.5">
-                Consultants
-              </div>
+              <div className="text-base font-extrabold tracking-tight text-white leading-none">WATPRO</div>
+              <div className="text-[10px] font-semibold tracking-[0.15em] text-amber-400 uppercase leading-none mt-0.5">Consultants</div>
             </div>
           </Link>
 
-          {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map(({ to, label }) => {
               const active = pathname === to || (to !== '/' && pathname.startsWith(to));
@@ -101,7 +85,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          {/* CTA + Mobile toggle */}
           <div className="flex items-center gap-3">
             <Link
               to="/contact"
@@ -121,7 +104,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
@@ -157,14 +139,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </AnimatePresence>
       </header>
 
-      {/* ── PAGE CONTENT ── */}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <Outlet />
+      </main>
 
-      {/* ── FOOTER ── */}
       <footer className="border-t border-white/8 bg-[#050d17]">
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-            {/* Brand column */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
                 <WatproLogo size={40} />
@@ -178,42 +159,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 and project management authority with a USD 300M+ delivery portfolio.
               </p>
               <div className="mt-5 flex flex-col gap-1.5 text-sm text-slate-400">
-                <a href="mailto:waseemalitipu@gmail.com" className="hover:text-amber-400 transition-colors">
-                  waseemalitipu@gmail.com
-                </a>
-                <a href="tel:+923004122313" className="hover:text-amber-400 transition-colors">
-                  +92 300 412 2313
-                </a>
+                <a href="mailto:waseemalitipu@gmail.com" className="hover:text-amber-400 transition-colors">waseemalitipu@gmail.com</a>
+                <a href="tel:+923004122313" className="hover:text-amber-400 transition-colors">+92 300 412 2313</a>
               </div>
             </div>
 
-            {/* Services */}
             <div>
               <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Services</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                {['PPP Advisory', 'Project Management', 'Procurement & Contracts', 'Infrastructure Planning', 'Sustainable Development', 'Defence Acquisition', 'Policy & Regulatory', 'Training & Academy'].map(s => (
+                {['PPP Advisory','Project Management','Procurement & Contracts','Infrastructure Planning','Sustainable Development','Defence Acquisition','Policy & Regulatory','Training & Academy'].map(s => (
                   <li key={s}><Link to="/services" className="hover:text-white transition-colors">{s}</Link></li>
                 ))}
               </ul>
             </div>
 
-            {/* Company */}
             <div>
               <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                {[['About Dr. Tipu', '/about'], ['Our Services', '/services'], ['Industries', '/industries'], ['WATPRO Academy', '/academy'], ['Insights & Research', '/insights'], ['Contact', '/contact']].map(([label, to]) => (
+                {[['About Dr. Tipu','/about'],['Our Services','/services'],['Industries','/industries'],['WATPRO Academy','/academy'],['Insights & Research','/insights'],['Contact','/contact']].map(([label,to]) => (
                   <li key={to}><Link to={to} className="hover:text-white transition-colors">{label}</Link></li>
                 ))}
               </ul>
               <div className="mt-6">
                 <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">Connect</h4>
                 <div className="flex gap-3">
-                  <a href="https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-sm">
-                    in
-                  </a>
-                  <a href="https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-xs">
-                    GS
-                  </a>
+                  <a href="https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-sm">in</a>
+                  <a href="https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-xs">GS</a>
                 </div>
               </div>
             </div>
