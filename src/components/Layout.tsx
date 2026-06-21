@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { WATPRO_LOGO } from '../assets';
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -38,7 +39,7 @@ export default function Layout() {
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: '72px' }}>
           <Link to="/" className="flex items-center gap-3 group">
             <div className="bg-white rounded-lg p-1 flex items-center justify-center flex-shrink-0" style={{ width: 44, height: 34 }}>
-              <img src="/watpro-logo.jpg" alt="WATPRO Logo" className="w-full h-full object-contain" />
+              <img src={WATPRO_LOGO} alt="WATPRO Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="text-base font-extrabold tracking-tight text-white leading-none">WATPRO</div>
@@ -127,7 +128,7 @@ export default function Layout() {
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
                 <div className="bg-white rounded-lg p-1 flex items-center justify-center flex-shrink-0" style={{ width: 44, height: 34 }}>
-                  <img src="/watpro-logo.jpg" alt="WATPRO Logo" className="w-full h-full object-contain" />
+                  <img src={WATPRO_LOGO} alt="WATPRO Logo" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <div className="text-base font-extrabold text-white">WATPRO Consultants</div>

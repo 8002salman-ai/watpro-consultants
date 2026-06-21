@@ -1,3 +1,5 @@
+import { FOUNDER_PHOTO } from '../assets';
+
 // ─── TYPES ─────────────────────────────────────────────────────────────────────
 export interface Service {
   id: string;
@@ -92,7 +94,7 @@ export const founderProfile = {
   email: 'waseemalitipu@gmail.com',
   linkedin: 'https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7',
   scholar: 'https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en',
-  photoUrl: '/dr-tipu.jpg',
+  photoUrl: FOUNDER_PHOTO,
   portfolio: 'USD 300 Million+',
   yearsExp: '25+',
   publications: '14+',
