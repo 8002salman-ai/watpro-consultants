@@ -145,14 +145,6 @@ export default function Home() {
                     src={founderProfile.photoUrl}
                     alt={founderProfile.name}
                     className="w-full h-full object-cover object-top"
-                    onError={(e) => {
-                      const target = e.currentTarget as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = '<div class="w-full h-full flex flex-col items-center justify-center text-white"><div class="text-6xl font-black opacity-30">WAT</div><div class="text-sm text-slate-400 mt-2">Dr. W.A. Tipu</div></div>';
-                      }
-                    }}
                   />
                 </div>
                 {/* Floating badge */}

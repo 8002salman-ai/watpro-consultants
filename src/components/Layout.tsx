@@ -12,30 +12,6 @@ const navLinks = [
   { to: '/contact', label: 'Contact' },
 ];
 
-function WatproLogo({ size = 44 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={Math.round(size * 0.77)}
-      viewBox="0 0 110 85"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="animated-logo flex-shrink-0"
-      aria-label="WATPRO Consultants Logo"
-    >
-      <polyline
-        points="4,12 26,70 47,24 62,58"
-        stroke="#3b82f6"
-        strokeWidth="10"
-        strokeLinejoin="miter"
-        strokeLinecap="square"
-        fill="none"
-      />
-      <line x1="62" y1="58" x2="96" y2="6" stroke="#d97706" strokeWidth="10" strokeLinecap="square" />
-      <polygon points="104,2 82,10 92,28" fill="#d97706" />
-    </svg>
-  );
-}
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -61,7 +37,9 @@ export default function Layout() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: '72px' }}>
           <Link to="/" className="flex items-center gap-3 group">
-            <WatproLogo size={44} />
+            <div className="bg-white rounded-lg p-1 flex items-center justify-center flex-shrink-0" style={{ width: 44, height: 34 }}>
+              <img src="/watpro-logo.jpg" alt="WATPRO Logo" className="w-full h-full object-contain" />
+            </div>
             <div>
               <div className="text-base font-extrabold tracking-tight text-white leading-none">WATPRO</div>
               <div className="text-[10px] font-semibold tracking-[0.15em] text-amber-400 uppercase leading-none mt-0.5">Consultants</div>

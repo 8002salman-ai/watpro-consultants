@@ -34,12 +34,6 @@ export default function About() {
                     src={founderProfile.photoUrl}
                     alt={founderProfile.name}
                     className="w-full h-full object-cover object-top"
-                    onError={(e) => {
-                      const t = e.currentTarget as HTMLImageElement;
-                      t.style.display = 'none';
-                      const p = t.parentElement;
-                      if (p) p.innerHTML = '<div class="w-full h-full flex flex-col items-center justify-center"><div class="text-7xl font-black text-white/10">WAT</div><div class="text-sm text-slate-500 mt-4">Dr. Waseem Ali Tipu</div></div>';
-                    }}
                   />
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-gradient-to-br from-amber-400 to-amber-600 text-slate-900 rounded-xl px-4 py-2 shadow-xl">
