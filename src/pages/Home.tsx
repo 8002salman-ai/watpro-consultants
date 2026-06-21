@@ -15,7 +15,7 @@ export default function Home() {
     <div className="min-h-screen" style={{ background: '#07111e' }}>
 
       {/* ══ HERO ══ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[85vh] md:min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 grid-overlay" />
         <div className="absolute inset-0 hero-mesh" />
         <div
@@ -27,15 +27,15 @@ export default function Home() {
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 pt-20 sm:pt-28 pb-12 sm:pb-20">
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-400/20 bg-amber-400/5 text-amber-400 text-xs font-bold uppercase tracking-widest mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-amber-400/20 bg-amber-400/5 text-amber-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-5 sm:mb-8"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse flex-shrink-0" />
               Pakistan's Premier PPP & Infrastructure Advisory
             </motion.div>
 
@@ -43,7 +43,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6"
+              className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight mb-4 sm:mb-6"
             >
               THE ULTIMATE
               <br />
@@ -54,7 +54,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-xl md:text-2xl text-slate-300 font-light tracking-wide mb-3"
+              className="text-base sm:text-xl md:text-2xl text-slate-300 font-light tracking-wide mb-2 sm:mb-3"
             >
               Strategy.&nbsp;&nbsp;Transformation.&nbsp;&nbsp;Delivery.
             </motion.p>
@@ -63,7 +63,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-base md:text-lg text-slate-400 max-w-2xl mb-10 leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mb-7 sm:mb-10 leading-relaxed"
             >
               Led by Dr. Waseem Ali Tipu — PhD Project Management, MS Gold Medal, 25+ years across
               Pakistan Army, HIT, UN Peacekeeping, SDPI, and Air University — WATPRO delivers
@@ -74,7 +74,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.45 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               <Link to="/contact" className={primaryButtonClass}>
                 Book a Consultation
@@ -89,12 +89,12 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="mt-10 flex flex-wrap gap-2"
+              className="mt-6 sm:mt-10 flex flex-wrap gap-2"
             >
               {['PhD Project Management', 'UN Peacekeeping Veteran', 'Heavy Industries Taxila', 'USD 300M+ Portfolio', 'MS Gold Medal', '14+ Publications'].map(badge => (
                 <span
                   key={badge}
-                  className="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-medium text-slate-300"
+                  className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/10 bg-white/5 text-[10px] sm:text-xs font-medium text-slate-300"
                 >
                   {badge}
                 </span>
@@ -103,12 +103,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — hidden on very small screens */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2"
         >
           <span className="text-xs text-slate-500 uppercase tracking-widest">Scroll</span>
           <div className="w-px h-10 bg-gradient-to-b from-amber-400/60 to-transparent" />
@@ -116,12 +116,12 @@ export default function Home() {
       </section>
 
       {/* ══ IMPACT STATS ══ */}
-      <section className="py-16 border-y border-white/8">
+      <section className="py-10 md:py-16 border-y border-white/8">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {impactStats.map((stat, i) => (
               <motion.div key={stat.label} {...fadeUp(i * 0.08)} className="text-center">
-                <div className="text-4xl font-black stat-big mb-1">{stat.value}</div>
+                <div className="text-3xl md:text-4xl font-black stat-big mb-1">{stat.value}</div>
                 <div className="text-xs font-semibold uppercase tracking-widest text-slate-400">{stat.label}</div>
               </motion.div>
             ))}
@@ -130,13 +130,13 @@ export default function Home() {
       </section>
 
       {/* ══ FOUNDER CREDIBILITY ══ */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="py-12 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 dot-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
             {/* Photo side */}
             <motion.div {...fadeUp(0)} className="flex flex-col items-center md:items-start">
-              <div className="relative w-72 h-72 md:w-80 md:h-80">
+              <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80">
                 <div
                   className="w-full h-full rounded-2xl photo-ring overflow-hidden"
                   style={{ background: 'linear-gradient(135deg, #0e2239 0%, #1a3a5c 100%)' }}
@@ -155,7 +155,7 @@ export default function Home() {
               </div>
 
               {/* Awards row */}
-              <div className="mt-10 flex flex-col gap-3 w-full max-w-sm">
+              <div className="mt-6 md:mt-10 flex flex-col gap-3 w-full max-w-sm">
                 {founderAwards.map(award => (
                   <div key={award.title} className="flex items-start gap-3 p-3 rounded-lg border border-white/8 bg-white/[0.04]">
                     <span className="text-xl flex-shrink-0">{award.icon}</span>
@@ -202,9 +202,9 @@ export default function Home() {
       </section>
 
       {/* ══ SERVICES ══ */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div {...fadeUp(0)} className="text-center mb-14">
+          <motion.div {...fadeUp(0)} className="text-center mb-8 md:mb-14">
             <SectionHeading
               eyebrow="Our Expertise"
               title="Eight Pillars of Advisory Excellence"
@@ -239,9 +239,9 @@ export default function Home() {
       </section>
 
       {/* ══ WHY WATPRO ══ */}
-      <section className="py-24" style={{ background: 'rgba(255,255,255,0.02)' }}>
+      <section className="py-12 md:py-24" style={{ background: 'rgba(255,255,255,0.02)' }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
             <motion.div {...fadeUp(0)}>
               <SectionHeading
                 eyebrow="Why WATPRO"
@@ -264,7 +264,7 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <div className="mt-10">
+              <div className="mt-6 md:mt-10">
                 <Link to="/about" className={secondaryButtonClass}>Our Story &amp; Approach</Link>
               </div>
             </motion.div>
@@ -282,9 +282,9 @@ export default function Home() {
       </section>
 
       {/* ══ INDUSTRIES ══ */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div {...fadeUp(0)} className="text-center mb-14">
+          <motion.div {...fadeUp(0)} className="text-center mb-8 md:mb-14">
             <SectionHeading eyebrow="Industries" title="Sectors We Serve" centered />
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -304,9 +304,9 @@ export default function Home() {
       </section>
 
       {/* ══ ACADEMY PREVIEW ══ */}
-      <section className="py-24" style={{ background: 'rgba(255,255,255,0.02)' }}>
+      <section className="py-12 md:py-24" style={{ background: 'rgba(255,255,255,0.02)' }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-start">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
             <motion.div {...fadeUp(0)}>
               <SectionHeading
                 eyebrow="WATPRO Academy"
@@ -355,11 +355,11 @@ export default function Home() {
       </section>
 
       {/* ══ INSIGHTS PREVIEW ══ */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div {...fadeUp(0)} className="flex justify-between items-end mb-14">
+          <motion.div {...fadeUp(0)} className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-10 md:mb-14">
             <SectionHeading eyebrow="Insights & Research" title="Knowledge From the Field" />
-            <Link to="/insights" className="hidden sm:inline-flex text-sm font-semibold text-amber-400 hover:text-amber-300 items-center gap-1">
+            <Link to="/insights" className="text-sm font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1 flex-shrink-0">
               All Insights &rarr;
             </Link>
           </motion.div>
@@ -392,7 +392,7 @@ export default function Home() {
       </section>
 
       {/* ══ PUBLICATIONS STRIP ══ */}
-      <section className="py-16 border-y border-white/8" style={{ background: 'rgba(255,255,255,0.02)' }}>
+      <section className="py-10 md:py-16 border-y border-white/8" style={{ background: 'rgba(255,255,255,0.02)' }}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div {...fadeUp(0)} className="text-center mb-10">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400 mb-3">Published Research</p>
@@ -415,7 +415,7 @@ export default function Home() {
       </section>
 
       {/* ══ CTA ══ */}
-      <section className="py-28 relative overflow-hidden">
+      <section className="py-16 md:py-28 relative overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
@@ -426,16 +426,16 @@ export default function Home() {
         <div className="relative max-w-4xl mx-auto px-6 text-center">
           <motion.div {...fadeUp(0)}>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400 mb-4">Ready to Begin?</p>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 md:mb-6 leading-tight">
               Let's Build Something
               <br />
               <span className="animated-gradient-text">Extraordinary</span>
             </h2>
-            <p className="text-lg text-slate-300 mb-10 max-w-xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-slate-300 mb-7 md:mb-10 max-w-xl mx-auto leading-relaxed">
               Governments and institutions across Pakistan trust WATPRO for their most complex
               infrastructure, PPP, and project delivery challenges.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link to="/contact" className={primaryButtonClass}>Start the Conversation</Link>
               <Link to="/services" className={secondaryButtonClass}>Explore Our Services</Link>
             </div>

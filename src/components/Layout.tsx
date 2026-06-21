@@ -13,6 +13,11 @@ const navLinks = [
   { to: '/contact', label: 'Contact' },
 ];
 
+const mobilePortalLinks = [
+  { to: '/client/login', label: 'Client Portal', icon: '👤' },
+  { to: '/admin', label: 'Admin Portal', icon: '🔐' },
+];
+
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -73,12 +78,12 @@ export default function Layout() {
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 text-white"
-              aria-label="Toggle menu"
+              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] text-white rounded-lg border border-white/15 bg-white/[0.08] active:bg-white/[0.14] transition-colors"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             >
-              <span className={`block h-0.5 w-6 bg-current transition-all ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <span className={`block h-0.5 w-6 bg-current transition-all ${mobileOpen ? 'opacity-0' : ''}`} />
-              <span className={`block h-0.5 w-6 bg-current transition-all ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <span className={`block h-[2px] w-[22px] bg-current rounded-full transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+              <span className={`block h-[2px] w-[22px] bg-current rounded-full transition-all duration-300 ${mobileOpen ? 'opacity-0 scale-x-0' : ''}`} />
+              <span className={`block h-[2px] w-[22px] bg-current rounded-full transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
             </button>
           </div>
         </div>
@@ -91,14 +96,14 @@ export default function Layout() {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden border-t border-white/8 bg-[#07111e]/98 backdrop-blur-md"
             >
-              <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
+              <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-0.5">
                 {navLinks.map(({ to, label }) => {
                   const active = pathname === to || (to !== '/' && pathname.startsWith(to));
                   return (
                     <Link
                       key={to}
                       to={to}
-                      className={`px-4 py-3 rounded-lg text-sm font-medium ${
+                      className={`px-4 py-3 rounded-lg text-sm font-medium min-h-[44px] flex items-center ${
                         active ? 'text-amber-400 bg-amber-400/10' : 'text-slate-300 hover:text-white hover:bg-white/5'
                       }`}
                     >
@@ -106,9 +111,23 @@ export default function Layout() {
                     </Link>
                   );
                 })}
+
+                <div className="h-px bg-white/8 my-2" />
+
+                {mobilePortalLinks.map(({ to, label, icon }) => (
+                  <Link
+                    key={to}
+                    to={to}
+                    className="px-4 py-3 rounded-lg text-sm font-medium min-h-[44px] flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5"
+                  >
+                    <span className="text-base">{icon}</span>
+                    {label}
+                  </Link>
+                ))}
+
                 <Link
                   to="/contact"
-                  className="mt-2 px-4 py-3 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 text-center"
+                  className="mt-3 px-4 py-3 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 text-center min-h-[44px] flex items-center justify-center"
                 >
                   Book Consultation
                 </Link>
