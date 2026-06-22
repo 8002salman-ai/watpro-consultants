@@ -56,7 +56,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.25 }}
               className="text-base sm:text-xl md:text-2xl text-slate-300 font-light tracking-wide mb-2 sm:mb-3"
             >
-              Strategy.&nbsp;&nbsp;Transformation.&nbsp;&nbsp;Delivery.
+              Strategy. Transformation. Delivery.
             </motion.p>
 
             <motion.p

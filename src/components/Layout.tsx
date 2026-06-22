@@ -31,58 +31,49 @@ export default function Layout() {
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
+  // Lock body scroll when menu open so page doesn't move behind overlay
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#07111e' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#07111e', overflowX: 'hidden' }}>
 
-      {/* ══ HEADER — always fixed, always opaque ══ */}
-      <header
-        style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999 }}
-        className={`transition-all duration-300 ${
-          scrolled
-            ? 'border-b border-white/10 animated-header'
-            : ''
-        }`}
-        /* Always keep a solid dark background so logo + hamburger are always readable */
-        data-scrolled={scrolled}
-      >
-        {/* Persistent dark bg — not conditional on scroll */}
-        <div
-          style={{
-            position: 'absolute', inset: 0,
-            backgroundColor: scrolled ? 'rgba(7,17,30,0.97)' : 'rgba(7,17,30,0.85)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            zIndex: 0,
-          }}
-        />
+      {/* ── FIXED HEADER ── */}
+      <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}>
+        {/* Always-opaque backdrop */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundColor: 'rgba(7,17,30,0.95)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(255,255,255,0.05)',
+        }} />
 
-        <div
-          style={{ position: 'relative', zIndex: 1 }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between"
-          /* 72px height */
-          // @ts-ignore
-        >
-          {/* 72px row */}
-          <div className="flex items-center justify-between w-full" style={{ height: 72 }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: '0 16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
 
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
-              <div
-                className="bg-white rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ width: 42, height: 32, padding: 4 }}
-              >
-                <img src={WATPRO_LOGO} alt="WATPRO" className="w-full h-full object-contain" />
+            <Link
+              to="/"
+              style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}
+            >
+              <div style={{
+                width: 40, height: 30, padding: '3px 4px',
+                background: '#ffffff', borderRadius: 6,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              }}>
+                <img src={WATPRO_LOGO} alt="WATPRO" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
               </div>
-              <div>
-                <div className="text-sm font-extrabold tracking-tight text-white leading-none">WATPRO</div>
-                <div className="text-[9px] font-semibold tracking-[0.15em] text-amber-400 uppercase leading-none mt-0.5">
-                  Consultants
-                </div>
+              <div style={{ flexShrink: 0 }}>
+                <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff', lineHeight: 1, whiteSpace: 'nowrap' }}>WATPRO</div>
+                <div style={{ fontSize: 8, fontWeight: 600, letterSpacing: '0.15em', color: '#fbbf24', textTransform: 'uppercase', lineHeight: 1, marginTop: 3, whiteSpace: 'nowrap' }}>Consultants</div>
               </div>
             </Link>
 
-            {/* Desktop nav — md and above */}
-            <nav className="hidden md:flex items-center gap-0.5">
+            {/* Desktop nav */}
+            <nav className="hidden md:flex" style={{ alignItems: 'center', gap: 2 }}>
               {navLinks.map(({ to, label }) => {
                 const active = pathname === to || (to !== '/' && pathname.startsWith(to));
                 return (
@@ -100,171 +91,150 @@ export default function Layout() {
             </nav>
 
             {/* Right side */}
-            <div className="flex items-center gap-2">
-              {/* Book Consultation — desktop only */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+              {/* Desktop CTA */}
               <Link
                 to="/contact"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-lg shadow-amber-900/30 transition-all duration-200"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all duration-200"
               >
                 Book Consultation
               </Link>
 
-              {/* ══ HAMBURGER BUTTON — visible below md only ══
-                  Wrapper div carries md:hidden (CSS display:none at md+).
-                  Button itself uses 100% inline styles — immune to Tailwind
-                  cascade. White 2.5px lines on semi-opaque bg, always visible. */}
+              {/* Hamburger — wrapper div carries md:hidden; button is 100% inline styles */}
               <div className="md:hidden" style={{ flexShrink: 0 }}>
-              <button
-                onClick={() => setMobileOpen(v => !v)}
-                aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'}
-                aria-expanded={mobileOpen}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 5,
-                  width: 44,
-                  height: 44,
-                  borderRadius: 8,
-                  backgroundColor: '#f59e0b',
-                  border: '2px solid #f59e0b',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  zIndex: 1001,
-                  flexShrink: 0,
-                  outline: 'none',
-                  padding: 0,
-                }}
-              >
-                {/* Line 1 */}
-                <span
+                <button
+                  onClick={() => setMobileOpen(v => !v)}
+                  aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                  aria-expanded={mobileOpen}
                   style={{
-                    display: 'block',
-                    height: 2.5,
-                    width: 22,
-                    backgroundColor: '#0f172a',
-                    borderRadius: 3,
-                    transformOrigin: 'center',
-                    transition: 'transform 0.3s ease, opacity 0.2s ease',
-                    transform: mobileOpen ? 'translateY(7.5px) rotate(45deg)' : 'none',
+                    display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', justifyContent: 'center',
+                    gap: 5, width: 44, height: 44,
+                    borderRadius: 8, border: 'none',
+                    backgroundColor: '#f59e0b',
+                    cursor: 'pointer', padding: 0, outline: 'none', flexShrink: 0,
                   }}
-                />
-                {/* Line 2 */}
-                <span
-                  style={{
-                    display: 'block',
-                    height: 2.5,
-                    width: 22,
-                    backgroundColor: '#0f172a',
-                    borderRadius: 3,
-                    transition: 'transform 0.3s ease, opacity 0.2s ease',
-                    opacity: mobileOpen ? 0 : 1,
-                    transform: mobileOpen ? 'scaleX(0)' : 'none',
-                  }}
-                />
-                {/* Line 3 */}
-                <span
-                  style={{
-                    display: 'block',
-                    height: 2.5,
-                    width: 22,
-                    backgroundColor: '#0f172a',
-                    borderRadius: 3,
-                    transformOrigin: 'center',
-                    transition: 'transform 0.3s ease, opacity 0.2s ease',
-                    transform: mobileOpen ? 'translateY(-7.5px) rotate(-45deg)' : 'none',
-                  }}
-                />
-              </button>
-              </div>{/* end md:hidden wrapper */}
+                >
+                  <span style={{ display: 'block', width: 22, height: 2.5, backgroundColor: '#0f172a', borderRadius: 2, transformOrigin: 'center', transition: 'transform 0.25s ease', transform: mobileOpen ? 'translateY(7.5px) rotate(45deg)' : 'none' }} />
+                  <span style={{ display: 'block', width: 22, height: 2.5, backgroundColor: '#0f172a', borderRadius: 2, transition: 'opacity 0.2s ease', opacity: mobileOpen ? 0 : 1 }} />
+                  <span style={{ display: 'block', width: 22, height: 2.5, backgroundColor: '#0f172a', borderRadius: 2, transformOrigin: 'center', transition: 'transform 0.25s ease', transform: mobileOpen ? 'translateY(-7.5px) rotate(-45deg)' : 'none' }} />
+                </button>
+              </div>
             </div>
-
           </div>
         </div>
+      </header>
 
-        {/* ══ MOBILE DRAWER ══ */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="md:hidden overflow-hidden"
-              style={{
-                position: 'relative',
-                zIndex: 998,
-                backgroundColor: '#07111e',
-                borderTop: '1px solid rgba(255,255,255,0.08)',
-              }}
-            >
-              <div className="px-4 pb-4 pt-2 flex flex-col gap-1">
+      {/* ── MOBILE NAV OVERLAY ──
+          Separate from the header so it never overlaps page content via stacking.
+          Starts at top:72 (below the header), covers full screen below.
+          Uses opacity-only animation — no height: 'auto' (broken on Android Chrome). */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            key="mobile-nav"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className="md:hidden"
+            style={{
+              position: 'fixed',
+              top: 72,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 999,
+              backgroundColor: '#07111e',
+              overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              borderTop: '1px solid rgba(255,255,255,0.1)',
+            }}
+          >
+            <div style={{ padding: '12px 16px 48px' }}>
 
-                {/* Main nav links */}
-                {navLinks.map(({ to, label }) => {
-                  const active = pathname === to || (to !== '/' && pathname.startsWith(to));
-                  return (
-                    <Link
-                      key={to}
-                      to={to}
-                      style={{ minHeight: 44, display: 'flex', alignItems: 'center' }}
-                      className={`px-4 rounded-lg text-sm font-medium transition-colors ${
-                        active
-                          ? 'text-amber-400 bg-amber-400/10'
-                          : 'text-white hover:text-amber-400 hover:bg-white/5'
-                      }`}
-                    >
-                      {label}
-                    </Link>
-                  );
-                })}
-
-                {/* Divider */}
-                <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', margin: '6px 0' }} />
-
-                {/* Client Portal + Admin Portal */}
-                {mobileOnlyLinks.map(({ to, label }) => (
+              {/* Main nav links — 100% inline styles, no Tailwind dependency */}
+              {navLinks.map(({ to, label }) => {
+                const active = pathname === to || (to !== '/' && pathname.startsWith(to));
+                return (
                   <Link
                     key={to}
                     to={to}
-                    style={{ minHeight: 44, display: 'flex', alignItems: 'center' }}
-                    className="px-4 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      height: 52,
+                      padding: '0 16px',
+                      marginBottom: 4,
+                      borderRadius: 10,
+                      textDecoration: 'none',
+                      fontSize: 16,
+                      fontWeight: 600,
+                      color: active ? '#fbbf24' : '#ffffff',
+                      backgroundColor: active ? 'rgba(251,191,36,0.1)' : 'transparent',
+                    }}
                   >
                     {label}
                   </Link>
-                ))}
+                );
+              })}
 
-                {/* Book Consultation CTA */}
+              {/* Divider */}
+              <div style={{ height: 1, background: 'rgba(255,255,255,0.1)', margin: '8px 16px 12px' }} />
+
+              {/* Client / Admin portals */}
+              {mobileOnlyLinks.map(({ to, label }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    height: 52,
+                    padding: '0 16px',
+                    marginBottom: 4,
+                    borderRadius: 10,
+                    textDecoration: 'none',
+                    fontSize: 15,
+                    fontWeight: 500,
+                    color: '#94a3b8',
+                  }}
+                >
+                  {label}
+                </Link>
+              ))}
+
+              {/* CTA */}
+              <div style={{ marginTop: 16 }}>
                 <Link
                   to="/contact"
                   style={{
-                    minHeight: 44,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginTop: 8,
-                    borderRadius: 8,
-                    background: 'linear-gradient(to right, #fbbf24, #f59e0b)',
+                    height: 52,
+                    borderRadius: 10,
+                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                     color: '#0f172a',
                     fontWeight: 700,
-                    fontSize: 14,
+                    fontSize: 16,
                     textDecoration: 'none',
+                    letterSpacing: '-0.01em',
                   }}
                 >
                   Book Consultation
                 </Link>
-
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
 
-      {/* Push content below fixed header */}
-      <div style={{ height: 72 }} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <main className="flex-1">
+      {/* Spacer — always 72 px, matches fixed header height */}
+      <div style={{ height: 72, flexShrink: 0 }} />
+
+      <main style={{ flex: 1 }}>
         <Outlet />
       </main>
 
