@@ -27,7 +27,7 @@ export default function Home() {
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 pt-20 sm:pt-28 pb-12 sm:pb-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 pt-8 sm:pt-12 pb-12 sm:pb-20">
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: -10 }}

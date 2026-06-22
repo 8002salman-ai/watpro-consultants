@@ -108,7 +108,7 @@ export function PageHero({ eyebrow, title, subtitle, meta, children }: PageHeroP
   const s = meta?.subtitle ?? meta?.description ?? subtitle;
 
   return (
-    <section className="relative pt-24 pb-12 md:pt-32 md:pb-20 overflow-hidden">
+    <section className="relative pt-8 pb-12 md:pt-14 md:pb-20 overflow-hidden">
       <div className="absolute inset-0 grid-overlay opacity-40" />
       <div
         className="absolute inset-0"
