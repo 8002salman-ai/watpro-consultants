@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WATPRO_LOGO } from '../assets';
 
-const navLinks = [
+const desktopNavLinks = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/services', label: 'Services' },
@@ -13,11 +13,17 @@ const navLinks = [
   { to: '/contact', label: 'Contact' },
 ];
 
-const mobilePortalLinks = [
-  { to: '/client/login', label: 'Client Portal', icon: '👤' },
-  { to: '/admin', label: 'Admin Portal', icon: '🔐' },
+const mobileNavLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About' },
+  { to: '/services', label: 'Services' },
+  { to: '/contact', label: 'Contact' },
 ];
 
+const mobileAuthLinks = [
+  { to: '/client/login', label: 'Login' },
+  { to: '/client/register', label: 'Sign Up' },
+];
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -35,14 +41,15 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#07111e' }}>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 inset-x-0 z-[100] transition-all duration-300 ${
           scrolled
             ? 'bg-[#07111e]/95 backdrop-blur-md border-b border-white/8 animated-header'
-            : 'bg-transparent'
+            : 'bg-[#07111e]/80 backdrop-blur-sm'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: '72px' }}>
-          <Link to="/" className="flex items-center gap-3 group">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between" style={{ height: '72px' }}>
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
             <div className="bg-white rounded-lg p-1 flex items-center justify-center flex-shrink-0" style={{ width: 44, height: 34 }}>
               <img src={WATPRO_LOGO} alt="WATPRO Logo" className="w-full h-full object-contain" />
             </div>
@@ -52,8 +59,9 @@ export default function Layout() {
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map(({ to, label }) => {
+          {/* Desktop nav — visible at md+ */}
+          <nav className="hidden md:flex items-center gap-1">
+            {desktopNavLinks.map(({ to, label }) => {
               const active = pathname === to || (to !== '/' && pathname.startsWith(to));
               return (
                 <Link
@@ -70,41 +78,63 @@ export default function Layout() {
           </nav>
 
           <div className="flex items-center gap-3">
+            {/* CTA button — desktop only */}
             <Link
               to="/contact"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-lg shadow-amber-900/30 transition-all duration-200 hover:-translate-y-0.5"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-lg shadow-amber-900/30 transition-all duration-200 hover:-translate-y-0.5"
             >
               Book Consultation
             </Link>
+
+            {/* Hamburger — visible below md (< 768px) */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] text-white rounded-lg border border-white/15 bg-white/[0.08] active:bg-white/[0.14] transition-colors"
+              className="md:hidden relative z-[110] flex flex-col items-center justify-center gap-[5px] w-10 h-10 rounded-lg border border-white/25 bg-[#1e2d40] text-white transition-colors active:bg-[#2a3d52]"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
             >
-              <span className={`block h-[2px] w-[22px] bg-current rounded-full transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-              <span className={`block h-[2px] w-[22px] bg-current rounded-full transition-all duration-300 ${mobileOpen ? 'opacity-0 scale-x-0' : ''}`} />
-              <span className={`block h-[2px] w-[22px] bg-current rounded-full transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+              <span
+                className={`block h-[2px] w-[20px] bg-white rounded-full transition-all duration-300 ${
+                  mobileOpen ? 'rotate-45 translate-y-[7px]' : ''
+                }`}
+              />
+              <span
+                className={`block h-[2px] w-[20px] bg-white rounded-full transition-all duration-300 ${
+                  mobileOpen ? 'opacity-0 scale-x-0' : ''
+                }`}
+              />
+              <span
+                className={`block h-[2px] w-[20px] bg-white rounded-full transition-all duration-300 ${
+                  mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''
+                }`}
+              />
             </button>
           </div>
         </div>
 
+        {/* Mobile drawer — only rendered below md */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden border-t border-white/8 bg-[#07111e]/98 backdrop-blur-md"
+              transition={{ duration: 0.2 }}
+              className="md:hidden border-t border-white/10 bg-[#07111e] overflow-hidden"
+              style={{ zIndex: 99 }}
             >
-              <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-0.5">
-                {navLinks.map(({ to, label }) => {
+              <div className="px-4 py-3 flex flex-col gap-0.5">
+                {/* Main nav links */}
+                {mobileNavLinks.map(({ to, label }) => {
                   const active = pathname === to || (to !== '/' && pathname.startsWith(to));
                   return (
                     <Link
                       key={to}
                       to={to}
-                      className={`px-4 py-3 rounded-lg text-sm font-medium min-h-[44px] flex items-center ${
-                        active ? 'text-amber-400 bg-amber-400/10' : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      className={`px-4 py-3 rounded-lg text-base font-medium min-h-[44px] flex items-center transition-colors ${
+                        active
+                          ? 'text-amber-400 bg-amber-400/10'
+                          : 'text-white hover:text-amber-400 hover:bg-white/5'
                       }`}
                     >
                       {label}
@@ -112,22 +142,24 @@ export default function Layout() {
                   );
                 })}
 
-                <div className="h-px bg-white/8 my-2" />
+                {/* Divider */}
+                <div className="h-px bg-white/10 my-2" />
 
-                {mobilePortalLinks.map(({ to, label, icon }) => (
+                {/* Auth links */}
+                {mobileAuthLinks.map(({ to, label }) => (
                   <Link
                     key={to}
                     to={to}
-                    className="px-4 py-3 rounded-lg text-sm font-medium min-h-[44px] flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5"
+                    className="px-4 py-3 rounded-lg text-base font-medium min-h-[44px] flex items-center text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
                   >
-                    <span className="text-base">{icon}</span>
                     {label}
                   </Link>
                 ))}
 
+                {/* Book Consultation CTA */}
                 <Link
                   to="/contact"
-                  className="mt-3 px-4 py-3 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 text-center min-h-[44px] flex items-center justify-center"
+                  className="mt-2 px-4 py-3 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 text-center min-h-[44px] flex items-center justify-center"
                 >
                   Book Consultation
                 </Link>
