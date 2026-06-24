@@ -45,9 +45,9 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight mb-4 sm:mb-6"
             >
-              THE ULTIMATE
+              WATPRO
               <br />
-              <span className="animated-gradient-text">SOLUTION HUB</span>
+              <span className="animated-gradient-text">CONSULTANTS</span>
             </motion.h1>
 
             <motion.p
