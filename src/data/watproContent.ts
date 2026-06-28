@@ -91,7 +91,7 @@ export const founderProfile = {
   title: 'PhD Project Management | PPP & Sustainable Development Expert',
   shortTitle: 'Founder & Principal Consultant',
   phone: '+923004122313',
-  email: 'waseemalitipu@gmail.com',
+  email: 'info@watproconsultants.com',
   linkedin: 'https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7',
   scholar: 'https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en',
   photoUrl: FOUNDER_PHOTO,
