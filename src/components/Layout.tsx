@@ -256,7 +256,7 @@ export default function Layout() {
                 and project management authority with a USD 300M+ delivery portfolio.
               </p>
               <div className="mt-5 flex flex-col gap-1.5 text-sm text-slate-400">
-                <a href="mailto:waseemalitipu@gmail.com" className="hover:text-amber-400 transition-colors">waseemalitipu@gmail.com</a>
+                <a href="mailto:info@watproconsultants.com" className="hover:text-amber-400 transition-colors">info@watproconsultants.com</a>
                 <a href="tel:+923004122313" className="hover:text-amber-400 transition-colors">+92 300 412 2313</a>
               </div>
             </div>
