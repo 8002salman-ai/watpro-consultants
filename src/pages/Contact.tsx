@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { founderProfile } from '../data/watproContent';
 import { GlassCard, PageHero, SectionHeading, inputClassName, labelClassName, primaryButtonClass } from '../components/ui';
+import { addMessage, addRegistration } from '../utils/store';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -13,10 +14,36 @@ const fadeUp = (delay = 0) => ({
 function ConsultationForm() {
   const [form, setForm] = useState({ name: '', org: '', email: '', phone: '', service: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setError('');
+    
+    // Validation
+    if (!form.name.trim() || !form.email.trim() || !form.service || !form.message.trim()) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+    
+    try {
+      // Store in localStorage
+      addMessage({
+        fullName: form.name.trim(),
+        organization: form.org.trim() || 'N/A',
+        email: form.email.trim().toLowerCase(),
+        interest: form.service,
+        message: form.message.trim(),
+      });
+      
+      // Show success
+      setSent(true);
+      
+      // Reset form
+      setForm({ name: '', org: '', email: '', phone: '', service: '', message: '' });
+    } catch (err) {
+      setError('Failed to submit. Please try again.');
+    }
   };
 
   if (sent) {
@@ -24,54 +51,62 @@ function ConsultationForm() {
       <div className="text-center py-12">
         <div className="text-5xl mb-4">✅</div>
         <h3 className="text-xl font-bold text-white mb-2">Message Received</h3>
-        <p className="text-slate-400">Dr. Tipu will respond within 24 hours.</p>
+        <p className="text-slate-400 mb-4">Thank you! Our team will respond to your enquiry at <strong>info@watproconsultants.com</strong> within 24 hours.</p>
+        <button onClick={() => setSent(false)} className="text-amber-400 hover:text-amber-300 text-sm font-semibold underline">
+          Send another message
+        </button>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-sm text-red-300">
+          {error}
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className={labelClassName}>Full Name *</label>
           <input required className={inputClassName} placeholder="Dr. / Mr. / Ms. ..." value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
         </div>
         <div>
-          <label className={labelClassName}>Organisation</label>
+          <label className={labelClassName}>Company / Organisation</label>
           <input className={inputClassName} placeholder="Ministry / Company" value={form.org} onChange={e => setForm({ ...form, org: e.target.value })} />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className={labelClassName}>Email *</label>
+          <label className={labelClassName}>Email Address *</label>
           <input required type="email" className={inputClassName} placeholder="you@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
         </div>
         <div>
-          <label className={labelClassName}>Phone</label>
+          <label className={labelClassName}>Phone Number</label>
           <input type="tel" className={inputClassName} placeholder="+92 ..." value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
         </div>
       </div>
       <div>
-        <label className={labelClassName}>Area of Interest *</label>
+        <label className={labelClassName}>Service Required *</label>
         <select required className={inputClassName + ' bg-[#0a1728]'} value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}>
           <option value="">Select a service...</option>
           <option>PPP Advisory</option>
           <option>Project Management Consulting</option>
-          <option>Procurement &amp; Contract Management</option>
-          <option>Infrastructure Development &amp; Planning</option>
+          <option>Procurement & Contract Management</option>
+          <option>Infrastructure Development & Planning</option>
           <option>Sustainable Development Consulting</option>
           <option>Defence Acquisition Advisory</option>
-          <option>Policy Development &amp; Regulatory Reform</option>
-          <option>Training &amp; Capacity Building</option>
-          <option>Other / Multiple</option>
+          <option>Policy Development & Regulatory Reform</option>
+          <option>Training & Capacity Building</option>
+          <option>Other / Multiple Services</option>
         </select>
       </div>
       <div>
-        <label className={labelClassName}>Project Brief *</label>
-        <textarea required rows={5} className={inputClassName + ' resize-none'} placeholder="Briefly describe your challenge, project context, and what you need..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
+        <label className={labelClassName}>Your Message *</label>
+        <textarea required rows={5} className={inputClassName + ' resize-none'} placeholder="Briefly describe your project, challenge, or requirements..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
       </div>
       <button type="submit" className={primaryButtonClass + ' w-full justify-center py-3.5 text-base'}>
-        Send Consultation Request
+        Send Enquiry to info@watproconsultants.com
       </button>
     </form>
   );
@@ -80,10 +115,38 @@ function ConsultationForm() {
 function TrainingForm() {
   const [form, setForm] = useState({ name: '', org: '', email: '', programme: '', participants: '', delivery: '', notes: '' });
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setError('');
+    
+    // Validation
+    if (!form.name.trim() || !form.org.trim() || !form.email.trim() || !form.programme) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+    
+    try {
+      // Store in localStorage
+      addRegistration({
+        fullName: form.name.trim(),
+        organization: form.org.trim(),
+        email: form.email.trim().toLowerCase(),
+        phone: form.phone || '',
+        seats: form.participants || '1',
+        program: form.programme,
+        notes: form.notes.trim(),
+      });
+      
+      // Show success
+      setSent(true);
+      
+      // Reset form
+      setForm({ name: '', org: '', email: '', programme: '', participants: '', delivery: '', notes: '' });
+    } catch (err) {
+      setError('Failed to submit. Please try again.');
+    }
   };
 
   if (sent) {
@@ -91,13 +154,21 @@ function TrainingForm() {
       <div className="text-center py-12">
         <div className="text-5xl mb-4">✅</div>
         <h3 className="text-xl font-bold text-white mb-2">Training Enquiry Received</h3>
-        <p className="text-slate-400">The Academy team will follow up within 48 hours.</p>
+        <p className="text-slate-400 mb-4">Thank you! Our Academy team will contact you at <strong>info@watproconsultants.com</strong> within 48 hours.</p>
+        <button onClick={() => setSent(false)} className="text-amber-400 hover:text-amber-300 text-sm font-semibold underline">
+          Submit another enquiry
+        </button>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-sm text-red-300">
+          {error}
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className={labelClassName}>Contact Name *</label>
@@ -109,7 +180,7 @@ function TrainingForm() {
         </div>
       </div>
       <div>
-        <label className={labelClassName}>Email *</label>
+        <label className={labelClassName}>Email Address *</label>
         <input required type="email" className={inputClassName} placeholder="you@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
       </div>
       <div>
@@ -119,8 +190,8 @@ function TrainingForm() {
           <option>PPP Foundation Programme</option>
           <option>PPP Professional Certificate</option>
           <option>Project Management Professional Programme</option>
-          <option>Risk &amp; Quality Management</option>
-          <option>Procurement &amp; Contract Management Masterclass</option>
+          <option>Risk & Quality Management</option>
+          <option>Procurement & Contract Management Masterclass</option>
           <option>System Acquisition Process (SAP)</option>
           <option>Custom / Bespoke Programme</option>
         </select>
