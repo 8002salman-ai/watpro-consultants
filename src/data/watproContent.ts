@@ -98,7 +98,7 @@ export const founderProfile = {
   portfolio: 'USD 300 Million+',
   yearsExp: '25+',
   publications: '14+',
-  bio: "Dr. Waseem Ali Tipu is Pakistan's foremost authority on Public-Private Partnerships, project management, and sustainable infrastructure development. With over 25 years spanning military service, international peacekeeping, academia, and private consulting, he has shaped policy, delivered mega-projects, and trained the next generation of Pakistani infrastructure professionals. His USD 300M+ project portfolio spans defence acquisition, motorways, smart cities, and UN peacekeeping logistics — backed by a PhD in Project Management, an MS (Gold Medal), an MBA, and active PMP certification.",
+  bio: "Dr. Waseem Ali Tipu is Pakistan's foremost authority on Public-Private Partnerships, project management, and sustainable infrastructure development. With over 25 years of experience in international peacekeeping, academia, and private consulting, he has shaped policy, delivered mega-projects, and trained the next generation of Pakistani infrastructure professionals. His USD 300M+ project portfolio spans defence acquisition, motorways, smart cities, and UN peacekeeping logistics — backed by a PhD in Project Management, an MS (Gold Medal), an MBA, and active PMP certification.",
   credentials: [
     'PhD – Project Management (MUST, Mirpur)',
     'MS Project Management – Gold Medal (MUST)',
