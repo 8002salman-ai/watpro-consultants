@@ -6,6 +6,7 @@ import { WATPRO_LOGO } from '../assets';
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
+  { to: '/media', label: 'Media' },
   { to: '/services', label: 'Services' },
   { to: '/industries', label: 'Industries' },
   { to: '/academy', label: 'Academy' },
@@ -274,7 +275,7 @@ export default function Layout() {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                {[['About Dr. Tipu', '/about'], ['Our Services', '/services'], ['Industries', '/industries'], ['WATPRO Academy', '/academy'], ['Insights & Research', '/insights'], ['Publications', '/publications'], ['Contact', '/contact']].map(([label, to]) => (
+                {[['About Dr. Tipu', '/about'], ['Media & Lectures', '/media'], ['Our Services', '/services'], ['Industries', '/industries'], ['WATPRO Academy', '/academy'], ['Insights & Research', '/insights'], ['Publications', '/publications'], ['Contact', '/contact']].map(([label, to]) => (
                   <li key={to}><Link to={to} className="hover:text-white transition-colors">{label}</Link></li>
                 ))}
               </ul>
