@@ -6,13 +6,13 @@ import { WATPRO_LOGO } from '../assets';
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
-  { to: '/media', label: 'Media' },
   { to: '/services', label: 'Services' },
   { to: '/industries', label: 'Industries' },
   { to: '/academy', label: 'Academy' },
   { to: '/insights', label: 'Insights' },
   { to: '/publications', label: 'Publications' },
   { to: '/contact', label: 'Contact' },
+  { to: '/media', label: 'Media' },
 ];
 
 const mobileOnlyLinks = [
