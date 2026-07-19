@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { services, industries, insights, impactStats, founderProfile, founderAwards, academyPrograms } from '../data/watproContent';
 import { researchPublications, totalPublications } from '../data/publications';
 import { GlassCard, SectionHeading, primaryButtonClass, secondaryButtonClass } from '../components/ui';
-import { WATPRO_LOGO } from '../assets';
+import { WATPRO_LOGO_FULL } from '../assets';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -115,9 +115,9 @@ export default function Home() {
             <div className="relative">
               {/* Glow behind logo */}
               <div className="absolute inset-0 bg-amber-400/20 rounded-full filter blur-[100px] scale-110" />
-              <div className="relative w-[26rem] h-[26rem] xl:w-[30rem] xl:h-[30rem] rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-sm shadow-2xl shadow-amber-900/20 flex items-center justify-center p-10">
+              <div className="relative w-[26rem] h-[26rem] xl:w-[30rem] xl:h-[30rem] rounded-3xl border border-white/10 bg-white shadow-2xl shadow-amber-900/20 flex items-center justify-center p-12">
                 <img
-                  src={WATPRO_LOGO}
+                  src={WATPRO_LOGO_FULL}
                   alt="WATPRO Consultants logo"
                   className="w-full h-full object-contain drop-shadow-2xl"
                 />
