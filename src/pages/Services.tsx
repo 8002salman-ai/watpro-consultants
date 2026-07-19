@@ -16,7 +16,7 @@ export default function Services() {
       <PageHero
         eyebrow="Our Services"
         title="Eight Pillars of Advisory Excellence"
-        subtitle="WATPRO delivers specialist consulting across the full spectrum of PPP, infrastructure, procurement, and project management — grounded in academic rigour and 25+ years of delivery."
+        subtitle="WATPRO delivers specialist consulting across the full spectrum of PPP, infrastructure, procurement, defence acquisition, and project management — grounded in academic rigour and hands-on delivery experience."
       >
         <div className="flex flex-wrap gap-3">
           <Link to="/contact" className={primaryButtonClass}>Request a Proposal</Link>

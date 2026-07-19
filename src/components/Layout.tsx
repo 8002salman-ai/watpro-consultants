@@ -10,6 +10,7 @@ const navLinks = [
   { to: '/industries', label: 'Industries' },
   { to: '/academy', label: 'Academy' },
   { to: '/insights', label: 'Insights' },
+  { to: '/publications', label: 'Publications' },
   { to: '/contact', label: 'Contact' },
 ];
 
@@ -273,15 +274,15 @@ export default function Layout() {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                {[['About Dr. Tipu', '/about'], ['Our Services', '/services'], ['Industries', '/industries'], ['WATPRO Academy', '/academy'], ['Insights & Research', '/insights'], ['Contact', '/contact']].map(([label, to]) => (
+                {[['About Dr. Tipu', '/about'], ['Our Services', '/services'], ['Industries', '/industries'], ['WATPRO Academy', '/academy'], ['Insights & Research', '/insights'], ['Publications', '/publications'], ['Contact', '/contact']].map(([label, to]) => (
                   <li key={to}><Link to={to} className="hover:text-white transition-colors">{label}</Link></li>
                 ))}
               </ul>
               <div className="mt-6">
                 <h4 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">Connect</h4>
                 <div className="flex gap-3">
-                  <a href="https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-sm">in</a>
-                  <a href="https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-xs">GS</a>
+                  <a href="https://www.linkedin.com/in/waseemalitipu/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-sm">in</a>
+                  <a href="https://scholar.google.com/citations?hl=en" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/30 transition-all text-xs">GS</a>
                 </div>
               </div>
             </div>

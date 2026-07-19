@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { founderProfile } from '../data/watproContent';
+import { pressCount, researchCount, totalPublications } from '../data/publications';
 import { GlassCard, primaryButtonClass, secondaryButtonClass } from '../components/ui';
 
 const fadeUp = (delay = 0) => ({
@@ -26,13 +27,13 @@ export default function About() {
     { icon: '📊', title: 'Project Management', desc: 'End-to-end project lifecycle management' },
     { icon: '📋', title: 'Procurement', desc: 'Strategic procurement and tendering' },
     { icon: '🏛️', title: 'Governance', desc: 'Institutional strengthening and reform' },
+    { icon: '⚙️', title: 'Defence Acquisition & System Acquisition', desc: 'System acquisition processes and defence programme management' },
     { icon: '📝', title: 'Contract Management', desc: 'Contract administration and compliance' },
     { icon: '⚠️', title: 'Risk Management', desc: 'Project risk assessment and mitigation' },
     { icon: '📈', title: 'Performance Measurement', desc: 'Project performance measurement and management' },
     { icon: '👥', title: 'Stakeholder Engagement', desc: 'Multi-stakeholder coordination' },
     { icon: '🚚', title: 'Supply Chain & Logistics', desc: 'Supply chain management and logistics operations' },
     { icon: '🎓', title: 'Capacity Building', desc: 'Training and knowledge transfer' },
-    { icon: '🌐', title: 'Programme Management', desc: 'Large-scale programme oversight' },
   ];
 
   const careerTimeline = [
@@ -608,9 +609,30 @@ export default function About() {
             <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-4">Thought Leadership</p>
             <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Publications &amp; Research</h2>
             <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-              Dr. Tipu&apos;s research on public-private partnerships, procurement, and project
-              management is available through his academic and professional profiles.
+              Peer-reviewed research on public-private partnerships, sustainability, artificial
+              intelligence, governance, lifecycle management, and project performance — alongside
+              regular policy and economic commentary published in The News and The News on Sunday.
             </p>
+          </motion.div>
+
+          {/* Derived publication stats */}
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            className="grid grid-cols-3 gap-6 max-w-3xl mx-auto mb-14 text-center"
+          >
+            {[
+              { number: String(researchCount), label: 'Peer-Reviewed Publications' },
+              { number: String(pressCount), label: 'Policy & Press Articles' },
+              { number: String(totalPublications), label: 'Total Publications' },
+            ].map((stat, index) => (
+              <motion.div key={stat.label} {...fadeUp(index * 0.1)}>
+                <div className="text-4xl lg:text-5xl font-black text-amber-400 mb-2">{stat.number}</div>
+                <p className="text-sm text-slate-400 font-medium">{stat.label}</p>
+              </motion.div>
+            ))}
           </motion.div>
 
           <motion.div
@@ -625,7 +647,7 @@ export default function About() {
               { title: 'LinkedIn', desc: 'Professional insights and articles', icon: '💼', link: founderProfile.linkedin },
             ].map((pub, index) => (
               <motion.div key={pub.title} {...fadeUp(index * 0.1)}>
-                <a href={pub.link} target="_blank" rel="noreferrer" className="block">
+                <a href={pub.link} target="_blank" rel="noopener noreferrer" className="block">
                   <GlassCard className="p-8 hover:border-amber-400/50 transition-all duration-300 group">
                     <div className="flex items-start gap-4">
                       <div className="text-4xl group-hover:scale-110 transition-transform duration-300">{pub.icon}</div>
@@ -638,6 +660,12 @@ export default function About() {
                 </a>
               </motion.div>
             ))}
+          </motion.div>
+
+          <motion.div {...fadeUp(0.2)} className="text-center mt-12">
+            <Link to="/publications" className={primaryButtonClass}>
+              Browse All {totalPublications} Publications
+            </Link>
           </motion.div>
         </div>
       </section>

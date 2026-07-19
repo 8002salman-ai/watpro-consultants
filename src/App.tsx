@@ -12,6 +12,7 @@ import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
 import CaseStudies from "./pages/CaseStudies";
 import Insights from "./pages/Insights";
+import Publications from "./pages/Publications";
 import TrainingCalendar from "./pages/TrainingCalendar";
 import Events from "./pages/Events";
 import Contact from "./pages/Contact";
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="blog/:id" element={<BlogDetail />} />
             <Route path="case-studies" element={<CaseStudies />} />
             <Route path="insights" element={<Insights />} />
+            <Route path="publications" element={<Publications />} />
             <Route path="training-calendar" element={<TrainingCalendar />} />
             <Route path="events" element={<Events />} />
             <Route path="contact" element={<Contact />} />

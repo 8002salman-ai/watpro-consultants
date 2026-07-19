@@ -133,7 +133,7 @@ function TrainingForm() {
         fullName: form.name.trim(),
         organization: form.org.trim(),
         email: form.email.trim().toLowerCase(),
-        phone: form.phone || '',
+        phone: '',
         seats: form.participants || '1',
         program: form.programme,
         notes: form.notes.trim(),

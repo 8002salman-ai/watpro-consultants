@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { services, industries, insights, impactStats, founderProfile, founderAwards, founderPublications, academyPrograms } from '../data/watproContent';
+import { services, industries, insights, impactStats, founderProfile, founderAwards, academyPrograms } from '../data/watproContent';
+import { researchPublications, totalPublications } from '../data/publications';
 import { GlassCard, SectionHeading, primaryButtonClass, secondaryButtonClass } from '../components/ui';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
-  transition: { duration: 0.55, delay, ease: 'easeOut' },
+  transition: { duration: 0.55, delay, ease: 'easeOut' as const },
 });
 
 export default function Home() {
@@ -396,10 +397,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <motion.div {...fadeUp(0)} className="text-center mb-10">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400 mb-3">Published Research</p>
-            <p className="text-2xl font-black text-white">14+ Publications. Peer-Reviewed. Field-Tested.</p>
+            <p className="text-2xl font-black text-white">{totalPublications} Publications. Peer-Reviewed. Field-Tested.</p>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-4">
-            {founderPublications.slice(0, 4).map((pub, i) => (
+            {researchPublications.slice(0, 4).map((pub, i) => (
               <motion.div key={pub.id} {...fadeUp(i * 0.07)}>
                 <div className="pub-card py-2">
                   <p className="text-sm font-semibold text-white leading-snug">{pub.title}</p>
@@ -409,7 +410,7 @@ export default function Home() {
             ))}
           </div>
           <motion.div {...fadeUp(0.3)} className="text-center mt-10">
-            <Link to="/insights" className={secondaryButtonClass}>View All Publications</Link>
+            <Link to="/publications" className={secondaryButtonClass}>View All Publications</Link>
           </motion.div>
         </div>
       </section>

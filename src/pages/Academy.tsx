@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { academyPrograms, founderProfile, founderTrainingsDelivered } from '../data/watproContent';
+import { totalPublications } from '../data/publications';
 import { GlassCard, PageHero, SectionHeading, primaryButtonClass, secondaryButtonClass } from '../components/ui';
 
 const fadeUp = (delay = 0) => ({
@@ -36,9 +37,9 @@ export default function Academy() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid sm:grid-cols-4 gap-6">
             {[
-              { stat: '500+', label: 'Officials Trained' },
               { stat: '6', label: 'Specialist Programmes' },
-              { stat: '25+', label: 'Years\'  Experience' },
+              { stat: String(totalPublications), label: 'Publications' },
+              { stat: 'Gold Medal', label: 'MS Project Management' },
               { stat: 'PhD', label: 'Researcher-Practitioner' },
             ].map((item, i) => (
               <motion.div key={item.label} {...fadeUp(i * 0.07)} className="text-center">
