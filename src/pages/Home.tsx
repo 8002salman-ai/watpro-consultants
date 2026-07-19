@@ -65,8 +65,8 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.35 }}
               className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mb-7 sm:mb-10 leading-relaxed"
             >
-              Led by Dr. Waseem Ali Tipu — PhD Project Management, MS Gold Medal, 25+ years across
-              Pakistan Army, HIT, UN Peacekeeping, SDPI, and Air University — WATPRO delivers
+              Led by Dr. Waseem Ali Tipu — PhD Project Management, MS Gold Medal, with experience
+              across Heavy Industries Taxila, UN MONUSCO, SDPI, and Air University — WATPRO delivers
               world-class advisory on PPP, infrastructure, procurement, and sustainable development.
             </motion.p>
 
@@ -91,7 +91,7 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.6 }}
               className="mt-6 sm:mt-10 flex flex-wrap gap-2"
             >
-              {['PhD Project Management', 'UN Peacekeeping Veteran', 'Heavy Industries Taxila', 'USD 300M+ Portfolio', 'MS Gold Medal', '14+ Publications'].map(badge => (
+              {['PhD Project Management', 'MS Gold Medal', 'UN MONUSCO', 'Air University Faculty', 'Heavy Industries Taxila', 'World Bank Trained'].map(badge => (
                 <span
                   key={badge}
                   className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/10 bg-white/5 text-[10px] sm:text-xs font-medium text-slate-300"
@@ -149,8 +149,8 @@ export default function Home() {
                 </div>
                 {/* Floating badge */}
                 <div className="absolute -bottom-4 -right-4 bg-gradient-to-br from-amber-400 to-amber-600 text-slate-900 rounded-xl px-4 py-2 shadow-xl">
-                  <div className="text-xs font-black uppercase tracking-wider">USD 300M+</div>
-                  <div className="text-[10px] font-semibold">Project Portfolio</div>
+                  <div className="text-xs font-black uppercase tracking-wider">PhD</div>
+                  <div className="text-[10px] font-semibold">Project Management</div>
                 </div>
               </div>
 

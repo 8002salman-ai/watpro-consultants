@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { founderProfile, founderAwards, founderPublications } from '../data/watproContent';
-import { GlassCard, PageHero, SectionHeading, primaryButtonClass, secondaryButtonClass } from '../components/ui';
+import { founderProfile } from '../data/watproContent';
+import { GlassCard, primaryButtonClass, secondaryButtonClass } from '../components/ui';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
+  viewport: { once: true, margin: '-100px' },
+  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 
 const staggerContainer = {
@@ -21,56 +21,55 @@ const staggerContainer = {
 
 export default function About() {
   const expertiseAreas = [
-    { icon: "🤝", title: "Public-Private Partnerships", desc: "PPP structuring, bidding, and contract management" },
-    { icon: "🏗️", title: "Infrastructure Development", desc: "Major projects advisory and delivery" },
-    { icon: "📊", title: "Project Management", desc: "End-to-end project lifecycle management" },
-    { icon: "📋", title: "Procurement", desc: "Strategic procurement and tendering" },
-    { icon: "🏛️", title: "Governance", desc: "Institutional strengthening and reform" },
-    { icon: "💻", title: "Digital Transformation", desc: "Technology-enabled process optimization" },
-    { icon: "⚠️", title: "Risk Management", desc: "Enterprise risk assessment and mitigation" },
-    { icon: "📈", title: "Institutional Development", desc: "Capacity building and organizational design" },
-    { icon: "👥", title: "Stakeholder Engagement", desc: "Multi-stakeholder coordination" },
-    { icon: "🔨", title: "Construction Advisory", desc: "Construction contract administration" },
-    { icon: "🎓", title: "Capacity Building", desc: "Training and knowledge transfer" },
-    { icon: "🌐", title: "Programme Management", desc: "Large-scale programme oversight" },
+    { icon: '🤝', title: 'Public-Private Partnerships', desc: 'PPP structuring, bidding, and contract management' },
+    { icon: '🏗️', title: 'Infrastructure Development', desc: 'Major projects advisory and delivery' },
+    { icon: '📊', title: 'Project Management', desc: 'End-to-end project lifecycle management' },
+    { icon: '📋', title: 'Procurement', desc: 'Strategic procurement and tendering' },
+    { icon: '🏛️', title: 'Governance', desc: 'Institutional strengthening and reform' },
+    { icon: '📝', title: 'Contract Management', desc: 'Contract administration and compliance' },
+    { icon: '⚠️', title: 'Risk Management', desc: 'Project risk assessment and mitigation' },
+    { icon: '📈', title: 'Performance Measurement', desc: 'Project performance measurement and management' },
+    { icon: '👥', title: 'Stakeholder Engagement', desc: 'Multi-stakeholder coordination' },
+    { icon: '🚚', title: 'Supply Chain & Logistics', desc: 'Supply chain management and logistics operations' },
+    { icon: '🎓', title: 'Capacity Building', desc: 'Training and knowledge transfer' },
+    { icon: '🌐', title: 'Programme Management', desc: 'Large-scale programme oversight' },
   ];
 
   const careerTimeline = [
-    { year: "2020-Present", org: "WATPRO Consultants", role: "Founder & Principal Consultant", desc: "Leading PPP and infrastructure advisory" },
-    { year: "2015-2020", org: "Air University Islamabad", role: "Senior Faculty", desc: "Teaching project management and defense studies" },
-    { year: "2010-2014", org: "MONUSCO (United Nations)", role: "Senior Officer", desc: "Peacekeeping operations in DRC" },
-    { year: "2005-2010", org: "SDPI", role: "Research Fellow", desc: "Sustainable development policy research" },
-    { year: "1998-2005", org: "Heavy Industries Taxila", role: "Deputy Manager", desc: "Defense production and project management" },
+    { org: 'WATPRO Consultants', role: 'Founder & Principal Consultant', desc: 'Leading PPP, procurement, and project management advisory' },
+    { org: 'Air University Islamabad', role: 'Adjunct Faculty, Project Management & PPP', desc: 'Teaching project management and public-private partnerships' },
+    { org: 'Heavy Industries Taxila', role: 'Senior Program & Procurement Manager', desc: 'Programme delivery and procurement management' },
+    { org: 'SDPI', role: 'Consultant, PPP & Governance', desc: 'Public-private partnership and governance consulting' },
+    { org: 'UN MONUSCO', role: 'Logistics & Procurement Officer', desc: 'United Nations mission logistics and procurement' },
   ];
 
   const academicDegrees = [
-    { degree: "PhD", field: "Management Sciences", institution: "National University of Modern Languages" },
-    { degree: "M.Sc", field: "Project Management (Gold Medal)", institution: "NUST" },
-    { degree: "B.Sc", field: "Engineering", institution: "University of Engineering & Technology" },
+    { degree: 'PhD', field: 'Project Management', institution: 'Bahria University' },
+    { degree: 'MS', field: 'Project Management (Gold Medal)', institution: 'Abasyn University' },
+    { degree: 'MBA', field: 'Human Resource Management', institution: 'Virtual University' },
   ];
 
   const professionalCerts = [
-    "PMP® - Project Management Professional",
-    "PRINCE2® Practitioner",
-    "Certified PPP Professional",
-    "FIDIC Contract Management",
+    'Project Performance Measurement & Management — PPMI',
+    'Supply Chain Management — PMI',
+    'Advance Diploma, Procurement & Contract Management — WISSEN',
   ];
 
   const internationalCerts = [
-    "United Nations Peacekeeping Training",
-    "WISSEN Leadership Programme",
-    "PPMI Advanced Procurement",
-    "World Bank PPP Certification",
+    'Public Private Partnership Course — World Bank',
+    'Public Procurement Course — World Bank',
+    'Merger & Acquisition — Ireland',
+    'Strategic Intelligence Certification — United Nations',
   ];
 
   const methodologySteps = [
-    { step: "Assessment", icon: "🔍", desc: "Comprehensive diagnostic" },
-    { step: "Strategy", icon: "📐", desc: "Evidence-based planning" },
-    { step: "Planning", icon: "📝", desc: "Detailed roadmap" },
-    { step: "Implementation", icon: "⚙️", desc: "Hands-on execution" },
-    { step: "Monitoring", icon: "📊", desc: "Performance tracking" },
-    { step: "Capacity Building", icon: "🎓", desc: "Knowledge transfer" },
-    { step: "Sustainable Outcomes", icon: "✅", desc: "Long-term impact" },
+    { step: 'Assessment', icon: '🔍', desc: 'Comprehensive diagnostic' },
+    { step: 'Strategy', icon: '📐', desc: 'Evidence-based planning' },
+    { step: 'Planning', icon: '📝', desc: 'Detailed roadmap' },
+    { step: 'Implementation', icon: '⚙️', desc: 'Hands-on execution' },
+    { step: 'Monitoring', icon: '📊', desc: 'Performance tracking' },
+    { step: 'Capacity Building', icon: '🎓', desc: 'Knowledge transfer' },
+    { step: 'Sustainable Outcomes', icon: '✅', desc: 'Long-term impact' },
   ];
 
   return (
@@ -89,10 +88,7 @@ export default function About() {
         <div className="relative max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: Portrait */}
-            <motion.div 
-              {...fadeUp(0)}
-              className="relative order-2 lg:order-1"
-            >
+            <motion.div {...fadeUp(0)} className="relative order-2 lg:order-1">
               <div className="relative">
                 {/* Main portrait frame */}
                 <div className="relative aspect-[4/5] max-w-md mx-auto lg:max-w-none">
@@ -107,9 +103,9 @@ export default function About() {
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                   </div>
                 </div>
-                
+
                 {/* Floating badge */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -123,20 +119,17 @@ export default function About() {
             </motion.div>
 
             {/* Right: Content */}
-            <motion.div 
-              {...fadeUp(0.2)}
-              className="order-1 lg:order-2 space-y-8"
-            >
+            <motion.div {...fadeUp(0.2)} className="order-1 lg:order-2 space-y-8">
               <div>
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   className="text-amber-400 font-bold uppercase tracking-[0.3em] text-sm mb-4"
                 >
-                  Founder & Principal Consultant
+                  Founder &amp; Principal Consultant
                 </motion.p>
-                <motion.h1 
+                <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -148,21 +141,22 @@ export default function About() {
                     Ali Tipu
                   </span>
                 </motion.h1>
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                   className="text-xl text-slate-300 leading-relaxed max-w-2xl"
                 >
-                  20+ years of executive leadership in Public-Private Partnerships, Infrastructure Development, 
-                  Government Advisory, and Project Governance. Trusted advisor to governments, multilateral 
-                  agencies, and private sector organizations across Pakistan and internationally.
+                  PhD in Project Management and specialist in Public-Private Partnerships, procurement,
+                  and project delivery — with a career spanning academia at Air University Islamabad,
+                  industry at Heavy Industries Taxila, policy consulting at SDPI, and United Nations
+                  service with MONUSCO.
                 </motion.p>
               </div>
 
               {/* CTA Buttons */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -172,25 +166,25 @@ export default function About() {
                 <Link to="/contact" className={primaryButtonClass}>
                   Book a Consultation
                 </Link>
-                <button className={`${secondaryButtonClass} flex items-center gap-2`}>
+                <a href={`mailto:${founderProfile.email}`} className={`${secondaryButtonClass} flex items-center gap-2`}>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  Download Profile
-                </button>
+                  Email WATPRO
+                </a>
               </motion.div>
 
               {/* Social Links */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
                 className="flex gap-4 pt-4"
               >
-                <a 
-                  href={founderProfile.linkedin} 
-                  target="_blank" 
+                <a
+                  href={founderProfile.linkedin}
+                  target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-2 px-5 py-3 rounded-xl border border-white/10 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-300 group"
                 >
@@ -199,9 +193,9 @@ export default function About() {
                   </svg>
                   <span className="font-semibold">LinkedIn</span>
                 </a>
-                <a 
-                  href={founderProfile.scholar} 
-                  target="_blank" 
+                <a
+                  href={founderProfile.scholar}
+                  target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-2 px-5 py-3 rounded-xl border border-white/10 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-300 group"
                 >
@@ -221,7 +215,7 @@ export default function About() {
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -230,26 +224,28 @@ export default function About() {
             <div>
               <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-6">Executive Biography</p>
               <h2 className="text-4xl lg:text-5xl font-black text-white mb-8 leading-tight">
-                A Legacy of<br />
-                <span className="text-amber-400">Excellence & Impact</span>
+                From Field Experience<br />
+                <span className="text-amber-400">to Advisory Excellence</span>
               </h2>
               <div className="space-y-6 text-lg text-slate-300 leading-relaxed">
                 <p>
-                  Dr. Waseem Ali Tipu brings over two decades of distinguished service spanning defense, 
-                  academia, international development, and strategic consulting. His unique combination 
-                  of field experience and academic rigor has made him a sought-after advisor for complex 
-                  infrastructure and governance challenges.
+                  Dr. Waseem Ali Tipu is the Founder and Principal Consultant of WATPRO Consultants.
+                  His career spans industry, academia, policy research, and international service:
+                  Senior Program &amp; Procurement Manager at Heavy Industries Taxila, Adjunct Faculty
+                  for Project Management &amp; PPP at Air University Islamabad, Consultant on PPP and
+                  Governance at SDPI, and Logistics &amp; Procurement Officer with the United Nations
+                  mission MONUSCO.
                 </p>
                 <p>
-                  As the founder of WATPRO Consultants, he leads a team dedicated to transforming how 
-                  governments and organizations approach public-private partnerships, project delivery, 
-                  and institutional reform. His work bridges the gap between policy and implementation, 
-                  ensuring sustainable outcomes that stand the test of time.
+                  He holds a PhD in Project Management from Bahria University, an MS in Project
+                  Management from Abasyn University — awarded a Gold Medal — and an MBA in Human
+                  Resource Management from Virtual University, complemented by World Bank courses in
+                  Public-Private Partnerships and Public Procurement.
                 </p>
                 <p>
-                  From United Nations peacekeeping missions to advising Pakistani government ministries, 
-                  Dr. Tipu's portfolio reflects a deep commitment to excellence, integrity, and national 
-                  development.
+                  As founder of WATPRO Consultants, he leads engagements in public-private
+                  partnerships, procurement, contract management, and project delivery — bridging the
+                  gap between policy and implementation.
                 </p>
               </div>
             </div>
@@ -263,9 +259,9 @@ export default function About() {
                     <h3 className="text-xl font-bold text-white mb-2">Core Focus Areas</h3>
                     <ul className="space-y-2 text-slate-300">
                       <li className="flex items-center gap-2"><span className="text-amber-400">•</span> Public-Private Partnerships</li>
-                      <li className="flex items-center gap-2"><span className="text-amber-400">•</span> Infrastructure Development</li>
-                      <li className="flex items-center gap-2"><span className="text-amber-400">•</span> Project Governance</li>
-                      <li className="flex items-center gap-2"><span className="text-amber-400">•</span> Digital Transformation</li>
+                      <li className="flex items-center gap-2"><span className="text-amber-400">•</span> Procurement &amp; Contract Management</li>
+                      <li className="flex items-center gap-2"><span className="text-amber-400">•</span> Project Management</li>
+                      <li className="flex items-center gap-2"><span className="text-amber-400">•</span> Governance</li>
                     </ul>
                   </div>
                 </div>
@@ -275,12 +271,12 @@ export default function About() {
                       <span className="text-2xl">🌟</span>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-2">Distinguished Service</h3>
+                      <h3 className="text-xl font-bold text-white mb-2">Background</h3>
                       <ul className="space-y-2 text-slate-300">
-                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> United Nations Veteran</li>
-                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> Government Advisor</li>
-                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> Published Researcher</li>
-                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> Award-Winning Professional</li>
+                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> United Nations Service (MONUSCO)</li>
+                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> University Faculty (Air University)</li>
+                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> Policy Consulting (SDPI)</li>
+                        <li className="flex items-center gap-2"><span className="text-blue-400">•</span> Industry Leadership (Heavy Industries Taxila)</li>
                       </ul>
                     </div>
                   </div>
@@ -296,7 +292,7 @@ export default function About() {
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-slate-900">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -305,11 +301,11 @@ export default function About() {
             <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-4">Core Expertise</p>
             <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Areas of Excellence</h2>
             <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-              Comprehensive consulting capabilities built on decades of hands-on experience
+              Consulting capabilities built on hands-on experience across industry, academia, and international missions
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={staggerContainer}
             initial="initial"
             whileInView="whileInView"
@@ -334,7 +330,7 @@ export default function About() {
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-gradient-to-b from-slate-900 to-slate-950">
         <div className="max-w-5xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -350,7 +346,7 @@ export default function About() {
 
             <div className="space-y-12">
               {careerTimeline.map((item, index) => (
-                <motion.div 
+                <motion.div
                   key={item.org}
                   initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -360,13 +356,10 @@ export default function About() {
                 >
                   {/* Timeline dot */}
                   <div className="absolute left-8 lg:left-1/2 w-4 h-4 bg-amber-400 rounded-full border-4 border-slate-950 transform -translate-x-1/2 z-10 mt-1.5" />
-                  
+
                   {/* Content */}
                   <div className={`ml-20 lg:ml-0 lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-16' : 'lg:pl-16'}`}>
                     <GlassCard className="p-6">
-                      <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-400 text-xs font-bold uppercase tracking-wider rounded-full mb-3">
-                        {item.year}
-                      </span>
                       <h3 className="text-xl font-bold text-white mb-1">{item.org}</h3>
                       <p className="text-amber-300 font-semibold mb-2">{item.role}</p>
                       <p className="text-slate-400 text-sm">{item.desc}</p>
@@ -384,19 +377,19 @@ export default function About() {
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-slate-950">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
             <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-4">Academic Excellence</p>
-            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Qualifications & Certifications</h2>
+            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Qualifications &amp; Certifications</h2>
           </motion.div>
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Academic Degrees */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -421,7 +414,7 @@ export default function About() {
             </motion.div>
 
             {/* Professional Certifications */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -445,8 +438,8 @@ export default function About() {
               </GlassCard>
             </motion.div>
 
-            {/* International Certifications */}
-            <motion.div 
+            {/* International Credentials */}
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -457,7 +450,7 @@ export default function About() {
                   <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
                     <span className="text-2xl">🌍</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white">International Certifications</h3>
+                  <h3 className="text-xl font-bold text-white">International Credentials</h3>
                 </div>
                 <ul className="space-y-3">
                   {internationalCerts.map((cert, i) => (
@@ -474,11 +467,11 @@ export default function About() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          SECTION 6: ACHIEVEMENTS (Real Numbers Only)
+          SECTION 6: ACHIEVEMENTS (Verified Only)
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -488,7 +481,7 @@ export default function About() {
             <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Achievements</h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={staggerContainer}
             initial="initial"
             whileInView="whileInView"
@@ -496,15 +489,15 @@ export default function About() {
             className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {[
-              { number: "20+", label: "Years Experience", icon: "📅" },
-              { number: "UN", label: "International Assignments", icon: "🌐" },
-              { number: "Multiple", label: "Government Advisory", icon: "🏛️" },
-              { number: "50+", label: "Research Publications", icon: "📚" },
+              { number: 'PhD', label: 'Project Management — Bahria University', icon: '🎓' },
+              { number: 'Gold Medal', label: 'MS Project Management — Abasyn University', icon: '🏅' },
+              { number: 'UN', label: 'MONUSCO Logistics & Procurement', icon: '🌐' },
+              { number: 'World Bank', label: 'PPP & Public Procurement Courses', icon: '🏛️' },
             ].map((stat, index) => (
               <motion.div key={stat.label} {...fadeUp(index * 0.1)}>
                 <GlassCard premium className="p-8 text-center">
                   <div className="text-4xl mb-4">{stat.icon}</div>
-                  <div className="text-4xl lg:text-5xl font-black text-amber-400 mb-2">{stat.number}</div>
+                  <div className="text-3xl lg:text-4xl font-black text-amber-400 mb-2">{stat.number}</div>
                   <p className="text-slate-400 font-medium">{stat.label}</p>
                 </GlassCard>
               </motion.div>
@@ -518,7 +511,7 @@ export default function About() {
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-slate-900">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -528,7 +521,7 @@ export default function About() {
             <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Why Clients Choose Us</h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={staggerContainer}
             initial="initial"
             whileInView="whileInView"
@@ -536,12 +529,12 @@ export default function About() {
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {[
-              { icon: "📊", title: "Evidence-Based Consulting", desc: "Data-driven insights backed by rigorous research" },
-              { icon: "🏛️", title: "Government Experience", desc: "Deep understanding of public sector dynamics" },
-              { icon: "🌍", title: "International Standards", desc: "Global best practices adapted to local context" },
-              { icon: "⚖️", title: "Independent Advice", desc: "Unbiased recommendations focused on your success" },
-              { icon: "✅", title: "Implementation Focus", desc: "From strategy to execution – we deliver results" },
-              { icon: "📈", title: "Long-term Value", desc: "Sustainable solutions that create lasting impact" },
+              { icon: '📊', title: 'Evidence-Based Consulting', desc: 'Doctoral-level research rigour applied to practical delivery' },
+              { icon: '🏛️', title: 'Public Sector Insight', desc: 'Direct experience across government-linked institutions and policy research' },
+              { icon: '🌍', title: 'International Exposure', desc: 'United Nations mission experience and World Bank training' },
+              { icon: '⚖️', title: 'Independent Advice', desc: 'Unbiased recommendations focused on your success' },
+              { icon: '✅', title: 'Implementation Focus', desc: 'From strategy to execution — hands-on delivery support' },
+              { icon: '📈', title: 'Capacity Transfer', desc: 'Training and knowledge transfer built into every engagement' },
             ].map((feature, index) => (
               <motion.div key={feature.title} {...fadeUp(index * 0.08)}>
                 <GlassCard className="p-6 hover:border-amber-400/50 transition-all duration-300">
@@ -556,28 +549,28 @@ export default function About() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          SECTION 8: GLOBAL CONSULTING METHODOLOGY
+          SECTION 8: CONSULTING METHODOLOGY
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-gradient-to-b from-slate-900 to-slate-950">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
             <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-4">Our Approach</p>
-            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Global Consulting Methodology</h2>
+            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Consulting Methodology</h2>
             <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-              A proven seven-step framework for sustainable transformation
+              A structured seven-step framework for sustainable transformation
             </p>
           </motion.div>
 
           <div className="relative">
             {/* Connection line */}
             <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-400 via-blue-500 to-green-500 transform -translate-y-1/2" />
-            
-            <motion.div 
+
+            <motion.div
               variants={staggerContainer}
               initial="initial"
               whileInView="whileInView"
@@ -590,9 +583,8 @@ export default function About() {
                     <div className="text-3xl mb-3">{step.icon}</div>
                     <h3 className="text-sm font-bold text-white mb-1">{step.step}</h3>
                     <p className="text-xs text-slate-400 hidden lg:block">{step.desc}</p>
-                    {/* Arrow for desktop */}
                     {index < methodologySteps.length - 1 && (
-                      <div className="hidden lg:block absolute -right-2 top-1/2 transform -translate-y-1/2 text-amber-400 text-lg">↓</div>
+                      <div className="hidden lg:block absolute -right-2 top-1/2 transform -translate-y-1/2 text-amber-400 text-lg">→</div>
                     )}
                   </GlassCard>
                 </motion.div>
@@ -603,43 +595,43 @@ export default function About() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          SECTION 9: RESEARCH & PUBLICATIONS
+          SECTION 9: PUBLICATIONS & RESEARCH
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-slate-950">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
             <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-4">Thought Leadership</p>
-            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Research & Publications</h2>
+            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Publications &amp; Research</h2>
+            <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+              Dr. Tipu&apos;s research on public-private partnerships, procurement, and project
+              management is available through his academic and professional profiles.
+            </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={staggerContainer}
             initial="initial"
             whileInView="whileInView"
             viewport={{ once: true }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto"
           >
             {[
-              { title: "Google Scholar", desc: "Academic publications and citations", icon: "📖", link: founderProfile.scholar },
-              { title: "LinkedIn", desc: "Professional insights and articles", icon: "💼", link: founderProfile.linkedin },
-              { title: "Research Papers", desc: "Peer-reviewed journal articles", icon: "📄", link: "#" },
-              { title: "Conference Papers", desc: "Presentations at international forums", icon: "🎤", link: "#" },
-              { title: "Book Chapters", desc: "Contributions to academic literature", icon: "📚", link: "#" },
-              { title: "Policy Briefs", desc: "Government advisory documents", icon: "📋", link: "#" },
+              { title: 'Google Scholar', desc: 'Academic publications and citations', icon: '📖', link: founderProfile.scholar },
+              { title: 'LinkedIn', desc: 'Professional insights and articles', icon: '💼', link: founderProfile.linkedin },
             ].map((pub, index) => (
               <motion.div key={pub.title} {...fadeUp(index * 0.1)}>
-                <a href={pub.link} target={pub.link.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="block">
-                  <GlassCard className="p-6 hover:border-amber-400/50 transition-all duration-300 group">
+                <a href={pub.link} target="_blank" rel="noreferrer" className="block">
+                  <GlassCard className="p-8 hover:border-amber-400/50 transition-all duration-300 group">
                     <div className="flex items-start gap-4">
-                      <div className="text-3xl group-hover:scale-110 transition-transform duration-300">{pub.icon}</div>
+                      <div className="text-4xl group-hover:scale-110 transition-transform duration-300">{pub.icon}</div>
                       <div>
-                        <h3 className="text-lg font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">{pub.title}</h3>
-                        <p className="text-slate-400 text-sm">{pub.desc}</p>
+                        <h3 className="text-xl font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">{pub.title}</h3>
+                        <p className="text-slate-400">{pub.desc}</p>
                       </div>
                     </div>
                   </GlassCard>
@@ -651,22 +643,22 @@ export default function About() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          SECTION 10: MISSION & VISION (Glassmorphism)
+          SECTION 10: MISSION & VISION
       ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-6 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
             <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-4">Our Purpose</p>
-            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Mission & Vision</h2>
+            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">Mission &amp; Vision</h2>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -679,18 +671,18 @@ export default function About() {
                   </div>
                   <h3 className="text-2xl font-black text-white mb-4">Our Mission</h3>
                   <p className="text-lg text-slate-300 leading-relaxed mb-4">
-                    To be the most trusted consulting partner for governments and institutions navigating 
-                    PPP, project delivery, and sustainable development.
+                    To be a trusted consulting partner for governments and institutions navigating
+                    PPP, procurement, project delivery, and sustainable development.
                   </p>
                   <p className="text-slate-400">
-                    We combine PhD-level analytical rigour with 20+ years of on-the-ground delivery experience, 
-                    translating research into results that last.
+                    We combine doctoral-level analytical rigour with on-the-ground delivery
+                    experience, translating research into results that last.
                   </p>
                 </div>
               </GlassCard>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -703,12 +695,12 @@ export default function About() {
                   </div>
                   <h3 className="text-2xl font-black text-white mb-4">Our Vision</h3>
                   <p className="text-lg text-slate-300 leading-relaxed mb-4">
-                    A Pakistan where every major infrastructure project is delivered on time, within budget, 
-                    and aligned to sustainable development goals.
+                    A Pakistan where major infrastructure projects are delivered on time, within
+                    budget, and aligned to sustainable development goals.
                   </p>
                   <p className="text-slate-400">
-                    We work toward this by raising the bar for project management, PPP governance, and 
-                    institutional capacity — one project at a time.
+                    We work toward this by raising the bar for project management, PPP governance,
+                    and institutional capacity — one project at a time.
                   </p>
                 </div>
               </GlassCard>
@@ -727,32 +719,29 @@ export default function About() {
         </div>
 
         <div className="relative max-w-4xl mx-auto text-center">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-6">Let's Work Together</p>
+            <p className="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm mb-6">Let&apos;s Work Together</p>
             <h2 className="text-5xl lg:text-7xl font-black text-white mb-8 leading-tight">
               Ready to Transform<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Your Project?</span>
             </h2>
             <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
-              Schedule a consultation with Dr. Tipu to discuss your infrastructure, PPP, or governance challenges.
+              Schedule a consultation with Dr. Tipu to discuss your PPP, procurement, or project delivery challenges.
             </p>
-            
+
             <div className="flex flex-wrap justify-center gap-6">
               <Link to="/contact" className={primaryButtonClass}>
                 Book Consultation
               </Link>
-              <Link to="/contact" className={secondaryButtonClass}>
-                Contact Us
-              </Link>
-              <a href="mailto:info@watproconsultants.com" className={`${secondaryButtonClass} flex items-center gap-2`}>
+              <a href={`mailto:${founderProfile.email}`} className={`${secondaryButtonClass} flex items-center gap-2`}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                Schedule Meeting
+                info@watproconsultants.com
               </a>
             </div>
           </motion.div>

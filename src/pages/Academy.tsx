@@ -125,7 +125,7 @@ export default function Academy() {
               <p className="text-amber-300 font-medium mb-4">{founderProfile.title}</p>
               <p className="text-slate-300 leading-relaxed mb-6">
                 Dr. Tipu brings a rare combination: PhD-level research methodology, gold medal academic
-                achievement, and hands-on delivery across Pakistan Army, HIT, UN Peacekeeping, SDPI,
+                achievement, and hands-on delivery across Heavy Industries Taxila, UN MONUSCO, SDPI,
                 and Air University. His training programmes are known for translating complex theory into
                 immediately applicable practice.
               </p>

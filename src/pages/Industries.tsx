@@ -16,7 +16,7 @@ export default function Industries() {
       <PageHero
         eyebrow="Industries"
         title="Sectors Where We Create Value"
-        subtitle="WATPRO's cross-sector experience — from Pakistan Army and UN Peacekeeping to academia, defence manufacturing, and infrastructure finance — enables us to serve diverse clients with precision."
+        subtitle="WATPRO's cross-sector experience — from UN MONUSCO and defence manufacturing to academia, policy research, and infrastructure finance — enables us to serve diverse clients with precision."
       />
 
       <section className="py-20">
@@ -59,9 +59,9 @@ export default function Industries() {
           </motion.div>
           <div className="grid sm:grid-cols-3 gap-6">
             {[
-              { title: 'Military Precision', desc: 'Pakistan Army and UN Peacekeeping experience brings rigorous planning, logistics discipline, and crisis management to every engagement.' },
+              { title: 'Operational Discipline', desc: 'UN MONUSCO logistics and procurement experience brings rigorous planning, logistics discipline, and delivery focus to every engagement.' },
               { title: 'Academic Depth', desc: 'PhD research and university teaching ensure every advisory product is grounded in current theory and best practice — not received wisdom.' },
-              { title: 'Institutional Knowledge', desc: '25+ years inside HIT, SDPI, Planning Commission, and provincial governments means we know how decisions actually get made in Pakistan.' },
+              { title: 'Institutional Knowledge', desc: 'Experience inside Heavy Industries Taxila, SDPI, and Air University means we know how decisions actually get made in Pakistan.' },
             ].map((item, i) => (
               <motion.div key={item.title} {...fadeUp(i * 0.08)}>
                 <GlassCard premium className="p-6">

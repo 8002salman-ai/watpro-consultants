@@ -88,40 +88,37 @@ export interface Event {
 // ─── FOUNDER ───────────────────────────────────────────────────────────────────
 export const founderProfile = {
   name: 'Dr. Waseem Ali Tipu',
-  title: 'PhD Project Management | PPP & Sustainable Development Expert',
+  title: 'PhD Project Management | PPP & Procurement Expert',
   shortTitle: 'Founder & Principal Consultant',
   phone: '+923004122313',
   email: 'info@watproconsultants.com',
-  linkedin: 'https://www.linkedin.com/in/dr-waseem-ali-tipu-ph-d-pm-ms-pm-pmp-457a70b7',
-  scholar: 'https://scholar.google.com/citations?user=8xifQ6kAAAAJ&hl=en',
+  linkedin: 'https://www.linkedin.com/in/waseemalitipu/',
+  scholar: 'https://scholar.google.com/citations?hl=en',
   photoUrl: FOUNDER_PHOTO,
-  portfolio: 'USD 300 Million+',
-  yearsExp: '25+',
-  publications: '14+',
-  bio: "Dr. Waseem Ali Tipu is Pakistan's foremost authority on Public-Private Partnerships, project management, and sustainable infrastructure development. With over 25 years of experience in international peacekeeping, academia, and private consulting, he has shaped policy, delivered mega-projects, and trained the next generation of Pakistani infrastructure professionals. His USD 300M+ project portfolio spans defence acquisition, motorways, smart cities, and UN peacekeeping logistics — backed by a PhD in Project Management, an MS (Gold Medal), an MBA, and active PMP certification.",
+  bio: 'Dr. Waseem Ali Tipu is the Founder and Principal Consultant of WATPRO Consultants. His career spans industry, academia, policy research, and international service — Senior Program & Procurement Manager at Heavy Industries Taxila, Adjunct Faculty for Project Management & PPP at Air University Islamabad, Consultant on PPP and Governance at SDPI, and Logistics & Procurement Officer with UN MONUSCO. He holds a PhD in Project Management from Bahria University, an MS in Project Management (Gold Medal) from Abasyn University, and an MBA in Human Resource Management from Virtual University, complemented by World Bank courses in Public-Private Partnerships and Public Procurement.',
   credentials: [
-    'PhD – Project Management (MUST, Mirpur)',
-    'MS Project Management – Gold Medal (MUST)',
-    'MBA – Human Resource Management',
-    'PMP (Project Management Professional – prep)',
-    'Advance Diploma – Procurement & Contract Management (WISSEN)',
-    'Strategic Intelligence Certification (UN)',
-    'Project Performance Measurement & Management (PPMI)',
-    'Supply Chain Management (PMI)',
+    'PhD Project Management – Bahria University',
+    'MS Project Management, Gold Medal – Abasyn University',
+    'MBA Human Resource Management – Virtual University',
+    'Public Private Partnership Course – World Bank',
+    'Public Procurement Course – World Bank',
+    'Merger & Acquisition – Ireland',
+    'Strategic Intelligence Certification – United Nations',
+    'Project Performance Measurement & Management – PPMI',
+    'Supply Chain Management – PMI',
+    'Advance Diploma, Procurement & Contract Management – WISSEN',
   ],
   roles: [
-    { org: 'Air University Islamabad', role: 'Faculty – Project Management & PPP' },
-    { org: 'Heavy Industries Taxila (HIT)', role: 'Senior Project & Procurement Manager' },
-    { org: 'SDPI (Sustainable Dev Policy Institute)', role: 'Consultant – PPP & Governance' },
-    { org: 'UN Peacekeeping Mission – Congo (MONUSCO)', role: 'Logistics & Procurement Officer' },
-    { org: 'Pakistan Army', role: '29-year commissioned service' },
+    { org: 'Air University Islamabad', role: 'Adjunct Faculty – Project Management & PPP' },
+    { org: 'Heavy Industries Taxila', role: 'Senior Program & Procurement Manager' },
+    { org: 'SDPI', role: 'Consultant – PPP & Governance' },
+    { org: 'UN MONUSCO', role: 'Logistics & Procurement Officer' },
   ],
   quote: 'The best infrastructure is not built from blueprints alone — it is built from strategy, trust, and relentless delivery.',
 };
 
 export const founderAwards = [
   { title: "UN Force Commander's Commendation Card", body: 'United Nations', year: 'Feb 2013', icon: '🏅' },
-  { title: "Chief of Army Staff's Commendation Card", body: 'Pakistan Army', year: 'Aug 2015', icon: '🎖️' },
   { title: 'Best Research Paper Award', body: '3rd International Conference on Project Management', year: 'Oct 2022', icon: '📜' },
 ];
 
@@ -164,20 +161,20 @@ export const founderTrainingsDelivered = [
 
 // ─── IMPACT STATS ──────────────────────────────────────────────────────────────
 export const impactStats = [
-  { value: 'USD 300M+', label: 'Project Portfolio', icon: '💼' },
-  { value: '25+', label: 'Years Experience', icon: '📅' },
-  { value: '14+', label: 'Publications', icon: '📖' },
-  { value: 'UN', label: 'Peacekeeping Experience', icon: '🌐' },
+  { value: 'PhD', label: 'Project Management', icon: '🎓' },
+  { value: 'Gold Medal', label: 'MS Project Management', icon: '🏅' },
+  { value: 'UN', label: 'MONUSCO Experience', icon: '🌐' },
+  { value: 'World Bank', label: 'PPP & Procurement Courses', icon: '🏛️' },
 ];
 
 // ─── SERVICES ──────────────────────────────────────────────────────────────────
 export const services: Service[] = [
   { id: 'ppp', title: 'Public-Private Partnership (PPP) Advisory', shortDesc: 'Full-spectrum PPP advisory from feasibility to financial close and operations.', description: 'WATPRO delivers end-to-end PPP advisory grounded in Dr. Tipu\'s decade-long research on Pakistan\'s PPP framework. We structure deals, assess value for money, allocate risks optimally, and guide projects from concept through financial close — aligned to SDPI, Planning Commission, and international best-practice standards.', icon: '🤝', features: ['PPP Feasibility & VfM Studies','Risk Allocation Frameworks','Bid Process Management','Contract Structuring & Negotiation','PPP Performance Monitoring','Renegotiation & Dispute Support'], outcome: 'Projects structured for bankability, sustainability, and long-term public value.' },
-  { id: 'project-management', title: 'Project Management Consulting', shortDesc: 'PMBOK-aligned project delivery for government and institutional clients.', description: 'Drawing on Dr. Tipu\'s PhD-level expertise and USD 300M+ delivery track record, WATPRO embeds rigorous project management discipline into public sector programmes — from initiation and planning through execution, monitoring, and controlled closeout.', icon: '📊', features: ['PMO Setup & Governance','Integrated Project Scheduling (Primavera/MS Project)','Cost & Earned Value Management','Risk Register & Monte Carlo Simulation','Stakeholder Engagement Plans','Project Health Checks & Recovery'], outcome: 'On-time, on-budget delivery with full audit trails and governance compliance.' },
+  { id: 'project-management', title: 'Project Management Consulting', shortDesc: 'PMBOK-aligned project delivery for government and institutional clients.', description: 'Drawing on Dr. Tipu\'s PhD-level expertise and hands-on delivery experience, WATPRO embeds rigorous project management discipline into public sector programmes — from initiation and planning through execution, monitoring, and controlled closeout.', icon: '📊', features: ['PMO Setup & Governance','Integrated Project Scheduling (Primavera/MS Project)','Cost & Earned Value Management','Risk Register & Monte Carlo Simulation','Stakeholder Engagement Plans','Project Health Checks & Recovery'], outcome: 'On-time, on-budget delivery with full audit trails and governance compliance.' },
   { id: 'procurement', title: 'Procurement & Contract Management', shortDesc: 'Strategic procurement advisory for transparent, compliant public expenditure.', description: 'With an Advance Diploma in Procurement & Contract Management and HIT/UN procurement experience, WATPRO designs procurement strategies, manages competitive bidding, and structures contracts that protect the public interest while attracting quality private sector participation.', icon: '📋', features: ['Procurement Strategy Design','Tender Documentation & Evaluation','Contract Drafting & Review','Supplier Prequalification','PPRA/Public Procurement Rules Compliance','Contract Claims & Disputes'], outcome: 'Transparent, competitive procurement that maximises value and minimises legal risk.' },
   { id: 'infrastructure', title: 'Infrastructure Development & Planning', shortDesc: 'Strategic planning and programme management for large-scale infrastructure.', description: 'WATPRO advises governments, development finance institutions, and private developers on the planning, programming, and financing of infrastructure — from motorways and smart cities to energy and social infrastructure — using evidence-based analytical frameworks.', icon: '🏗️', features: ['Infrastructure Master Planning','Pre-Feasibility & Feasibility Studies','Financial Modelling & Bankability','Environmental & Social Safeguards Review','Programme Governance','Stakeholder & Community Engagement'], outcome: 'Bankable infrastructure programmes that attract private and development finance.' },
   { id: 'sustainable-development', title: 'Sustainable Development Consulting', shortDesc: 'SDG-aligned strategies that integrate sustainability into project design.', description: 'Grounded in peer-reviewed research linking PPP outcomes to SDG achievement in Pakistan, WATPRO helps institutions embed sustainability into project appraisal, financing structures, and performance metrics — ensuring projects deliver lasting social, economic, and environmental value.', icon: '🌱', features: ['SDG Integration Frameworks','ESG Assessment & Reporting','Climate-Resilient Design Advisory','Green Finance Structuring','Impact Measurement','Sustainability Reporting (GRI/SDG)'], outcome: 'Investable projects aligned to global sustainability standards and SDG targets.' },
-  { id: 'defence-acquisition', title: 'Defence Acquisition & System Acquisition', shortDesc: 'Specialist advisory for defence procurement and system lifecycle management.', description: 'Dr. Tipu\'s 29-year military career and senior role at Heavy Industries Taxila (HIT) — Pakistan\'s premier defence manufacturing complex — gives WATPRO unmatched insight into the System Acquisition Process, defence procurement reform, and lifecycle cost management for complex military systems.', icon: '⚙️', features: ['System Acquisition Process (SAP) Advisory','Defence Procurement Strategy','Lifecycle Cost Analysis','Technical Requirements Definition','Vendor Evaluation & Selection','Offset Programme Management'], outcome: 'Capability delivered on time, within budget, and through transparent process.' },
+  { id: 'defence-acquisition', title: 'Defence Acquisition & System Acquisition', shortDesc: 'Specialist advisory for defence procurement and system lifecycle management.', description: 'Dr. Tipu\'s senior programme and procurement role at Heavy Industries Taxila (HIT) — Pakistan\'s premier defence manufacturing complex — gives WATPRO deep insight into the System Acquisition Process, defence procurement reform, and lifecycle cost management for complex systems.', icon: '⚙️', features: ['System Acquisition Process (SAP) Advisory','Defence Procurement Strategy','Lifecycle Cost Analysis','Technical Requirements Definition','Vendor Evaluation & Selection','Offset Programme Management'], outcome: 'Capability delivered on time, within budget, and through transparent process.' },
   { id: 'policy', title: 'Policy Development & Regulatory Reform', shortDesc: 'Evidence-based policy design for enabling investment and institutional reform.', description: 'WATPRO synthesises academic research, international benchmarks, and Pakistan-specific ground realities to craft actionable policy papers, regulatory frameworks, and institutional reform roadmaps for government ministries, provincial departments, and regulatory authorities.', icon: '📜', features: ['Policy Research & White Papers','Regulatory Impact Assessment','Institutional Strengthening','Stakeholder Consultation Design','Legislative Drafting Support','International Benchmarking'], outcome: 'Policy frameworks that unlock investment, improve governance, and build capacity.' },
   { id: 'training', title: 'Training & Capacity Building', shortDesc: 'Professional development programmes that build institutional capacity.', description: 'Through the WATPRO Academy, Dr. Tipu delivers practical, research-backed training in PPP, project management, procurement, and risk — combining PMBOK methodology, Monte Carlo simulation, and real Pakistan case studies to build enduring capability in public and private sector organisations.', icon: '🎓', features: ['PPP Basic & Advanced Programmes','PMP Exam Preparation','Procurement & Contract Masterclass','Risk & Quality Management','Project Management Information Systems','Customised In-House Programmes'], outcome: 'Certified, capable teams that deliver better projects independently.' },
 ];
@@ -190,7 +187,7 @@ export const industries: Industry[] = [
   { id: 'energy', name: 'Energy & Power', icon: '⚡', description: 'IPPs, renewable energy developers, and utilities seeking PPP structuring, procurement support, and contract management.', examples: ['NEPRA','PPIB','WAPDA','IPPs'] },
   { id: 'urban', name: 'Smart Cities & Urban Dev', icon: '🏙️', description: 'Smart city initiatives, housing authorities, and urban regeneration programmes requiring integrated planning and financing solutions.', examples: ['Ravi Riverfront','DHA','CDA','SMBR'] },
   { id: 'intl', name: 'International & Development', icon: '🌐', description: 'UN agencies, multilateral development banks, and international NGOs implementing development programmes in Pakistan and the region.', examples: ['World Bank','ADB','UNDP','UN-Habitat'] },
-  { id: 'academia', name: 'Academic & Research', icon: '🎓', description: 'Universities, think tanks, and research institutions collaborating on PPP policy, infrastructure finance, and sustainable development research.', examples: ['Air University','MUST','SDPI','NUST'] },
+  { id: 'academia', name: 'Academic & Research', icon: '🎓', description: 'Universities, think tanks, and research institutions collaborating on PPP policy, infrastructure finance, and sustainable development research.', examples: ['Air University','Bahria University','SDPI','Abasyn University'] },
   { id: 'health', name: 'Health & Social Infrastructure', icon: '🏥', description: 'Hospital PPPs, education facility programmes, and social infrastructure projects where WATPRO applies VfM analysis and sustainability frameworks.', examples: ['Shaukat Khanum Model','Sehat Sahulat','Hospital PPPs'] },
 ];
 
@@ -223,6 +220,13 @@ export const caseStudies: CaseStudy[] = [
 ];
 
 // ─── PAGE META (legacy compatibility) ────────────────────────────────────────
+export interface PageMeta {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
 export const pageMeta = {
   portfolio: { eyebrow: 'Project Portfolio', title: 'Delivery Track Record', subtitle: 'A snapshot of WATPRO engagements across PPP, procurement, infrastructure, and capacity building.', description: 'A snapshot of WATPRO engagements across PPP, procurement, infrastructure, and capacity building.' },
   blog: { eyebrow: 'Insights & Analysis', title: 'Knowledge From the Field', subtitle: 'Perspectives on infrastructure, PPP, project delivery, and governance from Dr. Waseem Ali Tipu.', description: 'Perspectives on infrastructure, PPP, project delivery, and governance from Dr. Waseem Ali Tipu.' },

@@ -252,8 +252,8 @@ export default function Layout() {
                 </div>
               </div>
               <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-                Strategy. Transformation. Delivery. Led by Dr. Waseem Ali Tipu, Pakistan's foremost PPP
-                and project management authority with a USD 300M+ delivery portfolio.
+                Strategy. Transformation. Delivery. Led by Dr. Waseem Ali Tipu — PhD in Project
+                Management and specialist in PPP, procurement, and project delivery.
               </p>
               <div className="mt-5 flex flex-col gap-1.5 text-sm text-slate-400">
                 <a href="mailto:info@watproconsultants.com" className="hover:text-amber-400 transition-colors">info@watproconsultants.com</a>
