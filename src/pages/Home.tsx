@@ -114,12 +114,12 @@ export default function Home() {
           >
             <div className="relative">
               {/* Glow behind logo */}
-              <div className="absolute inset-0 bg-amber-400/20 rounded-full filter blur-[100px] scale-110" />
-              <div className="relative w-[26rem] h-[26rem] xl:w-[30rem] xl:h-[30rem] rounded-3xl border border-white/10 bg-white shadow-2xl shadow-amber-900/20 flex items-center justify-center p-12">
+              <div className="absolute inset-0 bg-amber-400/20 rounded-full filter blur-[80px] scale-110" />
+              <div className="relative w-[19rem] xl:w-[22rem] rounded-2xl border border-white/10 bg-white shadow-2xl shadow-amber-900/20 flex items-center justify-center p-5 xl:p-6">
                 <img
                   src={WATPRO_LOGO_FULL}
                   alt="WATPRO Consultants logo"
-                  className="w-full h-full object-contain drop-shadow-2xl"
+                  className="w-full h-auto object-contain drop-shadow-xl"
                 />
               </div>
             </div>
