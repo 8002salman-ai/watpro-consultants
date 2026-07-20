@@ -1,35 +1,15 @@
-// Email settings + send helper for the admin dashboard (Resend service).
-// Settings are stored in localStorage on the admin's browser only.
+// Send helper for the admin dashboard Email Center.
+// The Resend API key and from-address are server-side environment variables on
+// Vercel; the browser only posts to /api/send-email with the admin's auth token.
 
-export type EmailSettings = {
-  apiKey: string; // Resend API key (re_...)
-  fromName: string; // e.g. "WATPRO Consultants"
-  fromEmail: string; // must be onboarding@resend.dev or a verified domain sender
-  replyTo: string; // optional reply-to address
-};
-
-const SETTINGS_KEY = 'watpro_email_settings_v1';
-
-export const DEFAULT_EMAIL_SETTINGS: EmailSettings = {
-  apiKey: '',
-  fromName: 'WATPRO Consultants',
-  fromEmail: 'onboarding@resend.dev',
-  replyTo: 'info@watproconsultants.com',
-};
-
-export function getEmailSettings(): EmailSettings {
-  if (typeof window === 'undefined') return DEFAULT_EMAIL_SETTINGS;
+// One-time cleanup: purge the Resend API key that older versions of the app
+// stored in this browser's localStorage.
+if (typeof window !== 'undefined') {
   try {
-    const raw = window.localStorage.getItem(SETTINGS_KEY);
-    if (!raw) return DEFAULT_EMAIL_SETTINGS;
-    return { ...DEFAULT_EMAIL_SETTINGS, ...(JSON.parse(raw) as Partial<EmailSettings>) };
+    window.localStorage.removeItem('watpro_email_settings_v1');
   } catch {
-    return DEFAULT_EMAIL_SETTINGS;
+    // ignore
   }
-}
-
-export function saveEmailSettings(settings: EmailSettings) {
-  window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
 }
 
 export type SendEmailInput = {
@@ -40,10 +20,9 @@ export type SendEmailInput = {
 
 export type SendEmailResult = { ok: true; id: string } | { ok: false; error: string };
 
-export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult> {
-  const settings = getEmailSettings();
-  if (!settings.apiKey) {
-    return { ok: false, error: 'No Resend API key saved. Open Email Settings and add your key first.' };
+export async function sendEmail(input: SendEmailInput, adminToken: string | null): Promise<SendEmailResult> {
+  if (!adminToken) {
+    return { ok: false, error: 'Your admin session needs to be refreshed — please sign out and sign in again.' };
   }
 
   const html = input.message
@@ -56,14 +35,14 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
   try {
     const res = await fetch('/api/send-email', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${adminToken}`,
+      },
       body: JSON.stringify({
-        apiKey: settings.apiKey,
-        from: `${settings.fromName} <${settings.fromEmail}>`,
         to: input.to,
         subject: input.subject,
         html,
-        replyTo: settings.replyTo || undefined,
       }),
     });
     const data = await res.json();

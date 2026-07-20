@@ -27,6 +27,7 @@ type AuthResult = { ok: true } | { ok: false; error: string };
 type AuthContextValue = {
   client: SessionUser | null;
   admin: SessionUser | null;
+  adminToken: string | null;
   signupClient: (input: {
     name: string;
     email: string;
@@ -86,7 +87,7 @@ function writeUsers(users: StoredUser[]) {
   window.localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
-type SessionState = { client: SessionUser | null; admin: SessionUser | null };
+type SessionState = { client: SessionUser | null; admin: SessionUser | null; adminToken?: string | null };
 
 function readSessions(): SessionState {
   if (typeof window === "undefined") return { client: null, admin: null };
@@ -166,14 +167,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!match) {
         return { ok: false, error: "Invalid administrator credentials." };
       }
-      setSessions((current) => ({ ...current, admin: toSessionUser(match) }));
+      setSessions((current) => ({
+        ...current,
+        admin: toSessionUser(match),
+        adminToken: btoa(`${match.email}:${password}`),
+      }));
       return { ok: true };
     },
     [users],
   );
 
   const logout = useCallback((role: Role) => {
-    setSessions((current) => ({ ...current, [role]: null }));
+    setSessions((current) =>
+      role === "admin"
+        ? { ...current, admin: null, adminToken: null }
+        : { ...current, [role]: null },
+    );
   }, []);
 
   const removeClient = useCallback((id: string) => {
@@ -187,6 +196,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       client: sessions.client,
       admin: sessions.admin,
+      adminToken: sessions.adminToken ?? null,
       signupClient,
       loginClient,
       loginAdmin,

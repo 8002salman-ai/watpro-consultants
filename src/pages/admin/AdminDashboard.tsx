@@ -1,5 +1,5 @@
 import { useMemo, useState, type FormEvent } from "react";
-import { LogOut, Mail, Users2, CalendarCheck, Inbox, Send, Settings2, CheckCircle2, AlertCircle } from "lucide-react";
+import { LogOut, Mail, Users2, CalendarCheck, Inbox, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import {
   GlassCard,
   SectionShell,
@@ -14,12 +14,7 @@ import { useDocumentMeta } from "../../hooks/useDocumentMeta";
 import { pageMeta } from "../../data/watproContent";
 import { useAuth } from "../../context/AuthContext";
 import { getMessages, getRegistrations } from "../../utils/store";
-import {
-  getEmailSettings,
-  saveEmailSettings,
-  sendEmail,
-  type EmailSettings,
-} from "../../utils/email";
+import { sendEmail } from "../../utils/email";
 
 type Tab = "overview" | "clients" | "registrations" | "messages" | "email";
 
@@ -255,20 +250,13 @@ export default function AdminDashboard() {
 }
 
 function EmailCenter({ clientEmails }: { clientEmails: string[] }) {
-  const [view, setView] = useState<"compose" | "settings">("compose");
+  const { adminToken } = useAuth();
 
-  // Compose state
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [sendResult, setSendResult] = useState<{ ok: boolean; text: string } | null>(null);
-
-  // Settings state
-  const [settings, setSettings] = useState<EmailSettings>(() => getEmailSettings());
-  const [settingsSaved, setSettingsSaved] = useState(false);
-
-  const hasKey = Boolean(getEmailSettings().apiKey);
 
   const handleSend = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -278,7 +266,7 @@ function EmailCenter({ clientEmails }: { clientEmails: string[] }) {
       return;
     }
     setSending(true);
-    const result = await sendEmail({ to: to.trim(), subject: subject.trim(), message });
+    const result = await sendEmail({ to: to.trim(), subject: subject.trim(), message }, adminToken);
     setSending(false);
     if (result.ok) {
       setSendResult({ ok: true, text: `Email sent successfully (id: ${result.id}).` });
@@ -290,229 +278,94 @@ function EmailCenter({ clientEmails }: { clientEmails: string[] }) {
     }
   };
 
-  const handleSaveSettings = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    saveEmailSettings(settings);
-    setSettingsSaved(true);
-    setTimeout(() => setSettingsSaved(false), 2500);
-  };
-
   return (
     <div className="grid gap-6 lg:grid-cols-3">
-      {/* Main panel */}
       <div className="lg:col-span-2">
         <GlassCard hover={false}>
-          {/* Sub-tabs */}
-          <div className="mb-6 flex gap-2">
-            <button
-              type="button"
-              onClick={() => setView("compose")}
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition",
-                view === "compose"
-                  ? "border-amber-300/35 bg-amber-300/12 text-white"
-                  : "border-white/10 bg-white/[0.04] text-slate-300 hover:text-white",
-              )}
-            >
-              <Send className="h-4 w-4" /> Compose
-            </button>
-            <button
-              type="button"
-              onClick={() => setView("settings")}
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition",
-                view === "settings"
-                  ? "border-amber-300/35 bg-amber-300/12 text-white"
-                  : "border-white/10 bg-white/[0.04] text-slate-300 hover:text-white",
-              )}
-            >
-              <Settings2 className="h-4 w-4" /> Email Settings
-            </button>
-          </div>
+          <form className="space-y-4" onSubmit={handleSend}>
+            <div>
+              <label className={labelClassName} htmlFor="email-to">To (recipient email)</label>
+              <input
+                id="email-to"
+                type="email"
+                className={inputClassName}
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+                placeholder="recipient@example.com"
+                list="client-emails"
+                required
+              />
+              <datalist id="client-emails">
+                {clientEmails.map((email) => (
+                  <option key={email} value={email} />
+                ))}
+              </datalist>
+              <p className="mt-1.5 text-xs text-slate-500">Tip: start typing to pick a registered client's email.</p>
+            </div>
 
-          {view === "compose" ? (
-            <form className="space-y-4" onSubmit={handleSend}>
-              {!hasKey ? (
-                <div className="flex items-start gap-3 rounded-2xl border border-amber-400/25 bg-amber-400/10 p-4 text-sm text-amber-100">
+            <div>
+              <label className={labelClassName} htmlFor="email-subject">Subject</label>
+              <input
+                id="email-subject"
+                type="text"
+                className={inputClassName}
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                placeholder="Subject of your email"
+                required
+              />
+            </div>
+
+            <div>
+              <label className={labelClassName} htmlFor="email-message">Message</label>
+              <textarea
+                id="email-message"
+                className={cn(textareaClassName, "min-h-[200px]")}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Write your message here. Line breaks are preserved."
+                required
+              />
+            </div>
+
+            {sendResult ? (
+              <div
+                className={cn(
+                  "flex items-start gap-3 rounded-2xl border p-4 text-sm",
+                  sendResult.ok
+                    ? "border-green-400/25 bg-green-400/10 text-green-100"
+                    : "border-red-400/25 bg-red-400/10 text-red-100",
+                )}
+              >
+                {sendResult.ok ? (
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                ) : (
                   <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                  <span>
-                    No Resend API key saved yet. Open <strong>Email Settings</strong> (button above) and add
-                    your key before sending.
-                  </span>
-                </div>
-              ) : null}
-
-              <div>
-                <label className={labelClassName} htmlFor="email-to">To (recipient email)</label>
-                <input
-                  id="email-to"
-                  type="email"
-                  className={inputClassName}
-                  value={to}
-                  onChange={(e) => setTo(e.target.value)}
-                  placeholder="recipient@example.com"
-                  list="client-emails"
-                  required
-                />
-                <datalist id="client-emails">
-                  {clientEmails.map((email) => (
-                    <option key={email} value={email} />
-                  ))}
-                </datalist>
-                <p className="mt-1.5 text-xs text-slate-500">Tip: start typing to pick a registered client's email.</p>
+                )}
+                <span>{sendResult.text}</span>
               </div>
+            ) : null}
 
-              <div>
-                <label className={labelClassName} htmlFor="email-subject">Subject</label>
-                <input
-                  id="email-subject"
-                  type="text"
-                  className={inputClassName}
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-                  placeholder="Subject of your email"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className={labelClassName} htmlFor="email-message">Message</label>
-                <textarea
-                  id="email-message"
-                  className={cn(textareaClassName, "min-h-[200px]")}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Write your message here. Line breaks are preserved."
-                  required
-                />
-              </div>
-
-              {sendResult ? (
-                <div
-                  className={cn(
-                    "flex items-start gap-3 rounded-2xl border p-4 text-sm",
-                    sendResult.ok
-                      ? "border-green-400/25 bg-green-400/10 text-green-100"
-                      : "border-red-400/25 bg-red-400/10 text-red-100",
-                  )}
-                >
-                  {sendResult.ok ? (
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                  ) : (
-                    <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                  )}
-                  <span>{sendResult.text}</span>
-                </div>
-              ) : null}
-
-              <button type="submit" disabled={sending} className={cn(primaryButtonClass, sending && "opacity-60 cursor-not-allowed")}>
-                <Send className="h-4 w-4" />
-                {sending ? "Sending…" : "Send Email"}
-              </button>
-            </form>
-          ) : (
-            <form className="space-y-4" onSubmit={handleSaveSettings}>
-              <div>
-                <label className={labelClassName} htmlFor="set-key">Resend API Key</label>
-                <input
-                  id="set-key"
-                  type="password"
-                  className={inputClassName}
-                  value={settings.apiKey}
-                  onChange={(e) => setSettings((s) => ({ ...s, apiKey: e.target.value }))}
-                  placeholder="re_xxxxxxxxxxxxxxxxxxxx"
-                  autoComplete="off"
-                />
-                <p className="mt-1.5 text-xs text-slate-500">
-                  Stored only in this browser (localStorage) — never in the website code.
-                </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className={labelClassName} htmlFor="set-fromname">From Name</label>
-                  <input
-                    id="set-fromname"
-                    type="text"
-                    className={inputClassName}
-                    value={settings.fromName}
-                    onChange={(e) => setSettings((s) => ({ ...s, fromName: e.target.value }))}
-                    placeholder="WATPRO Consultants"
-                  />
-                </div>
-                <div>
-                  <label className={labelClassName} htmlFor="set-fromemail">From Email</label>
-                  <input
-                    id="set-fromemail"
-                    type="email"
-                    className={inputClassName}
-                    value={settings.fromEmail}
-                    onChange={(e) => setSettings((s) => ({ ...s, fromEmail: e.target.value }))}
-                    placeholder="onboarding@resend.dev"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className={labelClassName} htmlFor="set-replyto">Reply-To (optional)</label>
-                <input
-                  id="set-replyto"
-                  type="email"
-                  className={inputClassName}
-                  value={settings.replyTo}
-                  onChange={(e) => setSettings((s) => ({ ...s, replyTo: e.target.value }))}
-                  placeholder="info@watproconsultants.com"
-                />
-              </div>
-
-              {settingsSaved ? (
-                <div className="flex items-center gap-2 rounded-2xl border border-green-400/25 bg-green-400/10 p-3 text-sm text-green-100">
-                  <CheckCircle2 className="h-4 w-4" /> Settings saved.
-                </div>
-              ) : null}
-
-              <button type="submit" className={primaryButtonClass}>
-                Save Settings
-              </button>
-            </form>
-          )}
+            <button type="submit" disabled={sending} className={cn(primaryButtonClass, sending && "opacity-60 cursor-not-allowed")}>
+              <Send className="h-4 w-4" />
+              {sending ? "Sending…" : "Send Email"}
+            </button>
+          </form>
         </GlassCard>
       </div>
 
-      {/* Info / setup guide */}
       <div>
         <GlassCard hover={false}>
           <h3 className="flex items-center gap-2 text-base font-semibold text-white">
-            <Mail className="h-4 w-4 text-amber-300" /> Free email setup (Resend)
+            <Mail className="h-4 w-4 text-amber-300" /> Email service
           </h3>
-          <ol className="mt-4 list-decimal space-y-3 pl-4 text-sm leading-6 text-slate-300">
-            <li>
-              Create a free account at{" "}
-              <a href="https://resend.com/signup" target="_blank" rel="noopener noreferrer" className="font-semibold text-amber-300 hover:text-amber-200">
-                resend.com
-              </a>{" "}
-              (free plan: 100 emails/day, 3,000/month).
-            </li>
-            <li>
-              In the Resend dashboard open <strong>API Keys</strong> → <strong>Create API Key</strong> and copy
-              the key (starts with <code className="rounded bg-white/10 px-1">re_</code>).
-            </li>
-            <li>Paste it in <strong>Email Settings</strong> here and save.</li>
-            <li>
-              Quick start: keep From Email as{" "}
-              <code className="rounded bg-white/10 px-1">onboarding@resend.dev</code> — works immediately for
-              testing.
-            </li>
-            <li>
-              For sending as{" "}
-              <code className="rounded bg-white/10 px-1">info@watproconsultants.com</code>: in Resend open{" "}
-              <strong>Domains</strong> → add <strong>watproconsultants.com</strong> → add the DNS records it
-              shows → once verified, change From Email here.
-            </li>
-          </ol>
+          <p className="mt-4 text-sm leading-6 text-slate-300">
+            Emails are sent from <strong>info@watproconsultants.com</strong> via Resend. The service is
+            configured on the server — no API key or settings are needed here.
+          </p>
           <p className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs leading-5 text-slate-400">
-            Your API key stays in this browser's storage only. Emails are relayed through the site's own
-            serverless endpoint (<code>/api/send-email</code>) because Resend blocks direct browser calls.
+            Only signed-in administrators can send emails. Sending is relayed through the site's
+            serverless endpoint (<code>/api/send-email</code>), which verifies your admin session.
           </p>
         </GlassCard>
       </div>
