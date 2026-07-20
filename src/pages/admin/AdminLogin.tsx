@@ -32,10 +32,9 @@ export default function AdminLogin() {
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-xs leading-6 text-slate-400">
           <p className="flex items-center gap-2 font-semibold text-slate-200">
             <ShieldCheck className="h-4 w-4 text-amber-200" />
-            Demo administrator credentials
+            Authorized personnel only
           </p>
-          <p className="mt-2">Email: admin@watpro.com</p>
-          <p>Password: watpro2026</p>
+          <p className="mt-2">Access is restricted to WATPRO administrators. Contact info@watproconsultants.com for assistance.</p>
         </div>
       }
     >
@@ -45,7 +44,7 @@ export default function AdminLogin() {
       <form className="space-y-4" onSubmit={handleSubmit}>
         <label className="block text-sm text-slate-300">
           Administrator email
-          <input type="email" className={cn(inputClassName, "mt-2")} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="admin@watpro.com" required />
+          <input type="email" className={cn(inputClassName, "mt-2")} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="admin@watproconsultants.com" required />
         </label>
         <label className="block text-sm text-slate-300">
           Password

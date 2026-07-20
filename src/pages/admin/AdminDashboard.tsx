@@ -19,8 +19,9 @@ export default function AdminDashboard() {
     title: "Admin Dashboard | WATPRO Consulting",
     description: "WATPRO internal admin dashboard for managing clients, registrations, and enquiries.",
   });
-  const { admin, logout, allClients } = useAuth();
+  const { admin, logout, allClients, removeClient } = useAuth();
   const [tab, setTab] = useState<Tab>("overview");
+  const [confirmRemove, setConfirmRemove] = useState<string | null>(null);
 
   const registrations = useMemo(() => getRegistrations(), []);
   const messages = useMemo(() => getMessages(), []);
@@ -130,16 +131,69 @@ export default function AdminDashboard() {
 
         {tab === "clients" ? (
           <GlassCard hover={false}>
-            <AdminTable
-              empty="No clients have signed up yet."
-              headers={["Name", "Organization", "Email", "Joined"]}
-              rows={allClients.map((c) => [
-                c.name,
-                c.organization ?? "—",
-                c.email,
-                new Date(c.createdAt).toLocaleDateString(),
-              ])}
-            />
+            {allClients.length === 0 ? (
+              <p className="text-sm text-slate-400">No clients have signed up yet.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[720px] text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-white/10 text-xs uppercase tracking-[0.2em] text-slate-400">
+                      <th className="px-3 py-3 font-medium">Name</th>
+                      <th className="px-3 py-3 font-medium">Organization</th>
+                      <th className="px-3 py-3 font-medium">Email</th>
+                      <th className="px-3 py-3 font-medium">Joined</th>
+                      <th className="px-3 py-3 font-medium">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allClients.map((c) => (
+                      <tr key={c.id} className="border-b border-white/5 text-slate-200">
+                        <td className="px-3 py-3">{c.name}</td>
+                        <td className="px-3 py-3">{c.organization ?? "—"}</td>
+                        <td className="px-3 py-3">{c.email}</td>
+                        <td className="px-3 py-3">{new Date(c.createdAt).toLocaleDateString()}</td>
+                        <td className="px-3 py-3">
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={`mailto:${c.email}`}
+                              className="rounded-lg border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-amber-200 hover:bg-white/[0.1] transition"
+                            >
+                              Email
+                            </a>
+                            {confirmRemove === c.id ? (
+                              <span className="flex items-center gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => { removeClient(c.id); setConfirmRemove(null); }}
+                                  className="rounded-lg border border-red-400/30 bg-red-400/15 px-3 py-1.5 text-xs font-semibold text-red-200 hover:bg-red-400/25 transition"
+                                >
+                                  Confirm
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setConfirmRemove(null)}
+                                  className="rounded-lg border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/[0.1] transition"
+                                >
+                                  Cancel
+                                </button>
+                              </span>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() => setConfirmRemove(c.id)}
+                                className="rounded-lg border border-red-400/20 bg-red-400/10 px-3 py-1.5 text-xs font-semibold text-red-300 hover:bg-red-400/20 transition"
+                              >
+                                Remove
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </GlassCard>
         ) : null}
 

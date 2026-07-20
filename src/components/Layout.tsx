@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { User, LogIn, UserPlus, LayoutDashboard, ShieldCheck, LogOut } from 'lucide-react';
 import { WATPRO_LOGO } from '../assets';
+import { useAuth } from '../context/AuthContext';
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -22,8 +24,12 @@ const mobileOnlyLinks = [
 
 export default function Layout() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { client, admin, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -31,7 +37,19 @@ export default function Layout() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  useEffect(() => { setMobileOpen(false); setUserMenuOpen(false); }, [pathname]);
+
+  // Close user menu on outside click
+  useEffect(() => {
+    if (!userMenuOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onClick);
+    return () => document.removeEventListener('mousedown', onClick);
+  }, [userMenuOpen]);
 
   // Lock body scroll when menu open so page doesn't move behind overlay
   useEffect(() => {
@@ -101,6 +119,90 @@ export default function Layout() {
               >
                 Book Consultation
               </Link>
+
+              {/* User account menu */}
+              <div ref={userMenuRef} style={{ position: 'relative', flexShrink: 0 }}>
+                <button
+                  onClick={() => setUserMenuOpen(v => !v)}
+                  aria-label="Account menu"
+                  aria-expanded={userMenuOpen}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: 40, height: 40, borderRadius: 10,
+                    border: (client || admin) ? '1px solid rgba(245,158,11,0.5)' : '1px solid rgba(255,255,255,0.15)',
+                    backgroundColor: (client || admin) ? 'rgba(245,158,11,0.15)' : 'rgba(255,255,255,0.06)',
+                    cursor: 'pointer', padding: 0, outline: 'none',
+                  }}
+                >
+                  <User size={18} color={(client || admin) ? '#fbbf24' : '#cbd5e1'} />
+                </button>
+
+                <AnimatePresence>
+                  {userMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.15 }}
+                      style={{
+                        position: 'absolute', right: 0, top: 48, width: 240,
+                        backgroundColor: 'rgba(10,22,38,0.98)', backdropFilter: 'blur(16px)',
+                        border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14,
+                        boxShadow: '0 20px 50px rgba(0,0,0,0.55)', overflow: 'hidden', zIndex: 1200,
+                      }}
+                    >
+                      {/* Client section */}
+                      <div className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-amber-400">Client Portal</div>
+                      {client ? (
+                        <>
+                          <div className="px-4 py-1.5 text-xs text-slate-400 truncate">{client.name} · {client.email}</div>
+                          <Link to="/client" className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/10 transition-colors">
+                            <LayoutDashboard size={15} className="text-amber-400" /> Client Dashboard
+                          </Link>
+                          <button
+                            onClick={() => { logout('client'); setUserMenuOpen(false); navigate('/'); }}
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/10 transition-colors text-left"
+                          >
+                            <LogOut size={15} className="text-red-400" /> Logout (Client)
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link to="/client/login" className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/10 transition-colors">
+                            <LogIn size={15} className="text-amber-400" /> Client Login
+                          </Link>
+                          <Link to="/client/signup" className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/10 transition-colors">
+                            <UserPlus size={15} className="text-amber-400" /> Client Sign Up
+                          </Link>
+                        </>
+                      )}
+
+                      <div style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)', margin: '4px 0' }} />
+
+                      {/* Admin section */}
+                      <div className="px-4 pt-2 pb-1 text-[10px] font-bold uppercase tracking-widest text-amber-400">Admin Portal</div>
+                      {admin ? (
+                        <>
+                          <div className="px-4 py-1.5 text-xs text-slate-400 truncate">{admin.email}</div>
+                          <Link to="/admin/dashboard" className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/10 transition-colors">
+                            <ShieldCheck size={15} className="text-amber-400" /> Admin Dashboard
+                          </Link>
+                          <button
+                            onClick={() => { logout('admin'); setUserMenuOpen(false); navigate('/'); }}
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/10 transition-colors text-left mb-1"
+                          >
+                            <LogOut size={15} className="text-red-400" /> Logout (Admin)
+                          </button>
+                        </>
+                      ) : (
+                        <Link to="/admin" className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/10 transition-colors mb-1">
+                          <ShieldCheck size={15} className="text-amber-400" /> Admin Login
+                        </Link>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Hamburger — wrapper div carries md:hidden; button is 100% inline styles */}
               <div className="md:hidden" style={{ flexShrink: 0 }}>

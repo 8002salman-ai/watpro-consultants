@@ -36,35 +36,49 @@ type AuthContextValue = {
   loginClient: (email: string, password: string) => AuthResult;
   loginAdmin: (email: string, password: string) => AuthResult;
   logout: (role: Role) => void;
+  removeClient: (id: string) => void;
   allClients: SessionUser[];
 };
 
-const USERS_KEY = "watpro_users_v1";
-const SESSION_KEY = "watpro_sessions_v1";
+const USERS_KEY = "watpro_users_v2";
+const SESSION_KEY = "watpro_sessions_v2";
 
 const DEFAULT_ADMIN: StoredUser = {
   id: "admin-root",
   name: "WATPRO Administrator",
-  email: "admin@watpro.com",
-  password: "watpro2026",
+  email: "admin@watproconsultants.com",
+  password: "Admin123@@@",
   role: "admin",
+  createdAt: new Date("2026-01-01").toISOString(),
+};
+
+const DEFAULT_CLIENT: StoredUser = {
+  id: "client-root",
+  name: "Salman",
+  email: "8002salman@gmail.com",
+  organization: "WATPRO Client",
+  password: "Client123@@@",
+  role: "client",
   createdAt: new Date("2026-01-01").toISOString(),
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 function readUsers(): StoredUser[] {
-  if (typeof window === "undefined") return [DEFAULT_ADMIN];
+  if (typeof window === "undefined") return [DEFAULT_ADMIN, DEFAULT_CLIENT];
   try {
     const raw = window.localStorage.getItem(USERS_KEY);
-    if (!raw) return [DEFAULT_ADMIN];
-    const parsed = JSON.parse(raw) as StoredUser[];
+    if (!raw) return [DEFAULT_ADMIN, DEFAULT_CLIENT];
+    let parsed = JSON.parse(raw) as StoredUser[];
     if (!parsed.some((user) => user.role === "admin")) {
-      return [DEFAULT_ADMIN, ...parsed];
+      parsed = [DEFAULT_ADMIN, ...parsed];
+    }
+    if (!parsed.some((user) => user.email.toLowerCase() === DEFAULT_CLIENT.email)) {
+      parsed = [...parsed, DEFAULT_CLIENT];
     }
     return parsed;
   } catch {
-    return [DEFAULT_ADMIN];
+    return [DEFAULT_ADMIN, DEFAULT_CLIENT];
   }
 }
 
@@ -162,6 +176,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSessions((current) => ({ ...current, [role]: null }));
   }, []);
 
+  const removeClient = useCallback((id: string) => {
+    setUsers((current) => current.filter((user) => !(user.role === "client" && user.id === id)));
+    setSessions((current) =>
+      current.client?.id === id ? { ...current, client: null } : current,
+    );
+  }, []);
+
   const value = useMemo<AuthContextValue>(
     () => ({
       client: sessions.client,
@@ -170,9 +191,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loginClient,
       loginAdmin,
       logout,
+      removeClient,
       allClients: users.filter((user) => user.role === "client").map(toSessionUser),
     }),
-    [sessions, signupClient, loginClient, loginAdmin, logout, users],
+    [sessions, signupClient, loginClient, loginAdmin, logout, removeClient, users],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
